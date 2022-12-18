@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/final/static/css/main.bf284d0f.css",
-    "main.js": "/final/static/js/main.7eb43b98.js",
+    "main.js": "/final/static/js/main.0e44beb9.js",
     "static/js/787.674770d0.chunk.js": "/final/static/js/787.674770d0.chunk.js",
     "static/media/template1.png": "/final/static/media/template1.d1220c1a466bcf9d3ec3.png",
     "static/media/backGroundHeader02.png": "/final/static/media/backGroundHeader02.f95cadcdb5fa3cb8e2e0.png",
@@ -14,11 +14,11 @@
     "static/media/logoHuutai.png": "/final/static/media/logoHuutai.4043226b5951fd4b742f.png",
     "index.html": "/final/index.html",
     "main.bf284d0f.css.map": "/final/static/css/main.bf284d0f.css.map",
-    "main.7eb43b98.js.map": "/final/static/js/main.7eb43b98.js.map",
+    "main.0e44beb9.js.map": "/final/static/js/main.0e44beb9.js.map",
     "787.674770d0.chunk.js.map": "/final/static/js/787.674770d0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.bf284d0f.css",
-    "static/js/main.7eb43b98.js"
+    "static/js/main.0e44beb9.js"
   ]
 }
