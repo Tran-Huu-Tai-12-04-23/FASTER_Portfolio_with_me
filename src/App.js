@@ -6,12 +6,12 @@ import ReactDOMServer from "react-dom/server";
 import { publicRoutes } from "./Routes";
 import styles from "./App.module.scss";
 
-
 function App() {
   return (
     <div className={clsx(styles.wrapper)}>
-      <Router>
-        <Routes>
+      hello
+      {/* <Router> */}
+      {/* <Routes>
           {publicRoutes.map((page, index) => {
             return (
               <Route
@@ -22,7 +22,7 @@ function App() {
             );
           })}
         </Routes>
-      </Router>
+      </Router> */}
     </div>
   );
 }
