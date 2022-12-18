@@ -1,0 +1,66 @@
+:root {
+  --btn_width: 52px;
+  --btn_height: 36px;
+  --primary: rgba(255, 59, 92, 1);
+}
+
+.wrapper {
+  min-width: 8rem;
+  padding: 0 0.8rem;
+  height: 3.6rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-weight: bold;
+  .title {
+    text-align: center;
+    width: 14rem;
+  }
+
+  svg {
+    margin-right: 12px;
+    margin-left: 12px;
+    min-width: 20px;
+  }
+}
+.wrapper + .wrapper {
+  margin-left: 24px;
+}
+// size button
+.small {
+  height: 3rem;
+}
+.large {
+  height: 4.2rem;
+  min-width: 361px;
+}
+
+.outline {
+  border-color: var(--primary);
+  color: var(--primary);
+  background-color: #201416;
+}
+// shape button
+.normal {
+  background-color: #252525;
+
+  &:hover {
+    background-color: #1b1b1b;
+  }
+}
+.rounded {
+  border-radius: 5.2rem;
+}
+.primary {
+  background-color: var(--primary);
+
+  &:hover {
+    background-color: #fff;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
+      #fe2c55;
+  }
+}

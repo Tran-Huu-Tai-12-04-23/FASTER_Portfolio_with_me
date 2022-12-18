@@ -1,0 +1,72 @@
+.wrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  background-color: #25252f;
+  margin: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  -webkit-box-shadow: 5px 5px 15px -2px #000000;
+  box-shadow: 5px 5px 15px -2px #000000;
+
+  &:hover .tip_suggest {
+    display: block;
+  }
+
+  .tip_suggest {
+    position: absolute;
+    display: block;
+    min-width: 250px;
+    height: 40px;
+    transform: translate(-20%, -20px);
+    text-align: center;
+    top: -40px;
+    left: 0;
+    right: 0;
+    background-color: #000;
+    border-radius: 4px;
+    color: #fff;
+    padding: 4px;
+    display: none;
+    animation: fadeInTippy 0.3s linear;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 70%;
+      width: 1 0px;
+      height: 20px;
+      border-left: 10px solid transparent;
+      border-right: 10px solid transparent;
+      border-top: 10px solid #000;
+      animation-delay: 0.4s;
+      animation: fadeInTippy 0.3s ease;
+    }
+  }
+
+  img,
+  div {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &:hover {
+    filter: brightness(0.6);
+  }
+}
+
+@keyframes fadeInTippy {
+  from {
+    opacity: 0;
+    transform: translate(-200px, -20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, -20px);
+  }
+}

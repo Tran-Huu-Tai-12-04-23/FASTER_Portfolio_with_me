@@ -1,0 +1,10 @@
+.overlay {
+  position: static;
+  width: 8.333333333333%;
+  height: 8.333333333333%;
+  border: 1px solid #ccc;
+  background-color: transparent;
+
+  z-index: -1;
+  display: none;
+}

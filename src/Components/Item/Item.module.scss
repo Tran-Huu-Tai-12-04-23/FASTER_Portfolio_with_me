@@ -1,0 +1,311 @@
+.wrapper_multi_items,
+.wrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 12px;
+  cursor: grab;
+  // resize: auto;\
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+}
+
+.input_text {
+  position: relative;
+  border: none;
+  height: 100%;
+  width: 100%;
+  cursor: text;
+  word-wrap: break-all;
+}
+
+.box {
+  border: 1px solid #ccc;
+  background-color: rgb(175, 67, 67);
+}
+
+.link {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // color: #fff;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-decoration-color: #4285f4;
+
+  &:focus {
+    border: 1px solid var(--primary);
+  }
+
+  svg {
+    padding: 0 12px;
+  }
+}
+
+.input_file {
+  border: 1px solid #ff0033;
+  background-color: transparent;
+  z-index: unset;
+
+  &[type="file"]::file-selector-button {
+    color: #fff;
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    margin: 8px;
+    border: none;
+    background: var(--primary);
+    padding: 4px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    line-height: 100%;
+    margin-right: 20px;
+  }
+  &[type="file"] {
+    &:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
+  }
+}
+
+// css when item have prop icon
+
+.wrapper {
+  // border-style: solid;
+  // border-color: transparent;
+  // border-width: 1px;
+
+  &:hover {
+    border: 2px dotted #0000ff !important;
+    // border-style: solid !important;
+    // border-width: 1px !important;
+  }
+}
+
+.icon {
+  // width: 100%;
+  // height: 100%;
+  margin-bottom: 6px;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  cursor: grab;
+  background-color: var(--primary_color_component);
+  border-style: none;
+  svg {
+    color: #fff;
+    
+  }
+}
+.button {
+  text-align: center;
+  background-color: transparent;
+  // border-radius: 12px;
+  // border: 2px outset rgb(15, 121, 133);
+  // color: #ccc;
+  // text-transform: uppercase;
+}
+.modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000000;
+  .modal_enter_link {
+    position: absolute;
+    left: 50vh;
+    min-width: 300px;
+    min-height: 160px;
+    // display: flex;
+    transform: translate(-20%, -20%);
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 24px;
+    border-radius: 24px;
+    background-color: #ccc;
+    transition: all 0.3s ease-in-out;
+    span {
+      margin-left: 12px;
+      font-size: 18px;
+      color: var(--primary_color_component);
+    }
+    h5 {
+      width: 100%;
+      position: unset;
+      text-align: center;
+      font-size: 18px;
+      color: var(--primary);
+    }
+    input {
+      width: 100%;
+      position: unset;
+      border: none;
+      outline: none;
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 12px;
+      font-size: 16px;
+    }
+    button {
+      width: 50%;
+      position: unset;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 12px;
+      background-color: var(--primary_color_component);
+      color: #fff;
+      font-size: 18px;
+      transform: translateX(50%);
+      &:hover {
+        cursor: pointer;
+        background-color: var(--primary);
+      }
+    }
+  }
+}
+
+// css icon
+.get_link_icon:hover .item_edit,
+.wrapper:hover + .item_edit {
+  display: flex;
+}
+.item_edit:hover {
+  display: flex;
+}
+.item_edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // font-weight: 800;
+  background-color: #f90a3a;
+  position: absolute;
+  top: -16px;
+  right: -40px;
+  width: 60px;
+  height: 30px;
+  border-radius: 12px;
+  cursor: pointer;
+  z-index: 100000;
+  display: none;
+  svg {
+    width: 100%;
+    height: 100%;
+    color: #fff;
+    font-size: 24px;
+  }
+  &:hover {
+    background-color: var(--primary_color_component);
+  }
+}
+
+.wrapper_multi_items {
+  display: flex;
+  justify-content: center;
+  min-height: 160px;
+
+  &:hover {
+    border: 1px solid #4285f4;
+  }
+}
+
+.wrapper_multi_items {
+  &:hover .add_height_bottom,
+  .add_height_bottom:hover {
+    display: block;
+  }
+}
+
+.add_height_bottom {
+  display: block;
+  width: 15px;
+  height: 15px;
+  background-color: #4285f4;
+  position: absolute;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  z-index: 10;
+  display: none;
+
+  &:hover {
+    cursor: row-resize;
+  }
+}
+
+.add_height_bottom {
+  bottom: -8px;
+  left: 70%;
+}
+
+//get link for icon
+.enter_link_icon {
+  display: none;
+  position: absolute;
+  top: -60px;
+  right: -200px;
+  width: 400px;
+  height: 50px;
+  display: flex;
+  padding: 0 6px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #e6e6fa;
+  border-radius: 12px;
+  border: 1px solid #000;
+
+  input {
+    width: 78%;
+    height: 80%;
+    border: none;
+    outline: none;
+    position: unset;
+    background-color: transparent;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 0 12px;
+  }
+  button {
+    width: 20%;
+    height: 80%;
+    border: none;
+    outline: none;
+    padding: 0 12px;
+    position: unset;
+    border-radius: 12px;
+    background-color: var(--primary);
+    color: #fff;
+    font-size: 14px;
+    &:hover {
+      cursor: pointer;
+      background-color: #4285f4;
+    }
+  }
+}
+
+// icon
+.icon_ingrid {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    color: inherit;
+  }
+}

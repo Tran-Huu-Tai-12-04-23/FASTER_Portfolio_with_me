@@ -1,0 +1,244 @@
+.wrapper {
+  position: relative;
+  min-height: 800px;
+  background-image: url(https://img4.thuthuatphanmem.vn/uploads/2020/04/28/hinh-nen-2k-dep-ma-don-gian_014253030.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+
+  .button_cerate {
+    position: relative;
+    top: 30vh;
+    width: 300px;
+    max-height: 80px;
+    padding: 24px 32px;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px double #000;
+    transition-duration: 1s;
+    margin: 0 auto;
+    overflow: hidden;
+    z-index: 10;
+    cursor: pointer;
+    &:hover {
+      transform: scale(1.4);
+    }
+
+    &::after {
+      background: rgba(0, 0, 0, 0)
+        linear-gradient(
+          to right,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0.3) 100%
+        )
+        repeat scroll 0 0;
+      content: "";
+      display: block;
+      height: 100%;
+      position: absolute;
+      right: -75%;
+      top: 0;
+      transform: skewX(-25deg);
+      width: 50%;
+      z-index: 2;
+    }
+
+    &:hover::after {
+      animation: 1s ease 0s normal none 1 running fixedAnim;
+      animation: 1s ease 0s normal none 1 running fixedAnim;
+      -webkit-animation: 1s ease 0s normal none 1 running fixedAnim;
+      -moz-animation: 1s ease 0s normal none 1 running fixedAnim;
+    }
+    @-webkit-keyframes fixedAnim {
+      0% {
+        right: 125%;
+      }
+      125% {
+        right: 0;
+      }
+    }
+
+    @-moz-keyframes fixedAnim {
+      0% {
+        right: 125%;
+      }
+      125% {
+        right: 0;
+      }
+    }
+
+    @keyframes fixedAnim {
+      0% {
+        right: 125%;
+      }
+      125% {
+        right: 0;
+      }
+    }
+
+    &:hover span {
+      display: block;
+    }
+
+    button {
+      background-color: transparent;
+      border: none;
+      outline: none;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      font-size: 24px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    span {
+      display: block;
+      position: absolute;
+      background-color: #0066ff;
+      display: none;
+    }
+    .span1 {
+      top: 4px;
+      left: 4px;
+      width: 20px;
+      height: 2px;
+    }
+    .span2 {
+      top: 4px;
+      left: 4px;
+      width: 2px;
+      height: 20px;
+    }
+    .span3 {
+      bottom: 4px;
+      right: 4px;
+      width: 20px;
+      height: 2px;
+    }
+    .span4 {
+      bottom: 4px;
+      right: 4px;
+      width: 2px;
+      height: 20px;
+    }
+  }
+  .bubble {
+    animation: morph 3s linear infinite alternate, spin 20s linear infinite;
+  }
+  @keyframes morph {
+    0% {
+      border-radius: 40% 60% 60% 40%/70% 30%;
+    }
+    to {
+      border-radius: 40% 60%;
+    }
+  }
+  .bubble1 {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    width: 500px;
+    height: 500px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 30% 70% 70% 30% / 58% 30% 70% 42%;
+  }
+  .bubble2 {
+    position: absolute;
+    top: 60%;
+    left: 80%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 44% 56% 70% 30% / 58% 73% 27% 42%;
+  }
+  .bubble3 {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 44% 56% 22% 78% / 58% 73% 27% 42%;
+  }
+  .bubble4 {
+    position: absolute;
+    top: 0%;
+    left: 0;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 44% 56% 33% 67% / 58% 43% 57% 42%;
+  }
+}
+
+.wrapper_text {
+  color: #fff;
+  font-weight: bold;
+  font-size: 24px;
+  display: inline-flex;
+  position: absolute;
+  left: 50%;
+  top: 64%;
+  transform: translateX(-50%);
+  z-index: 1;
+
+  .static_text {
+    margin-right: 12px;
+    color: var(--primary);
+    line-height: 34px;
+    text-transform: uppercase;
+  }
+  .dynamic_txt {
+    padding-bottom: 10px;
+    color: #20b2aa;
+    line-height: 32px;
+    height: 32px;
+    position: relative;
+    overflow: hidden;
+
+    .wrapper_content_txt {
+      width: 100%;
+      height: 96px;
+      animation: typing 4s steps(20) infinite alternate;
+      overflow: hidden;
+    }
+
+    @keyframes typing {
+      0% {
+        width: 0%;
+      }
+      100% {
+        width: 100%;
+      }
+    }
+
+    li {
+      width: 100%;
+      animation: slide 24s steps(1) infinite;
+      border-right: 2px solid #fc6d6d;
+      white-space: nowrap;
+
+      @keyframes slide {
+        0% {
+          transform: translateY(0);
+        }
+        30% {
+          transform: translateY(-32px);
+        }
+        60% {
+          transform: translateY(-64px);
+        }
+        90% {
+          transform: translateY(-96px);
+        }
+        95% {
+          transform: translateY(0);
+        }
+      }
+    }
+  }
+}

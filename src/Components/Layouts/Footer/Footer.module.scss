@@ -1,0 +1,40 @@
+.wrapper {
+  padding-top: 60px;
+  height: 500px;
+  width: 100%;
+  background-color: #1b212f;
+
+  .wrapper_logo {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      width: 80px;
+      height: 50px;
+      border-radius: 50%;
+      margin: 50px 24px;
+    }
+  }
+}
+
+.wrapper_social_network {
+  a {
+    display: block;
+    margin: 12px;
+    width: 70px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px double transparent;
+    text-align: center;
+    line-height: 100%;
+    svg {
+      font-size: 24px;
+    }
+    &:hover {
+      border-color: var(--primary);
+      cursor: pointer;
+    }
+  }
+}
