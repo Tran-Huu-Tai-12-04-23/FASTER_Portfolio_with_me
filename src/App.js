@@ -9,9 +9,8 @@ import styles from "./App.module.scss";
 function App() {
   return (
     <div className={clsx(styles.wrapper)}>
-      hello
-      {/* <Router> */}
-      {/* <Routes>
+      <Router>
+        <Routes>
           {publicRoutes.map((page, index) => {
             return (
               <Route
@@ -22,7 +21,7 @@ function App() {
             );
           })}
         </Routes>
-      </Router> */}
+      </Router>
     </div>
   );
 }
