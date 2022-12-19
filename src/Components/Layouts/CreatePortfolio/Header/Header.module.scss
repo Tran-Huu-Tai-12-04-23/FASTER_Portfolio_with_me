@@ -87,3 +87,17 @@
     height: calc(var(--header_height) / 2);
   }
 }
+
+.modal_public {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  line-height: 60px;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+}

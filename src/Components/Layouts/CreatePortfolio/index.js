@@ -3,7 +3,6 @@ import clsx from "clsx";
 import styles from "./CreatePortfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { VscAdd } from "react-icons/vsc";
-import { FiEdit2 } from "react-icons/fi";
 
 import Header from "./Header";
 import MenuUntil from "~/Components/MenuUntil";
