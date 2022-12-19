@@ -129,6 +129,7 @@ function BoxMenu() {
             type='input'
             className={clsx(styles.item_text)}
             icon
+            widthMenu={widthMenu}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -152,6 +153,7 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_link)}
             icon
+            widthMenu={widthMenu}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -176,6 +178,7 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_img)}
             icon
+            widthMenu={widthMenu}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -199,6 +202,7 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_button)}
             icon
+            widthMenu={widthMenu}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -215,6 +219,7 @@ function BoxMenu() {
             draggable='true'
             className={clsx(styles.item_button)}
             icon
+            widthMenu={widthMenu}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
