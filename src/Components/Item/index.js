@@ -5,7 +5,6 @@ import {
   useEffect,
   useContext,
   useRef,
-  useCallback,
   useLayoutEffect,
 } from "react";
 import { ResizableBox as ReactResizableBox } from "react-resizable";
@@ -68,6 +67,7 @@ function Item({
   isChild = false,
   children,
   InfoIcon,
+  widthMenu,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
@@ -135,6 +135,7 @@ function Item({
         inGrid,
         type,
         isMulti,
+        widthMenu,
         type1,
         type2,
         type3,

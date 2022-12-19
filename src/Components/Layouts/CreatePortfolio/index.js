@@ -13,6 +13,7 @@ import {
   ContextItemsIngrid,
   ContextItemsMultiIngrid,
   ElementContentPortfolio,
+  wrapperContent,
 } from "~/Store/Context";
 import Footer from "../Footer";
 import Preview from "../Preview";
@@ -38,6 +39,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const inputAddHeight = useRef();
   const [contentTag, setContentTag] = useState("Header");
   const [showTag, setShowTag] = useState(false);
+  const wrapperContentPortfolio = useRef();
 
   // save data in localStorage
   useEffect(() => {
@@ -132,7 +134,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   };
 
   return (
-    <>
+    <wrapperContent.Provider value={wrapperContentPortfolio}>
       <ContextItemsIngrid.Provider value={[items, setItems]}>
         <ContextShowEditorComponent.Provider
           value={[showEditorComponent, setEditorComponent]}
@@ -145,7 +147,10 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
                 ""
               )}
 
-              <div className={clsx(styles.content)}>
+              <div
+                className={clsx(styles.content)}
+                ref={wrapperContentPortfolio}
+              >
                 <MenuUntil state={setWidthMenu} valueState={widthMenu}>
                   <div className={clsx(styles.wrapper_icon_add_height_content)}>
                     <TipSuggest
@@ -258,7 +263,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
           items={items}
         ></Preview>
       </div>
-    </>
+    </wrapperContent.Provider>
   );
 }
 

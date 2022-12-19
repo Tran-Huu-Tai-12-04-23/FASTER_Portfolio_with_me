@@ -11,6 +11,7 @@ import {
   ShowOverlay,
   ContextReducer,
   ContextItemsMultiIngrid,
+  wrapperContent,
 } from "~/Store/Context";
 import ComponentLayouts from "../Item/ComponentLayouts";
 
@@ -52,7 +53,7 @@ function Grid(props) {
         const data = monitor.getDifferenceFromInitialOffset();
         console.log(data);
         console.log(delta);
-        let left = delta.x - 400;
+        let left = item.widthMenu ? delta.x - item.widthMenu : delta.x - 360;
         let top = delta.y - 100;
         console.log(item);
         addItem(

@@ -1,4 +1,5 @@
 import uuid from "react-uuid";
+import { useEffect, useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -21,6 +22,7 @@ import { AiOutlineAlignLeft, AiOutlineLink } from "react-icons/ai";
 
 import styles from "./BoxMenu.module.scss";
 import { Item, TipSuggest } from "~/Components";
+import { wrapperContent } from "~/Store/Context";
 
 function BoxMenu() {
   const icons = [
@@ -46,6 +48,25 @@ function BoxMenu() {
     },
   ];
 
+  const wrapperContentPortfolio = useContext(wrapperContent);
+  const [widthMenu, setWidthMenu] = useState();
+
+  /// resize set width content
+  useEffect(() => {
+    if (wrapperContentPortfolio.current) {
+      setWidthMenu(wrapperContentPortfolio.current.offsetWidth * 0.22 + 14);
+    }
+    const handleResize = () => {
+      setWidthMenu(wrapperContentPortfolio.current.offsetWidth * 0.22 + 14);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  });
+
   const renderIcons = () => {
     return icons.map((Icon) => {
       return (
@@ -66,6 +87,7 @@ function BoxMenu() {
             id={uuid()}
             type='icon'
             InfoIcon={Icon}
+            widthMenu={widthMenu}
             styleDefault={{
               position: "unset",
               border: "none",
