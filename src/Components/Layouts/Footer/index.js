@@ -69,7 +69,7 @@ function Footer({ backgroundColor }) {
             ></TfiFacebook>
           </a>
           <a
-            href='https://www.instagram.com/tai_fhuu/'
+            href='https://www.instagram.com/'
             target='_blank'
             style={{
               backgroundColor: "#DC143C",
