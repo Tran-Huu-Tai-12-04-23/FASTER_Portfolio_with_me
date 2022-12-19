@@ -53,7 +53,8 @@ function Grid(props) {
         const data = monitor.getDifferenceFromInitialOffset();
         console.log(data);
         console.log(delta);
-        let left = item.widthMenu ? delta.x - item.widthMenu : delta.x - 360;
+        console.log(item);
+        let left = item.widthMenu ? delta.x - item.widthMenu : delta.x - 400;
         let top = delta.y - 100;
         console.log(item);
         addItem(
@@ -151,7 +152,7 @@ function Grid(props) {
     href,
     valueItem,
     width = 200,
-    height = 100
+    height = type === "a" ? 30 : 100
   ) => {
     // setStyleDefault(styleDefault);
 

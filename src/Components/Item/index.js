@@ -69,6 +69,7 @@ function Item({
   InfoIcon,
   widthMenu,
 }) {
+  console.log(widthMenu);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
@@ -87,7 +88,7 @@ function Item({
   const elementContentPortfolio = useContext(ElementContentPortfolio);
   const [widthContents, setWidthContents] = useState(width);
   const [heightWrapperReSizeable, setHeightWrapperReSizeable] = useState(
-    height + 24
+    type === "a" ? 30 : height + 24
   );
   const [scrollHeight, setScrollHeight] = useState(0);
   const inputEditLinkIcon = useRef();
@@ -357,8 +358,8 @@ function Item({
           width={widthContents ? parseInt(widthContents) : parseInt(width)}
           height={type === "input" ? heightWrapperReSizeable : height}
           // onClick={handleSelectItemToEdit}
+
           style={{
-            height: 100,
             ...stylesItem,
             transform: center ? "translateX(-50%)" : "none",
           }}
