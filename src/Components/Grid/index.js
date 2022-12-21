@@ -303,7 +303,7 @@ function Grid(props) {
   useLayoutEffect(() => {
     const item = findItem(state.id_item_selected);
     const itemDomReal = document.getElementById(state.id_item_selected);
-    if (item) {
+    if (itemDomReal) {
       // item.styleDefault.color = state.color;
       // item.styleDefault.backgroundColor = state.background_color;
       // item.styleDefault.fontSize = state.font_size;
