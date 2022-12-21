@@ -69,7 +69,7 @@ function Item({
   InfoIcon,
   widthMenu,
 }) {
-  console.log(widthMenu);
+  // console.log(widthMenu);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");

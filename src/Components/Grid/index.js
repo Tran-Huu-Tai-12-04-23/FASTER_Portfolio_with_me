@@ -270,8 +270,8 @@ function Grid(props) {
     });
   }, [items]);
   // load style default
+
   useEffect(() => {
-    // console.log(state);
     // console.log("render");
     const setStyle = (item) => {
       item.styleDefault.color = state.color;
@@ -287,6 +287,8 @@ function Grid(props) {
       item.styleDefault.textTransform = state.text_transform;
       item.styleDefault.lineHeight = state.line_height;
     };
+    // console.log(state);
+
     items.map((item) => {
       if (item.id === state.id_item_selected) {
         setStyle(item);
@@ -297,26 +299,13 @@ function Grid(props) {
         setStyle(item);
       }
     });
+    // console.log(findItem(state.id_item_selected));
   }, [state]);
 
   //load styles
   useLayoutEffect(() => {
-    const item = findItem(state.id_item_selected);
     const itemDomReal = document.getElementById(state.id_item_selected);
     if (itemDomReal) {
-      // item.styleDefault.color = state.color;
-      // item.styleDefault.backgroundColor = state.background_color;
-      // item.styleDefault.fontSize = state.font_size;
-      // item.styleDefault.fontFamily = state.font_family;
-      // item.styleDefault.borderRadius = state.border_radius;
-      // item.styleDefault.borderStyle = state.border_style;
-      // item.styleDefault.borderColor = state.border_color;
-      // item.styleDefault.fontWeight = state.font_weight ? "bold" : "normal";
-      // item.styleDefault.textAlign = state.text_align ? "center" : "";
-      // item.styleDefault.borderWidth = state.border_size;
-      // item.styleDefault.textTransform = state.text_transform ? "uppercase" : "";
-      // item.styleDefault.lineHeight = state.line_height;
-      //
       itemDomReal.style.fontSize = state.font_size;
       itemDomReal.style.fontFamily = state.font_family;
       itemDomReal.style.borderRadius = state.border_radius;
@@ -330,6 +319,18 @@ function Grid(props) {
       itemDomReal.style.color = state.color;
       itemDomReal.style.backgroundColor = state.background_color;
     }
+  });
+
+  // get height for element when it change
+  useEffect(() => {
+    items.map((item) => {
+      const itemDomReal = document.getElementById(item.id);
+      item.height = itemDomReal.offsetHeight;
+      item.width = item.width === "100%" ? item.width : itemDomReal.offsetWidth;
+      item.href = itemDomReal.href;
+      item.src = itemDomReal.src;
+      item.valueItem = itemDomReal.value ? itemDomReal.value : itemDomReal.text;
+    });
   });
 
   const renderItem = () => {
@@ -376,6 +377,7 @@ function Grid(props) {
       });
     }
   };
+
   return (
     <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
       <div

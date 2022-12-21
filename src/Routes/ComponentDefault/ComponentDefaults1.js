@@ -21,7 +21,6 @@ export const DefaultItemInGridTemplate1 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-    valueItem: "<About>",
     styleDefault: {
       backgroundColor: "#669999",
     },
