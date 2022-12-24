@@ -7,8 +7,16 @@ import {
   useRef,
   useLayoutEffect,
 } from "react";
+
 import { ResizableBox as ReactResizableBox } from "react-resizable";
 import { RiEdit2Fill } from "react-icons/ri";
+import {
+  GrFacebookOption,
+  GrInstagram,
+  GrGithub,
+  GrLinkedin,
+  GrYoutube,
+} from "react-icons/gr";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
@@ -36,7 +44,7 @@ import {
   setLineHeight,
   setFontWeight,
 } from "~/Store/reducer/actions";
-import { TbRipple } from "react-icons/tb";
+// import { TbRipple } from "react-icons/tb";
 
 function Item({
   type,
@@ -60,21 +68,23 @@ function Item({
   opacity = false,
   styleDefault = {},
   styleDefaultChild = {},
-  src,
-  href,
-  valueItem,
+  src = "",
+  href = "",
+  valueItem = "",
+  textValue = "",
   center = false,
   isChild = false,
   children,
   InfoIcon,
   widthMenu,
 }) {
-  // console.log(widthMenu);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
-  const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href.href : "");
-  const [nameItemLink, setNameItemLink] = useState(href ? href.name : "");
+  const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href : "");
+  const [nameItemLink, setNameItemLink] = useState(
+    textValue ? textValue : href ? href.name : ""
+  );
   const [Type, setType] = useState("div");
   const [linkImg, setLinkImg] = useState(src ? src : "");
   const [state, dispatch] = useContext(ContextReducer);
@@ -92,8 +102,14 @@ function Item({
   );
   const [scrollHeight, setScrollHeight] = useState(0);
   const inputEditLinkIcon = useRef();
-  const [linkIcon, setLinkIcon] = useState("");
-
+  const [linkIcon, setLinkIcon] = useState(href ? href : "");
+  const icons = {
+    Facebook: <GrFacebookOption />,
+    Instagram: <GrInstagram />,
+    Github: <GrGithub />,
+    Linkedin: <GrLinkedin />,
+    Youtube: <GrYoutube />,
+  };
   const classNamesItem = clsx(
     styles.wrapper,
     styles.text,
@@ -122,7 +138,6 @@ function Item({
       [styles.button]: type === "button" && inGrid,
     }
   );
-
   var left = stylesItem ? stylesItem.left : 0;
   var top = stylesItem ? stylesItem.top : 0;
 
@@ -163,15 +178,15 @@ function Item({
   let heightHeadingText, setHeightHeadingText;
   const handleChangeValue = (e) => {
     setValue(e.target.value);
-    // console.log(e.target.scrollHeight);
-    // console.log(e.target.offsetHeight);
-    if (e.target.scrollHeight > e.target.offsetHeight) {
-      e.target.style.height = e.target.scrollHeight + 6 + "px";
+    const item = findItem(e.target.id);
+    if (item) {
+      item.valueItem = e.target.value;
     }
-    setHeightWrapperReSizeable(e.target.offsetHeight);
     if (data) {
       [heightHeadingText, setHeightHeadingText] = data;
       setHeightHeadingText(e.target.scrollHeight);
+      const itemResize = e.target.parentElement.children[0];
+      setWidthContents(itemResize.offsetWidth);
     }
   };
 
@@ -182,13 +197,17 @@ function Item({
   };
 
   const handleShowInputImg = (e) => {
-    setValue(e.target.value);
+    var item = findItem(e.target.id);
+
     const reader = new FileReader();
     var url;
     reader.onload = () => {
       if (reader.readyState === 2) {
         url = reader.result;
         setLinkImg(url);
+        if (item) {
+          item.src = url;
+        }
       }
     };
 
@@ -233,15 +252,21 @@ function Item({
           itemDomReal.style.borderColor ? itemDomReal.style.borderColor : ""
         )
       );
-      dispatch(setFontWeight(itemDomReal.style.fontWeight ? true : false));
-      dispatch(setTextAlign(itemDomReal.style.textAlign ? true : false));
+      dispatch(
+        setFontWeight(itemDomReal.style.fontWeight === "bold" ? true : false)
+      );
+      dispatch(
+        setTextAlign(itemDomReal.style.textAlign === "center" ? true : false)
+      );
       dispatch(
         setBorderSize(
           itemDomReal.style.borderWidth ? itemDomReal.style.borderWidth : ""
         )
       );
       dispatch(
-        setTextTransform(itemDomReal.style.textTransform ? true : false)
+        setTextTransform(
+          itemDomReal.style.textTransform === "uppercase" ? true : false
+        )
       );
       dispatch(
         setLineHeight(
@@ -287,6 +312,7 @@ function Item({
     setEditorComponent(true);
   };
 
+  // edit link
   const handleEditLink = (e) => {
     e.stopPropagation();
     setEditorComponent(true);
@@ -303,6 +329,21 @@ function Item({
     target: null,
     onClick: null,
     type: "text",
+  };
+
+  // handle when mouse up
+  const handleMouseDown = (e) => {
+    const itemResize = e.target.parentElement.children[0];
+    setWidthContents(itemResize.offsetWidth);
+    setHeightWrapperReSizeable(itemResize.offsetHeight);
+  };
+  const handleMouseUp = (e) => {
+    const itemResize = e.target.parentElement.children[0];
+    const item = findItem(itemResize.id);
+    if (item) {
+      item.height = itemResize.offsetHeight;
+      item.width = itemResize.offsetWidth;
+    }
   };
 
   useEffect(() => {
@@ -348,21 +389,21 @@ function Item({
       setWidthContents(widthContent);
     }
   });
-
   // render item
-
   const renderItem = () => {
     if (resizable && type !== "icon" && isChild === false) {
       return (
         <ReactResizableBox
           width={widthContents ? parseInt(widthContents) : parseInt(width)}
-          height={type === "input" ? heightWrapperReSizeable : height}
+          height={heightWrapperReSizeable}
           // onClick={handleSelectItemToEdit}
 
           style={{
             ...stylesItem,
             transform: center ? "translateX(-50%)" : "none",
           }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
         >
           <>
             <Type
@@ -371,7 +412,7 @@ function Item({
               onClick={handleSelectItemToEdit}
               className={classNamesItem}
               cols={50}
-              src={type === "img" ? linkImg : null}
+              src={type === "img" && linkImg ? linkImg : null}
               value={type !== "img" ? value : undefined}
               onChange={type === "img" ? handleShowInputImg : handleChangeValue}
               href={linkItemTypeA ? linkItemTypeA : ""}
@@ -379,7 +420,7 @@ function Item({
               onBlur={handleBlurInput}
               style={{
                 textAlign: type === "button" ? "center" : "",
-                backgroundColor: type === "a" ? "#1E90FF" : "#fff",
+                // backgroundColor: type === "a" ? "#1E90FF" : "#fff",
                 fontSize: fontSize,
                 position: position,
                 lineHeight: heading ? "24px" : "16px",
@@ -436,11 +477,13 @@ function Item({
     } else if (type === "icon" && inGrid && isChild === false) {
       return (
         <ReactResizableBox
-          width={40}
-          height={40}
+          width={widthContents ? widthContents : width}
+          height={heightWrapperReSizeable ? heightWrapperReSizeable : height}
           style={{
             ...stylesItem,
           }}
+          onMouseDown={handleMouseDown}
+          onMouseUp={handleMouseUp}
         >
           <>
             <a
@@ -451,11 +494,10 @@ function Item({
               target='_blank'
               href={linkIcon ? linkIcon : null}
               style={{
-                backgroundColor: "transparent",
                 ...styleDefault,
               }}
             >
-              {InfoIcon ? InfoIcon.Component : null}
+              {InfoIcon ? icons[InfoIcon] : null}
             </a>
             <div
               className={clsx(styles.item_edit)}
@@ -464,8 +506,16 @@ function Item({
                 inputEditLinkIcon.current.focus();
                 setShowEditLinkIcon(true);
                 if (inputEditLinkIcon) {
-                  setEditorComponent(true);
+                  setEditorComponent(
+                    inputEditLinkIcon.current.value ? false : true
+                  );
                 }
+              }}
+              onMouseDown={(e) => {
+                e.stopPropagation();
+              }}
+              onMouseUp={(e) => {
+                e.stopPropagation();
               }}
             >
               <TipSuggest content='Add link '>
@@ -482,8 +532,8 @@ function Item({
                 placeholder="After adding,you can't edit the item's style"
                 ref={inputEditLinkIcon}
                 onChange={(e) => {
-                  setLinkIcon(e.target.value);
                   e.stopPropagation();
+                  setLinkIcon(e.target.value);
                 }}
                 value={linkIcon}
                 onKeyPress={(e) => {
@@ -498,11 +548,23 @@ function Item({
                   setShowEditLinkIcon(false);
                   setLinkIcon(e.target.value);
                 }}
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                }}
+                onMouseUp={(e) => {
+                  e.stopPropagation();
+                }}
               ></input>
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setShowEditLinkIcon(false);
+                }}
+                onMouseDown={(e) => {
+                  e.stopPropagation();
+                }}
+                onMouseUp={(e) => {
+                  e.stopPropagation();
                 }}
               >
                 Enter

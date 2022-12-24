@@ -12,8 +12,5 @@ const initState = {
   text_align: false,
   text_transform: false,
   id_item_selected: "",
-  href: "",
-  value: "",
-  src: "",
 };
 export default initState;

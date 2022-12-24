@@ -4,7 +4,6 @@ export const constantActions = {
   SET_BORDER_RADIUS: "set_border_radius",
   SET_BORDER_STYLE: "set_border_style",
   SET_BORDER_SIZE: "set_border_size",
-  SET_HEIGHT: "set_height",
   SET_LINE_HEIGHT: "set_line_height",
   SET_COLOR: "set_color",
   SET_FONT_SIZE: "set_font_size",
@@ -16,4 +15,6 @@ export const constantActions = {
   SET_SRC: "set_src",
   SET_HREF: "set_href",
   SET_VALUE: "set_value",
+  SET_HEIGHT: "set_height",
+  SET_WIDTH: "set_height",
 };

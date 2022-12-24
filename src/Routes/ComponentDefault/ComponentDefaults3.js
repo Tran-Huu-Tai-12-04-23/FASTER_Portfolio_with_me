@@ -688,10 +688,7 @@ export const DefaultItemInGridTemplate3 = [
     top: 2850,
     inGrid: true,
     isMulti: false,
-    InfoIcon: {
-      Name: "Facebook",
-      Component: <GrFacebookOption />,
-    },
+    InfoIcon: "Facebook",
     styleDefault: {
       color: "blue",
       backgroundColor: "transparent",
@@ -709,10 +706,7 @@ export const DefaultItemInGridTemplate3 = [
     top: 2850,
     inGrid: true,
     isMulti: false,
-    InfoIcon: {
-      Name: "Instagram",
-      Component: <GrInstagram />,
-    },
+    InfoIcon: "Instagram",
     styleDefault: {
       color: "#FF3399",
       textTransform: "uppercase",
@@ -730,10 +724,7 @@ export const DefaultItemInGridTemplate3 = [
     top: 2850,
     inGrid: true,
     isMulti: false,
-    InfoIcon: {
-      Name: "Github",
-      Component: <GrGithub />,
-    },
+    InfoIcon: "Github",
     styleDefault: {
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
       borderRadius: "50px",
@@ -749,10 +740,7 @@ export const DefaultItemInGridTemplate3 = [
     top: 2850,
     inGrid: true,
     isMulti: false,
-    InfoIcon: {
-      Name: "Youtube",
-      Component: <GrYoutube />,
-    },
+    InfoIcon: "Youtube",
     styleDefault: {
       color: "red",
       boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",

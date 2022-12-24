@@ -87,24 +87,6 @@ const reducer = (state, action) => {
         id_item_selected: action.payload,
       };
     }
-    case constantActions.SET_VALUE: {
-      return {
-        ...state,
-        value: action.payload,
-      };
-    }
-    case constantActions.SET_HREF: {
-      return {
-        ...state,
-        href: action.payload,
-      };
-    }
-    case constantActions.SET_SRC: {
-      return {
-        ...state,
-        src: action.payload,
-      };
-    }
 
     default:
       throw new Error("Invalid action type");

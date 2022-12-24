@@ -16,7 +16,7 @@ function Guide() {
   const [showIconGuide4, setShowIconGuide4] = useState(false);
   const [showGuide4, setShowGuide4] = useState(false);
 
-  console.log(showIconGuide2);
+  // console.log(showIconGuide2);
   return (
     <div className={clsx(styles.wrapper)} id='guide'>
       <h1 className={clsx(styles.title)}>Quick creation guide</h1>

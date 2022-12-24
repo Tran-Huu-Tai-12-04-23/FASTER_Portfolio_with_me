@@ -1,4 +1,10 @@
-import { useEffect, useState, useRef, useLayoutEffect } from "react";
+import {
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+  useContext,
+} from "react";
 import clsx from "clsx";
 import styles from "./CreatePortfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
@@ -13,12 +19,15 @@ import {
   ContextItemsMultiIngrid,
   ElementContentPortfolio,
   wrapperContent,
+  ContextReducer,
 } from "~/Store/Context";
 import Footer from "../Footer";
 import Preview from "../Preview";
 import Tag from "./Tag";
+import { getData } from "~/Store/util";
 
-function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
+function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
+  const [state, dispatch] = useContext(ContextReducer);
   const [items, setItems] = useState(DefaultComponent ? DefaultComponent : []);
   const [itemMulti, setItemMulti] = useState([]);
   const [transactionContent, setTransactionContent] = useState("0");
@@ -40,13 +49,67 @@ function CreatePortfolio({ DefaultComponent, heightDefault, children }) {
   const [showTag, setShowTag] = useState(false);
   const wrapperContentPortfolio = useRef();
 
+  const loadInStyleDefault = () => {
+    // console.log("render");
+    const setStyle = (item) => {
+      const itemDomReal = document.getElementById(item.id);
+      if (itemDomReal) {
+        item.href = itemDomReal.href;
+        item.textValue = itemDomReal.text;
+        item.src = itemDomReal.src;
+      }
+      item.styleDefault.color = state.color;
+      item.styleDefault.backgroundColor = state.background_color;
+      item.styleDefault.fontSize = state.font_size;
+      item.styleDefault.fontFamily = state.font_family;
+      item.styleDefault.borderRadius = state.border_radius;
+      item.styleDefault.borderStyle = state.border_style;
+      item.styleDefault.borderColor = state.border_color;
+      item.styleDefault.fontWeight = state.font_weight ? "bold" : "";
+      item.styleDefault.textAlign = state.text_align ? "center" : "";
+      item.styleDefault.borderSize = state.border_size;
+      item.styleDefault.textTransform = state.text_transform ? "uppercase" : "";
+      item.styleDefault.lineHeight = state.line_height;
+    };
+    // console.log(state);
+
+    items.map((item) => {
+      if (item.id === state.id_item_selected) {
+        setStyle(item);
+      }
+    });
+    itemMulti.map((item) => {
+      if (item.id === state.id_item_selected) {
+        setStyle(item);
+      }
+    });
+    // console.log(findItem(state.id_item_selected));
+    localStorage.setItem(`items-${id}`, JSON.stringify(items));
+  };
+
   // save data in localStorage
   useEffect(() => {
-    // localStorage.clear();
-    // localStorage.setItem("items", JSON.stringify(items));
-    // const data = localStorage.getItem("items");
-    // console.log(data);
-  }, [items]);
+    const handleSaveDataInStorage = (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+      loadInStyleDefault();
+    };
+    window.addEventListener("beforeunload", handleSaveDataInStorage);
+    // return () => {
+    //   window.removeEventListener("beforeunload", handleSaveDataInStorage);
+    // };
+  });
+
+  useEffect(() => {
+    const data = getData(id);
+    data
+      .then((data) => {
+        if (data && data.length > 0) {
+          setItems(data);
+        }
+      })
+      .catch((err) => err);
+  }, []);
   //auto focus for users
   useEffect(() => {
     if (inputAddHeight && inputAddHeight.current) {

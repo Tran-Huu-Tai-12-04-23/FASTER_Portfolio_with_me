@@ -14,6 +14,7 @@ import {
   wrapperContent,
 } from "~/Store/Context";
 import ComponentLayouts from "../Item/ComponentLayouts";
+// import { AiOutlineConsoleSql } from "react-icons/ai";
 
 function Grid(props) {
   const [state, dispatch] = useContext(ContextReducer);
@@ -23,6 +24,7 @@ function Grid(props) {
   const [contentPortfolio, setShowTrash, widthContent] = useContext(
     ElementContentPortfolio
   );
+  // console.log(widthContent);
   const [showOverlay, setShowOverlay] = useState(false);
 
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
@@ -56,13 +58,13 @@ function Grid(props) {
         console.log(item);
         let left = item.widthMenu ? delta.x - item.widthMenu : delta.x - 400;
         let top = delta.y - 100;
-        console.log(item);
+
         addItem(
           item.type,
           left,
           top + valueScrollTop,
           uuid(),
-          item.InfoIcon,
+          item.InfoIcon ? item.InfoIcon.Name : "",
           item.styleDefault,
           item.src,
           item.href,
@@ -240,68 +242,6 @@ function Grid(props) {
     setShowTrash(isDragging ? true : false);
   }, [isDragging]);
 
-  // find item in grid
-  const findItem = (id) => {
-    var item;
-    items.forEach((element) => {
-      if (element.id === id) {
-        item = element;
-      }
-    });
-    itemMulti.map((element) => {
-      if (element.id === id) {
-        item = element;
-      }
-    });
-    return item;
-  };
-
-  const isActive = canDrop && isOver;
-  //set style when drop
-  // useEffect(() => {
-  //   // setBackgroundColor(
-  //   //   isActive ? "rgba(0,0,0,0.2)" : canDrop ? "rgba(238 ,44, 44, 1)" : "#fff"
-  //   // );
-  // }, [{ isActive, canDrop }]);
-  //load style default cho items
-  useEffect(() => {
-    items.map((item) => {
-      // setStyleDefault(item);
-    });
-  }, [items]);
-  // load style default
-
-  useEffect(() => {
-    // console.log("render");
-    const setStyle = (item) => {
-      item.styleDefault.color = state.color;
-      item.styleDefault.backgroundColor = state.background_color;
-      item.styleDefault.fontSize = state.font_size;
-      item.styleDefault.fontFamily = state.font_family;
-      item.styleDefault.borderRadius = state.border_radius;
-      item.styleDefault.borderStyle = state.border_style;
-      item.styleDefault.borderColor = state.border_color;
-      item.styleDefault.fontWeight = state.font_weight;
-      item.styleDefault.textAlign = state.text_align;
-      item.styleDefault.borderSize = state.border_size;
-      item.styleDefault.textTransform = state.text_transform;
-      item.styleDefault.lineHeight = state.line_height;
-    };
-    // console.log(state);
-
-    items.map((item) => {
-      if (item.id === state.id_item_selected) {
-        setStyle(item);
-      }
-    });
-    itemMulti.map((item) => {
-      if (item.id === state.id_item_selected) {
-        setStyle(item);
-      }
-    });
-    // console.log(findItem(state.id_item_selected));
-  }, [state]);
-
   //load styles
   useLayoutEffect(() => {
     const itemDomReal = document.getElementById(state.id_item_selected);
@@ -319,19 +259,7 @@ function Grid(props) {
       itemDomReal.style.color = state.color;
       itemDomReal.style.backgroundColor = state.background_color;
     }
-  });
-
-  // get height for element when it change
-  useEffect(() => {
-    items.map((item) => {
-      const itemDomReal = document.getElementById(item.id);
-      item.height = itemDomReal.offsetHeight;
-      item.width = item.width === "100%" ? item.width : itemDomReal.offsetWidth;
-      item.href = itemDomReal.href;
-      item.src = itemDomReal.src;
-      item.valueItem = itemDomReal.value ? itemDomReal.value : itemDomReal.text;
-    });
-  });
+  }, [state]);
 
   const renderItem = () => {
     if (items) {
@@ -363,6 +291,7 @@ function Grid(props) {
               icon={false}
               styleDefault={item.styleDefault}
               InfoIcon={item.InfoIcon}
+              textValue={item.textValue}
               stylesItem={{
                 top: item.top,
                 left: item.left,

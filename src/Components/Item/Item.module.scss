@@ -35,7 +35,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  // color: #fff;
+  color: #fff;
+  background-color: blue;
   text-transform: uppercase;
   text-decoration: underline;
   text-decoration-color: #4285f4;
@@ -193,8 +194,8 @@
   position: absolute;
   top: -16px;
   right: -40px;
-  width: 60px;
-  height: 30px;
+  width: 80px;
+  height: 40px;
   border-radius: 12px;
   cursor: pointer;
   z-index: 100000;

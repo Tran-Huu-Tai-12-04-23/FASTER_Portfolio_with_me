@@ -1,3 +1,4 @@
+import { AiOutlineConsoleSql } from "react-icons/ai";
 import { constantActions } from "~/Constants";
 export const setBackgroundColor = (payload) => {
   return {
@@ -48,12 +49,6 @@ export const setBorderSize = (payload) => {
   };
 };
 
-export const setHeight = (payload) => {
-  return {
-    type: constantActions.SET_HEIGHT,
-    payload,
-  };
-};
 export const setColor = (payload) => {
   return {
     type: constantActions.SET_COLOR,
@@ -94,27 +89,6 @@ export const setTextTransform = (payload) => {
 export const setIdItemSelected = (payload) => {
   return {
     type: constantActions.SET_ID_ITEM,
-    payload,
-  };
-};
-
-export const setHref = (payload) => {
-  return {
-    type: constantActions.SET_HREF,
-    payload,
-  };
-};
-
-export const setValue = (payload) => {
-  return {
-    type: constantActions.SET_VALUE,
-    payload,
-  };
-};
-
-export const setSRC = (payload) => {
-  return {
-    type: constantActions.SET_SRC,
     payload,
   };
 };
