@@ -7,7 +7,7 @@
   line-height: 16px;
   padding: 12px;
   cursor: grab;
-  // resize: auto;\
+  // resize: auto;\x
   &::-webkit-scrollbar {
     display: none !important;
   }
@@ -71,7 +71,6 @@
   }
   &[type="file"] {
     &:hover {
-      opacity: 0.8;
       cursor: pointer;
     }
   }

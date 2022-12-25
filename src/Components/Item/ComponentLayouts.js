@@ -25,7 +25,9 @@ function ComponentLayouts({ item, opacity, children }) {
 
   useEffect(() => {
     const itemWrapperComponent = document.getElementById(item.id);
-    setHeightDisplayContent(itemWrapperComponent.offsetHeight);
+    if (itemWrapperComponent) {
+      setHeightDisplayContent(itemWrapperComponent.offsetHeight);
+    }
   });
 
   const renderItem = () => {
@@ -66,7 +68,7 @@ function ComponentLayouts({ item, opacity, children }) {
             inGrid={true}
             type={item.typeChild[0]}
             width={widthDisplayContent / 4}
-            height={(heightDisplayContent / 3.5) * 2}
+            height={heightDisplayContent - 50}
             draggable={false}
             styleDefault={
               item.styleDefaultChild[0] ? item.styleDefaultChild[0] : {}
@@ -103,7 +105,6 @@ function ComponentLayouts({ item, opacity, children }) {
   const [heightHeadingText, setHeightHeadingText] = useState(
     heightDisplayContent ? heightDisplayContent * 0.3 + 12 : 50
   );
-
   const renderComponents = () => {
     if (item.numberComponents === 3) {
       return (
@@ -157,7 +158,7 @@ function ComponentLayouts({ item, opacity, children }) {
               id={item.idChild[1]}
               inGrid={true}
               width={widthDisplayContent / 2 - 24}
-              height={40}
+              height={heightHeadingText}
               draggable={false}
               position='unset'
               type={item.typeChild[1]}
@@ -165,23 +166,6 @@ function ComponentLayouts({ item, opacity, children }) {
               heading='true'
               styleDefault={
                 item.styleDefaultChild ? item.styleDefaultChild[1] : {}
-              }
-              stylesItem={{
-                maxWidth: "100%",
-                position: "unset",
-              }}
-            ></Item>
-            <Item
-              key={item.idChild[2]}
-              id={item.idChild[2]}
-              inGrid={true}
-              draggable={false}
-              width={widthDisplayContent / 2 - 24}
-              height={40}
-              position='unset'
-              type={item.typeChild[2]}
-              styleDefault={
-                item.styleDefaultChild ? item.styleDefaultChild[2] : {}
               }
               stylesItem={{
                 maxWidth: "100%",
@@ -232,9 +216,8 @@ function ComponentLayouts({ item, opacity, children }) {
             id={item.idChild[1]}
             position='unset'
             inGrid={true}
-            height={50}
             width={widthDisplayContent / 4 - 12}
-            // height={heightDisplayContent - 24}
+            height={heightDisplayContent - 24}
             draggable={false}
             type={item.typeChild[1]}
             styleDefault={
@@ -270,8 +253,7 @@ function ComponentLayouts({ item, opacity, children }) {
             position='unset'
             inGrid={true}
             width={widthDisplayContent / 4 - 12}
-            // height={heightDisplayContent - 24}
-            height={50}
+            height={heightDisplayContent - 24}
             draggable={false}
             type={item.typeChild[3]}
             styleDefault={
@@ -282,28 +264,6 @@ function ComponentLayouts({ item, opacity, children }) {
               margin: "12px",
             }}
           ></Item>
-        </MultiItem>
-      );
-    } else if (item.numberComponents === 8) {
-      return (
-        <MultiItem
-          isMulti={true}
-          inGrid={true}
-          top={item.top}
-          id={item.id}
-          className={clsx(styles.wrapper_multi_items)}
-          key={item.id}
-          stylesItem={{
-            display: "flex",
-            alignItems: "center",
-            top: item.top,
-            left: item.left,
-            right: item.right,
-            height: heightDisplayContent,
-            opacity: opacity ? "0.4" : 1,
-          }}
-        >
-          {renderItem()}
         </MultiItem>
       );
     }

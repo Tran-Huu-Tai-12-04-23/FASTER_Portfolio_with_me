@@ -1,12 +1,5 @@
 import uuid from "react-uuid";
 import backGroundHeader02 from "~/assets/img/backGroundHeader02.png";
-import {
-  GrFacebookOption,
-  GrInstagram,
-  GrGithub,
-  GrLinkedin,
-  GrYoutube,
-} from "react-icons/gr";
 
 const leftDefaultText = 50;
 const leftDefaultTitle = 100;

@@ -313,33 +313,6 @@ export const DefaultItemInGridTemplate2 = [
       margin: "0 auto",
     },
   },
-  {
-    typeChild: ["img", "input"],
-    styleDefaultChild: [
-      {
-        backgroundColor: "transparent",
-      },
-      {
-        backgroundColor: "transparent",
-        fontSize: 18,
-        color: "#fff",
-      },
-    ],
-    left: 0,
-    top: 1200,
-    width: "100%",
-    height: 300,
-    id: uuid(),
-    idChild: [uuid(), uuid(), uuid(), uuid(), uuid(), uuid(), uuid(), uuid()],
-
-    inGrid: true,
-    isMulti: true,
-    numberComponents: 8,
-    styleDefault: {
-      color: "text",
-      backgroundColor: "transparent",
-    },
-  },
   //end service
   //begin feedback
   {
@@ -451,39 +424,7 @@ export const DefaultItemInGridTemplate2 = [
       margin: "0 auto",
     },
   },
-  {
-    typeChild: ["img", "input", "img", "input"],
-    styleDefaultChild: [
-      {
-        backgroundColor: "transparent",
-      },
-      {
-        backgroundColor: "transparent",
-        fontSize: 18,
-        color: "#fff",
-      },
-      {
-        backgroundColor: "transparent",
-      },
-      {
-        backgroundColor: "transparent",
-        fontSize: 18,
-        color: "#fff",
-      },
-    ],
-    left: 0,
-    top: 2250,
-    width: "100%",
-    height: 300,
-    id: uuid(),
-    idChild: [uuid(), uuid(), uuid(), uuid()],
-    inGrid: true,
-    isMulti: true,
-    numberComponents: 4,
-    styleDefault: {
-      backgroundColor: "transparent",
-    },
-  },
+
   //end your project
   //begin footer
   {
@@ -599,10 +540,8 @@ export const DefaultItemInGridTemplate2 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-    href: {
-      name: "facebook",
-      href: "#",
-    },
+    href: "#",
+    textValue: "facebook",
     styleDefault: {
       fontWeight: "bold",
       color: "#FFF",
@@ -622,14 +561,11 @@ export const DefaultItemInGridTemplate2 = [
     top: 2880,
     width: 100,
     height: 30,
-
     id: uuid(),
     inGrid: true,
     isMulti: false,
-    href: {
-      name: "Instagram",
-      href: "#",
-    },
+    href: "#",
+    textValue: "Instagram",
     valueItem: "[Detail contact, number phone]",
     styleDefault: {
       fontWeight: "bold",
@@ -654,10 +590,8 @@ export const DefaultItemInGridTemplate2 = [
     id: uuid(),
     inGrid: true,
     isMulti: false,
-    href: {
-      name: "Youtube",
-      href: "#",
-    },
+    href: "#",
+    textValue: "Youtube",
     styleDefault: {
       fontWeight: "bold",
       color: "#FFF",

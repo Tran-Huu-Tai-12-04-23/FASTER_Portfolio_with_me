@@ -8,14 +8,14 @@ import { TfiFacebook } from "react-icons/tfi";
 import { FaInstagram } from "react-icons/fa";
 import { AiFillGithub } from "react-icons/ai";
 
-function Footer({ backgroundColor }) {
+function Footer({ backgroundColor, showPreview }) {
   return (
     <div
       className={clsx(styles.wrapper)}
       id='footer'
       style={{
         backgroundColor: backgroundColor,
-
+        display: showPreview ? "none" : "block",
         borderTop: backgroundColor ? "1px solid #000" : "",
         marginTop: backgroundColor ? 60 : "",
       }}

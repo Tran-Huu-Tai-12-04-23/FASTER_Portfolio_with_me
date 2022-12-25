@@ -263,32 +263,7 @@ export const DefaultItemInGridTemplate3 = [
       borderRadius: "50px",
     },
   },
-  {
-    typeChild: ["img", "input"],
-    styleDefaultChild: [
-      {
-        backgroundColor: "transparent",
-      },
-      {
-        backgroundColor: "transparent",
-        fontSize: 14,
-      },
-    ],
-    left: 0,
-    top: 1200,
-    width: "100%",
-    height: 450,
-    id: uuid(),
-    idChild: [uuid(), uuid(), uuid(), uuid(), uuid(), uuid(), uuid(), uuid()],
-    inGrid: true,
-    isMulti: true,
-    numberComponents: 8,
-    styleDefault: {
-      backgroundColor: "#FFC0CB",
-      boxShadow: "10px 10px 106px -33px rgba(240,43,53,1)",
-      borderRadius: "50px",
-    },
-  },
+
   //end projects
   //begin education
   {
@@ -493,8 +468,6 @@ export const DefaultItemInGridTemplate3 = [
     styleDefault: {
       boxShadow: " 10px 10px 106px -33px rgba(240,43,53,1)",
       border: "3px outset  rgb(255, 69, 0)",
-    },
-    styleDefault: {
       borderRadius: "24px",
       backgroundColor: "transparent",
       border: "none",

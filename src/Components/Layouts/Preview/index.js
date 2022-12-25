@@ -2,26 +2,96 @@ import { useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
 import styles from "./Preview.module.scss";
-import Grid from "~/Components/Grid";
-import render from "./render";
+import { Item } from "~/Components";
 
 function Preview({
   items,
   heightTemplate = 1000,
-  width = "80%",
+  width = "76%",
   setShowPreview,
   showPreview,
   children,
 }) {
-  //render
-  useEffect(() => {
-    if (showPreview) {
-      render();
+  const renderItem = () => {
+    if (items) {
+      return items.map((item, index) => {
+        if (item.type === "img") {
+          return (
+            <img
+              src={item.src}
+              style={{
+                width: item.width,
+                height: item.height,
+                position: "absolute",
+                top: item.top,
+                left: item.left,
+                ...item.styleDefault,
+                zIndex: 1,
+                transform: item.center ? "translateX(-50%)" : "",
+              }}
+            ></img>
+          );
+        } else if (item.type === "input") {
+          return (
+            <div
+              style={{
+                position: "absolute",
+                top: item.top,
+                left: item.left,
+                height: item.height,
+                width: item.width,
+                ...item.styleDefault,
+                zIndex: 2,
+                transform: item.center ? "translateX(-50%)" : "",
+              }}
+            >
+              {item.valueItem}
+            </div>
+          );
+        } else if (item.type === "div") {
+          return (
+            <div
+              style={{
+                position: "absolute",
+                top: item.top,
+                left: item.left,
+                height: item.height,
+                width: item.width,
+                transform: item.center ? "translateX(-50%)" : "",
+                ...item.styleDefault,
+                zIndex: 1,
+              }}
+            ></div>
+          );
+        } else if (item.type === "a") {
+          console.log(item);
+          return (
+            <a
+              href={item.href}
+              style={{
+                position: "absolute",
+                top: item.top,
+                left: item.left,
+                height: item.height,
+                width: item.width,
+                ...item.styleDefault,
+                zIndex: 2,
+              }}
+            >
+              {item.textValue}
+            </a>
+          );
+        }
+      });
     }
-  }, [showPreview]);
-
+  };
   return (
-    <div className={clsx(styles.wrapper)}>
+    <div
+      className={clsx(styles.wrapper)}
+      style={{
+        height: heightTemplate + 400,
+      }}
+    >
       <AiOutlineClose
         className={clsx(styles.icon_close)}
         onClick={(e) => {
@@ -33,9 +103,12 @@ function Preview({
         style={{
           width: width,
           height: heightTemplate,
+          width: "76%",
         }}
         id='preview'
-      ></div>
+      >
+        {items && renderItem()}
+      </div>
     </div>
   );
 }

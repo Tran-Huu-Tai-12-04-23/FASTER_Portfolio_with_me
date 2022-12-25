@@ -27,7 +27,6 @@ import {
   HeightHeading,
   ContextShowEditorComponent,
   ElementContentPortfolio,
-  ContextItemsMultiIngrid,
 } from "~/Store/Context";
 import {
   setBackgroundColor,
@@ -79,7 +78,6 @@ function Item({
   widthMenu,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
-  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href : "");
   const [nameItemLink, setNameItemLink] = useState(
@@ -98,7 +96,7 @@ function Item({
   const elementContentPortfolio = useContext(ElementContentPortfolio);
   const [widthContents, setWidthContents] = useState(width);
   const [heightWrapperReSizeable, setHeightWrapperReSizeable] = useState(
-    type === "a" ? 30 : height + 24
+    type === "a" ? 30 : height
   );
   const [scrollHeight, setScrollHeight] = useState(0);
   const inputEditLinkIcon = useRef();
@@ -169,7 +167,7 @@ function Item({
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
-        opacity: monitor.isDragging() ? 0.6 : 1,
+        // opacity: monitor.isDragging() ? 0.6 : 1,
       }),
     }),
     [id, left, top, inGrid, isMulti]
@@ -294,11 +292,6 @@ function Item({
         item = element;
       }
     });
-    itemMulti.map((element) => {
-      if (element.id === id) {
-        item = element;
-      }
-    });
     return item;
   };
 
@@ -346,6 +339,9 @@ function Item({
     }
   };
 
+  useLayoutEffect(() => {
+    setHeightWrapperReSizeable(height);
+  }, [height]);
   useEffect(() => {
     setType(icon ? "div" : type);
     setType(type === "button" ? "input" : type);
@@ -389,6 +385,7 @@ function Item({
       setWidthContents(widthContent);
     }
   });
+
   // render item
   const renderItem = () => {
     if (resizable && type !== "icon" && isChild === false) {
@@ -424,8 +421,8 @@ function Item({
                 fontSize: fontSize,
                 position: position,
                 lineHeight: heading ? "24px" : "16px",
-                opacity: isDragging ? "0.9" : "1",
-                opacity: opacity ? "0.7" : "1",
+                // opacity: isDragging ? "0.9" : "1",
+                // opacity: opacity ? "0.7" : "1",
                 // backgroundColor: "transparent",
                 ...styleDefault,
               }}
@@ -434,6 +431,7 @@ function Item({
             >
               {nameItemLink ? nameItemLink : null}
             </Type>
+
             {type === "a" ? (
               <div
                 id={id}
@@ -460,8 +458,7 @@ function Item({
           className={classNamesItem}
           style={{
             ...stylesItem,
-            opacity: isDragging ? "0.5" : "1",
-            opacity: opacity ? "0.4" : "1",
+            // opacity: isDragging ? "0.5" : "1",
             width: isMulti ? "100%" : "40px",
             height: "40px",
             backgroundColor: "transparent",
@@ -499,6 +496,7 @@ function Item({
             >
               {InfoIcon ? icons[InfoIcon] : null}
             </a>
+
             <div
               className={clsx(styles.item_edit)}
               onClick={(e) => {

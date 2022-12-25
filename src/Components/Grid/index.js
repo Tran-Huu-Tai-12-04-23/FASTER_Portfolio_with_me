@@ -18,7 +18,6 @@ import ComponentLayouts from "../Item/ComponentLayouts";
 
 function Grid(props) {
   const [state, dispatch] = useContext(ContextReducer);
-  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [backgroundColor, setBackgroundColor] = useState("#fff");
   const [contentPortfolio, setShowTrash, widthContent] = useContext(
@@ -70,30 +69,6 @@ function Grid(props) {
           item.href,
           item.valueItem
         );
-      } else if (item.inGrid === false && item.isMulti) {
-        const valueScrollTop = contentPortfolio.current.scrollTop;
-        const delta = monitor.getClientOffset();
-        let top = delta.y - 116;
-        const idChild = [
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-          uuid(),
-        ];
-        const typeChild = [item.type1, item.type2, item.type3, item.type4];
-        addItemMulti(
-          top + valueScrollTop,
-          uuid(),
-          idChild,
-          typeChild,
-          item.numberComponents,
-          item.styleDefault,
-          item.styleDefaultChild
-        );
       }
     },
     collect: (monitor) => ({
@@ -101,7 +76,6 @@ function Grid(props) {
       canDrop: monitor.canDrop(),
     }),
   }));
-
   //set default styles for components
   // const setStyleDefault = (item) => {
   //   if (item.styleDefault) {
@@ -180,51 +154,6 @@ function Grid(props) {
     });
   };
 
-  const addItemMulti = (
-    top,
-    id,
-    idChild,
-    typeChild,
-    numberComponents,
-    styleDefault,
-    styleDefaultChild
-  ) => {
-    const listItems = Array.from(Array(numberComponents).keys());
-    listItems.forEach((it) => {
-      setItemMulti((prev) => {
-        return [
-          ...prev,
-          {
-            id: idChild[it],
-            idParent: id,
-            type: typeChild[it],
-            isChild: true,
-            inGrid: true,
-            styleDefault: styleDefaultChild[it] ? styleDefaultChild[it] : {},
-          },
-        ];
-      });
-    });
-    setItems((prev) => {
-      return [
-        ...prev,
-        {
-          idChild,
-          typeChild,
-          numberComponents,
-          styleDefault,
-          styleDefaultChild,
-          right: 0,
-          left: 0,
-          top,
-          width: "100%",
-          id,
-          inGrid: true,
-          isMulti: true,
-        },
-      ];
-    });
-  };
   const moveItem = (id, left, top, inGrid, items) => {
     items.map((item) => {
       if (item.id === id) {
@@ -264,45 +193,30 @@ function Grid(props) {
   const renderItem = () => {
     if (items) {
       return items.map((item, index) => {
-        if (item.isMulti) {
-          return (
-            <ComponentLayouts
-              key={item.id}
-              item={item}
-              id={"multi_items"}
-              // opacity={isDragging ? true : false}
-              styleDefault={item.styleDefault}
-              styleDefaultChild={item.styleDefaultChild}
-              src={item.src}
-            ></ComponentLayouts>
-          );
-        } else {
-          return (
-            <Item
-              key={item.id}
-              id={item.id}
-              inGrid={true}
-              type={item.type}
-              width={item.width}
-              height={item.height}
-              valueItem={item.valueItem}
-              center={item.center}
-              href={item.href}
-              icon={false}
-              styleDefault={item.styleDefault}
-              InfoIcon={item.InfoIcon}
-              textValue={item.textValue}
-              stylesItem={{
-                top: item.top,
-                left: item.left,
-                width: item.width,
-                height: item.height,
-              }}
-              src={item.src}
-              opacity={isDragging ? true : false}
-            ></Item>
-          );
-        }
+        return (
+          <Item
+            key={item.id}
+            id={item.id}
+            inGrid={true}
+            type={item.type}
+            width={item.width}
+            height={item.height}
+            valueItem={item.valueItem}
+            center={item.center}
+            href={item.href}
+            icon={false}
+            styleDefault={item.styleDefault}
+            InfoIcon={item.InfoIcon}
+            textValue={item.textValue}
+            stylesItem={{
+              top: item.top,
+              left: item.left,
+              width: item.width,
+              height: item.height,
+            }}
+            src={item.src}
+          ></Item>
+        );
       });
     }
   };
@@ -319,7 +233,7 @@ function Grid(props) {
       >
         {/* <Overlay></Overlay> */}
 
-        {renderItem()}
+        {items && renderItem()}
         {props.children}
       </div>
     </ShowOverlay.Provider>

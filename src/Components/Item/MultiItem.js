@@ -19,11 +19,7 @@ import {
   setFontWeight,
   setLineHeight,
 } from "~/Store/reducer/actions";
-import {
-  ContextItemsIngrid,
-  ShowOverlay,
-  ContextItemsMultiIngrid,
-} from "~/Store/Context";
+import { ContextItemsIngrid, ShowOverlay } from "~/Store/Context";
 
 function MultiItem({
   stylesItem,
@@ -37,7 +33,7 @@ function MultiItem({
   styleDefaultChild,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
-  const [itemMulti, setItemMulti] = useContext(ContextItemsMultiIngrid);
+
   const [heightWrapperContent, setHeightWrapperContent] = useState(200);
   const [topWrapperContent, setTopWrapperContent] = useState(top);
   const [state, dispatch] = useContext(ContextReducer);
@@ -84,11 +80,7 @@ function MultiItem({
         item = element;
       }
     });
-    itemMulti.map((element) => {
-      if (element.id === id) {
-        item = element;
-      }
-    });
+
     return item;
   };
   const handleSelectItemToEdit = (e) => {
