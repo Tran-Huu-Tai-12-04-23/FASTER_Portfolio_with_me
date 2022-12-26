@@ -194,7 +194,6 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
     setHeightContentChange("");
     setShowAddHeight(!showAddHeight);
   };
-
   return (
     <>
       <wrapperContent.Provider value={wrapperContentPortfolio}>

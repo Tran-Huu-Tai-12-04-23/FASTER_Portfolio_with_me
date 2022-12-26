@@ -11,7 +11,7 @@ import { IoCloseOutline } from "react-icons/io5";
 
 function Home() {
   const [showModalChooseTemplate, setShowModalChooseTemplate] = useState(false);
-  // console.log(showModalChooseTemplate);
+
   return (
     <div className={clsx(styles.wrapper)}>
       <Header />

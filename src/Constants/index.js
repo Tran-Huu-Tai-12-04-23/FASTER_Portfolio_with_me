@@ -17,4 +17,6 @@ export const constantActions = {
   SET_VALUE: "set_value",
   SET_HEIGHT: "set_height",
   SET_WIDTH: "set_height",
+  SET_REDO: "set_redo",
+  SET_UNDO: "set_undo",
 };

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { BsArrowCounterclockwise, BsArrowClockwise } from "react-icons/bs";
 
 import styles from "./Header.module.scss";
 import { Button, TipSuggest } from "~/Components";
@@ -52,18 +53,7 @@ function Header({ setShowPreview }) {
             icon={faComputer}
           ></FontAwesomeIcon>
         </TipSuggest>
-        {/* <TipSuggest content='Get Link'>
-          <FontAwesomeIcon icon={faLink}></FontAwesomeIcon>
-        </TipSuggest> */}
-        {/* <TipSuggest content='Share'>
-          <FontAwesomeIcon icon={faUserPlus}></FontAwesomeIcon>
-        </TipSuggest> */}
-        {/* <TipSuggest content='Settings'>
-          <FontAwesomeIcon icon={faGears}></FontAwesomeIcon>
-        </TipSuggest> */}
-        {/* <TipSuggest content='Menu'>
-          <FontAwesomeIcon icon={faEllipsisVertical}></FontAwesomeIcon>
-        </TipSuggest> */}
+
         <TipSuggest content='Public'>
           <Button
             primary

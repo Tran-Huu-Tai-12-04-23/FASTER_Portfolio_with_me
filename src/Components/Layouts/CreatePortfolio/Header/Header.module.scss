@@ -57,7 +57,7 @@
 }
 
 .until_options {
-  width: 15%;
+  width: 24%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -100,4 +100,16 @@
   text-align: center;
   color: #fff;
   font-weight: 700;
+}
+
+.icon_undo,
+.icon_redo {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  width: 100px;
+  height: 80%;
+  svg {
+    font-size: 32px;
+  }
 }

@@ -45,7 +45,7 @@ function Grid(props) {
         } else {
           top = Math.round(item.top + delta.y);
         }
-        console.log(`check left: ${left} top: ${top} `);
+        console.log(`check left: ${parseInt(left)} top: ${parseInt(top)} `);
         moveItem(item.id, left, top, item.inGrid, item.items);
       } else if (item.inGrid === false && item.isMulti === false) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
@@ -56,7 +56,12 @@ function Grid(props) {
         console.log(item);
         let left = item.widthMenu ? delta.x - item.widthMenu : delta.x - 400;
         let top = delta.y - 100;
-
+        if (left < 0) {
+          left = 0;
+        }
+        if (top < 0) {
+          top = 0;
+        }
         addItem(
           item.type,
           left,
@@ -190,8 +195,6 @@ function Grid(props) {
         className={clsx(styles.wrapper)}
         id={props.id}
       >
-        {/* <Overlay></Overlay> */}
-
         {items && renderItem()}
         {props.children}
       </div>

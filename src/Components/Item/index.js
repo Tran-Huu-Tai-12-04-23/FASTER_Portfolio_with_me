@@ -50,11 +50,6 @@ function Item({
   id,
   inGrid = false,
   isMulti = false,
-  type1,
-  type2,
-  type3,
-  type4,
-  numberComponents,
   stylesItem,
   fontSize = "14px",
   heading = false,
@@ -64,9 +59,7 @@ function Item({
   resizable = true,
   draggable = true,
   position = "absolute",
-  opacity = false,
   styleDefault = {},
-  styleDefaultChild = {},
   src = "",
   href = "",
   valueItem = "",
@@ -95,9 +88,8 @@ function Item({
   const data = useContext(HeightHeading);
   const elementContentPortfolio = useContext(ElementContentPortfolio);
   const [widthContents, setWidthContents] = useState(width);
-  const [heightWrapperReSizeable, setHeightWrapperReSizeable] = useState(
-    type === "a" ? 30 : height
-  );
+  const [heightWrapperReSizeable, setHeightWrapperReSizeable] =
+    useState(height);
   const [scrollHeight, setScrollHeight] = useState(0);
   const inputEditLinkIcon = useRef();
   const [linkIcon, setLinkIcon] = useState(href ? href : "");
@@ -150,11 +142,6 @@ function Item({
         type,
         isMulti,
         widthMenu,
-        type1,
-        type2,
-        type3,
-        type4,
-        numberComponents,
         items,
         InfoIcon,
         icon,
@@ -163,7 +150,6 @@ function Item({
         href,
         valueItem,
         stylesItem,
-        styleDefaultChild,
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
@@ -172,7 +158,6 @@ function Item({
     }),
     [id, left, top, inGrid, isMulti]
   );
-
   let heightHeadingText, setHeightHeadingText;
   const handleChangeValue = (e) => {
     setValue(e.target.value);
@@ -180,12 +165,12 @@ function Item({
     if (item) {
       item.valueItem = e.target.value;
     }
-    if (data) {
-      [heightHeadingText, setHeightHeadingText] = data;
-      setHeightHeadingText(e.target.scrollHeight);
-      const itemResize = e.target.parentElement.children[0];
-      setWidthContents(itemResize.offsetWidth);
-    }
+    // if (data) {
+    //   [heightHeadingText, setHeightHeadingText] = data;
+    //   setHeightHeadingText(e.target.scrollHeight);
+    //   const itemResize = e.target.parentElement.children[0];
+    //   setWidthContents(itemResize.offsetWidth);
+    // }
   };
 
   const handleBlurInput = (e) => {
@@ -296,7 +281,6 @@ function Item({
   };
 
   const handleSelectItemToEdit = (e) => {
-    // e.preventDefault();
     e.stopPropagation();
     if (findItem(getId(e))) {
       loadStyleComponentInInitState(findItem(getId(e)));
@@ -327,8 +311,8 @@ function Item({
   // handle when mouse up
   const handleMouseDown = (e) => {
     const itemResize = e.target.parentElement.children[0];
-    setWidthContents(itemResize.offsetWidth);
-    setHeightWrapperReSizeable(itemResize.offsetHeight);
+    // setWidthContents(itemResize.offsetWidth);
+    // setHeightWrapperReSizeable(itemResize.offsetHeight);
   };
   const handleMouseUp = (e) => {
     const itemResize = e.target.parentElement.children[0];
@@ -379,22 +363,24 @@ function Item({
   useLayoutEffect(() => {
     if (elementContentPortfolio && width === "100%") {
       [contentPortfolio, setShowTrash, widthContent] = elementContentPortfolio;
-      setWidthContents(widthContent);
+      setWidthContents(widthContent ? widthContent : width);
     }
   });
-
   // render item
   const renderItem = () => {
-    if (resizable && type !== "icon" && isChild === false) {
+    if (resizable && type !== "icon") {
       return (
         <ReactResizableBox
-          width={widthContents ? parseInt(widthContents) : parseInt(width)}
-          height={heightWrapperReSizeable}
+          width={widthContents ? parseInt(widthContents) : width}
+          height={
+            heightWrapperReSizeable ? parseInt(heightWrapperReSizeable) : height
+          }
           // onClick={handleSelectItemToEdit}
 
           style={{
             ...stylesItem,
             transform: center ? "translateX(-50%)" : "none",
+            maxWidth: "102%",
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
@@ -405,7 +391,6 @@ function Item({
               ref={draggable ? drag : null}
               onClick={handleSelectItemToEdit}
               className={classNamesItem}
-              cols={50}
               src={type === "img" && linkImg ? linkImg : null}
               value={type !== "img" ? value : undefined}
               onChange={type === "img" ? handleShowInputImg : handleChangeValue}
@@ -414,13 +399,9 @@ function Item({
               onBlur={handleBlurInput}
               style={{
                 textAlign: type === "button" ? "center" : "",
-                // backgroundColor: type === "a" ? "#1E90FF" : "#fff",
                 fontSize: fontSize,
                 position: position,
                 lineHeight: heading ? "24px" : "16px",
-                // opacity: isDragging ? "0.9" : "1",
-                // opacity: opacity ? "0.7" : "1",
-                // backgroundColor: "transparent",
                 ...styleDefault,
               }}
               type={type === "img" ? "file" : "text"}
@@ -436,7 +417,7 @@ function Item({
                 onClick={handleEditLink}
               >
                 <TipSuggest content='Edit link '>
-                  <RiEdit2Fill id={id}></RiEdit2Fill>
+                  <RiEdit2Fill onClick={handleEditLink}></RiEdit2Fill>
                 </TipSuggest>
               </div>
             ) : undefined}
@@ -471,8 +452,10 @@ function Item({
     } else if (type === "icon" && inGrid && isChild === false) {
       return (
         <ReactResizableBox
-          width={widthContents ? widthContents : width}
-          height={heightWrapperReSizeable ? heightWrapperReSizeable : height}
+          width={widthContents ? parseInt(widthContents) : width}
+          height={
+            heightWrapperReSizeable ? parseInt(heightWrapperReSizeable) : height
+          }
           style={{
             ...stylesItem,
           }}
@@ -490,6 +473,8 @@ function Item({
               style={{
                 ...styleDefault,
               }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
             >
               {InfoIcon ? icons[InfoIcon] : null}
             </a>
@@ -570,6 +555,20 @@ function Item({
       );
     }
   };
+  useEffect(() => {
+    //work next
+    items.map((item) => {
+      const itemDomReal = document.getElementById(item.id);
+      if (itemDomReal) {
+        item.textValue = itemDomReal.textContent;
+        item.valueItem = itemDomReal.textContent;
+        item.src = itemDomReal.src;
+        item.href = itemDomReal.href;
+        item.styleDefault.backgroundColor = itemDomReal.style.backgroundColor;
+        item.styleDefault.color = itemDomReal.style.color;
+      }
+    });
+  }, [items]);
 
   return (
     <>
@@ -597,11 +596,13 @@ function Item({
               }}
               value={nameItemLink}
               onChange={(e) => {
+                e.stopPropagation();
                 setEditorComponent(true);
                 setNameItemLink(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.which === 13) {
+                  e.stopPropagation();
                   setShowModal(!showModal);
                 }
               }}
@@ -615,11 +616,13 @@ function Item({
               }}
               value={linkItemTypeA}
               onChange={(e) => {
+                e.stopPropagation();
                 setEditorComponent(true);
                 setLinkItemTypeA(e.target.value);
               }}
               onKeyPress={(e) => {
                 if (e.which === 13) {
+                  e.stopPropagation();
                   setShowModal(!showModal);
                 }
               }}
