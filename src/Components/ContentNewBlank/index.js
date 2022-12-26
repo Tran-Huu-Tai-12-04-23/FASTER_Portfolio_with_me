@@ -39,7 +39,7 @@ function ContentNewBlank({ setShowModalChooseTemplate }) {
       <div className={clsx(styles.wrapper)}>
         <a
           href='/template1'
-          target='_blank'
+          target={"_blank"}
           onClick={(e) => {
             setShowModalChooseTemplate(false);
           }}

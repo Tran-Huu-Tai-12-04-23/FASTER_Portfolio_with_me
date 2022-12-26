@@ -75,47 +75,7 @@ function Grid(props) {
       canDrop: monitor.canDrop(),
     }),
   }));
-  //set default styles for components
-  // const setStyleDefault = (item) => {
-  //   if (item.styleDefault) {
-  //     item.styleDefault.color = item.styleDefault.color
-  //       ? item.styleDefault.color
-  //       : "";
-  //     item.styleDefault.backgroundColor = item.styleDefault.backgroundColor
-  //       ? item.styleDefault.backgroundColor
-  //       : "";
-  //     item.styleDefault.fontSize = item.styleDefault.fontSize
-  //       ? item.styleDefault.fontSize
-  //       : "";
-  //     item.styleDefault.fontFamily = item.styleDefault.fontFamily
-  //       ? item.styleDefault.fontFamily
-  //       : "";
-  //     item.styleDefault.borderRadius = item.styleDefault.borderRadius
-  //       ? item.styleDefault.borderRadius
-  //       : "";
-  //     item.styleDefault.borderStyle = item.styleDefault.borderStyle
-  //       ? item.styleDefault.borderStyle
-  //       : "";
-  //     item.styleDefault.borderColor = item.styleDefault.borderColor
-  //       ? item.styleDefault.borderColor
-  //       : "";
-  //     item.styleDefault.fontWeight = item.styleDefault.fontWeight
-  //       ? item.styleDefault.fontWeight
-  //       : "";
-  //     item.styleDefault.textAlign = item.styleDefault.textAlign
-  //       ? item.styleDefault.textAlign
-  //       : "";
-  //     item.styleDefault.borderWidth = item.styleDefault.borderWidth
-  //       ? item.styleDefault.borderWidth
-  //       : "";
-  //     item.styleDefault.textTransform = item.styleDefault.textTransform
-  //       ? item.styleDefault.textTransform
-  //       : "";
-  //     item.styleDefault.lineHeight = item.styleDefault.lineHeight
-  //       ? item.styleDefault.lineHeight
-  //       : "";
-  //   }
-  // };
+
   const addItem = (
     type,
     left = "200px",

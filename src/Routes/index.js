@@ -1,3 +1,4 @@
+import { getData } from "~/Store/util";
 import {
   Home,
   CreatePortfolio,
@@ -23,6 +24,7 @@ export const publicRoutes = [
     element: (
       <CreatePortfolio
         DefaultComponent={DefaultItemInGridTemplate1}
+        heightDefault={2000}
         id='template-1'
       >
         <Template1Content />
@@ -35,6 +37,7 @@ export const publicRoutes = [
       <CreatePortfolio
         id='template-2'
         DefaultComponent={DefaultItemInGridTemplate2}
+        heightDefault={3000}
       >
         <Template2Content />
       </CreatePortfolio>
@@ -46,6 +49,7 @@ export const publicRoutes = [
       <CreatePortfolio
         id='template-3'
         DefaultComponent={DefaultItemInGridTemplate3}
+        heightDefault={3000}
       >
         <Template3Content />
       </CreatePortfolio>
@@ -57,6 +61,7 @@ export const publicRoutes = [
       <CreatePortfolio
         id='template-4'
         DefaultComponent={DefaultItemInGridTemplate4}
+        heightDefault={3000}
       >
         <Template4Content />
       </CreatePortfolio>
@@ -68,6 +73,7 @@ export const publicRoutes = [
       <CreatePortfolio
         id='template-5'
         DefaultComponent={DefaultItemInGridTemplate5}
+        heightDefault={3000}
       >
         <Template5Content />
       </CreatePortfolio>

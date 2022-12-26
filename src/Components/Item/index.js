@@ -329,10 +329,7 @@ function Item({
     const itemResize = e.target.parentElement.children[0];
     setWidthContents(itemResize.offsetWidth);
     setHeightWrapperReSizeable(itemResize.offsetHeight);
-    console.log(widthContents);
-    console.log(heightWrapperReSizeable);
   };
-
   const handleMouseUp = (e) => {
     const itemResize = e.target.parentElement.children[0];
     const item = findItem(itemResize.id);
@@ -391,7 +388,7 @@ function Item({
     if (resizable && type !== "icon" && isChild === false) {
       return (
         <ReactResizableBox
-          width={parseInt(widthContents)}
+          width={widthContents ? parseInt(widthContents) : parseInt(width)}
           height={heightWrapperReSizeable}
           // onClick={handleSelectItemToEdit}
 

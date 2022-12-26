@@ -18,7 +18,6 @@ function Preview({
         if (item.type === "img") {
           return (
             <img
-              key={index}
               src={item.src}
               style={{
                 width: item.width,
@@ -35,8 +34,8 @@ function Preview({
         } else if (item.type === "input") {
           return (
             <div
-              key={index}
               style={{
+                padding: "12 0",
                 position: "absolute",
                 top: item.top,
                 left: item.left,
@@ -53,7 +52,6 @@ function Preview({
         } else if (item.type === "div") {
           return (
             <div
-              key={index}
               style={{
                 position: "absolute",
                 top: item.top,
@@ -67,9 +65,9 @@ function Preview({
             ></div>
           );
         } else if (item.type === "a") {
+          console.log(item);
           return (
             <a
-              key={index}
               href={item.href}
               style={{
                 position: "absolute",

@@ -8,7 +8,7 @@ import {
 import clsx from "clsx";
 import styles from "./CreatePortfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import { IoAddOutline } from "react-icons/io5";
+import { VscAdd } from "react-icons/vsc";
 
 import Header from "./Header";
 import MenuUntil from "~/Components/MenuUntil";
@@ -19,7 +19,6 @@ import {
   ElementContentPortfolio,
   wrapperContent,
   ContextReducer,
-  NumberPages,
 } from "~/Store/Context";
 import Footer from "../Footer";
 import Preview from "../Preview";
@@ -32,10 +31,13 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
   const [itemMulti, setItemMulti] = useState([]);
   const [transactionContent, setTransactionContent] = useState("0");
   const [widthMenu, setWidthMenu] = useState("22%");
+  const [goToTop, setGoToTop] = useState(false);
   const [showEditorComponent, setEditorComponent] = useState(false);
+  const [showAddHeight, setShowAddHeight] = useState(false);
   const [heightContent, setHeightContent] = useState(
     heightDefault ? heightDefault : 1000
   );
+  const [heightContentChange, setHeightContentChange] = useState("");
   const [showTrash, setShowTrash] = useState(false);
   const [widthContent, setWidthContent] = useState();
   const [showPreview, setShowPreview] = useState(false);
@@ -45,7 +47,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
   const [contentTag, setContentTag] = useState("Header");
   const [showTag, setShowTag] = useState(false);
   const wrapperContentPortfolio = useRef();
-  const [numberPages, setNumberPages] = useState(1);
+  const [heightOnScroll, setHeightOnScroll] = useState();
 
   const loadInStyleDefault = () => {
     // console.log("render");
@@ -81,6 +83,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
         setStyle(item);
       }
     });
+    // console.log(findItem(state.id_item_selected));
     localStorage.setItem(`items-${id}`, JSON.stringify(items));
   };
 
@@ -92,6 +95,9 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
       loadInStyleDefault();
     };
     window.addEventListener("beforeunload", handleSaveDataInStorage);
+    // return () => {
+    //   window.removeEventListener("beforeunload", handleSaveDataInStorage);
+    // };
   });
 
   useEffect(() => {
@@ -115,11 +121,13 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
   useEffect(() => {
     if (wrapperTemplateContent.current) {
       setWidthContent(wrapperTemplateContent.current.offsetWidth);
+      // console.log(wrapperTemplateContent.current.offsetWidth);
     }
   }, []);
   //set size when window resize
   useLayoutEffect(() => {
     const handleResizeWindow = () => {
+      // console.log(wrapperTemplateContent.current.offsetWidth);
       setWidthContent(wrapperTemplateContent.current.offsetWidth);
     };
     window.addEventListener("resize", handleResizeWindow);
@@ -137,21 +145,56 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
     }
   }, [items]);
 
+  //set height for page
+  useEffect(() => {
+    if (wrapperTemplateContent.current) {
+      wrapperTemplateContent.current.style.height = `${heightContent}px`;
+    }
+  }, [heightContent]);
+
   // transaction page when hidden menu
   useEffect(() => {
     setTransactionContent(widthMenu === "0" ? "-11%" : "0");
   }, [widthMenu]);
 
-  const renderManagerPages = () => {
-    const arrPages = Array.from(Array(numberPages).keys());
-    return arrPages.map((page, index) => {
-      return (
-        <TipSuggest key={index} content={`page-${index + 1}`}>
-          <div id={`grid_${index + 1}`}></div>;
-        </TipSuggest>
-      );
-    });
+  //go to top page
+  const handleShowScroll = (e) => {
+    setShowTag(true);
+    if (e.currentTarget.scrollTop <= 0) {
+      setShowTag(false);
+    }
+    if (e.currentTarget.scrollTop < 200) {
+      setContentTag("Header");
+    }
+    if (e.currentTarget.scrollTop > 200) {
+      setContentTag("Content");
+    }
+    if (e.currentTarget.scrollTop > 2000) {
+      setContentTag("Footer");
+    }
+    setGoToTop(e.currentTarget.scrollTop > 200 ? true : false);
   };
+
+  const handleGoToTop = (e) => {
+    if (contentPortfolio.current) {
+      contentPortfolio.current.scrollTop = 0;
+    }
+  };
+
+  //handle set height
+  const handleSetHeightPage = (e) => {
+    setHeightContent((prev) => {
+      const newHeight = prev + parseInt(heightContentChange);
+      if (newHeight > 1000) {
+        return newHeight;
+      } else {
+        return 1000;
+      }
+    });
+    setHeightContentChange("");
+    setShowAddHeight(!showAddHeight);
+  };
+
   return (
     <>
       <wrapperContent.Provider value={wrapperContentPortfolio}>
@@ -162,101 +205,131 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
             <ElementContentPortfolio.Provider
               value={[contentPortfolio, setShowTrash, widthContent]}
             >
-              <NumberPages.Provider value={[numberPages, setNumberPages]}>
+              <div
+                className={clsx(styles.wrapper)}
+                style={{
+                  display: showPreview ? "none" : "block",
+                }}
+              >
+                {showEditorComponent === false ? (
+                  <Header setShowPreview={setShowPreview} />
+                ) : (
+                  ""
+                )}
+
                 <div
-                  className={clsx(styles.wrapper)}
-                  style={{
-                    display: showPreview ? "none" : "block",
-                  }}
+                  className={clsx(styles.content)}
+                  ref={wrapperContentPortfolio}
                 >
-                  {showEditorComponent === false ? (
-                    <Header setShowPreview={setShowPreview} />
-                  ) : (
-                    ""
-                  )}
-
-                  <div
-                    className={clsx(styles.content)}
-                    ref={wrapperContentPortfolio}
-                  >
-                    <MenuUntil
-                      state={setWidthMenu}
-                      valueState={widthMenu}
-                    ></MenuUntil>
-                    {showTag && widthMenu !== "0" ? (
-                      <Tag content={contentTag}></Tag>
-                    ) : null}
-
+                  <MenuUntil state={setWidthMenu} valueState={widthMenu}>
                     <div
-                      ref={contentPortfolio}
-                      id={"content_portfolio"}
-                      className={clsx(styles.wrapper_template)}
-                      style={{
-                        minWidth: "76%",
-                        transform: `translateX(${transactionContent})`,
-                      }}
+                      className={clsx(styles.wrapper_icon_add_height_content)}
                     >
-                      <div
-                        ref={wrapperTemplateContent}
-                        className={clsx(styles.wrapper_template_content)}
-                        id='wrapper_template_content'
-                      >
-                        {children}
-                      </div>
-                    </div>
-                    {/* add page  */}
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-evenly",
-                        alignItems: "center",
-                        position: "absolute",
-                        bottom: "20px",
-                        left: "calc(22%)",
-                        width: "74%",
-                        height: 20,
-                      }}
-                    >
-                      <div
-                        className={clsx(styles.pages_add)}
-                        style={{
-                          display: widthMenu === "0" ? "none" : "flex",
+                      <TipSuggest
+                        content='Add height page, click'
+                        position={"top"}
+                        styles={{
+                          width: "100%",
+                          height: "100%",
                         }}
                       >
-                        <IoAddOutline></IoAddOutline>
-                        <span>Add page</span>
-                      </div>
-                      <div className={clsx(styles.manager_pages)}>
-                        {renderManagerPages()}
+                        <VscAdd
+                          className={clsx(styles.icon_add_height_content)}
+                          onClick={(e) => {
+                            setShowAddHeight(!showAddHeight);
+                          }}
+                        ></VscAdd>
+                      </TipSuggest>
+                      <div
+                        className={clsx(styles.form_enter_height)}
+                        style={{
+                          display: showAddHeight ? "block" : "none",
+                        }}
+                      >
+                        <input
+                          ref={inputAddHeight}
+                          type='number'
+                          onChange={(e) => {
+                            setHeightContentChange(e.target.value);
+                          }}
+                          onKeyPress={(e) => {
+                            if (e.which === 13) {
+                              handleSetHeightPage();
+                            }
+                          }}
+                          value={heightContentChange}
+                          placeholder='Please enter number !!'
+                        />
+                        <button onClick={handleSetHeightPage}>Enter</button>
                       </div>
                     </div>
+                  </MenuUntil>
+                  {showTag && widthMenu !== "0" ? (
+                    <Tag content={contentTag}></Tag>
+                  ) : null}
 
-                    <EditorComponent
-                      style={{
-                        display: showEditorComponent ? "flex" : "none",
-                      }}
-                    ></EditorComponent>
+                  <div
+                    ref={contentPortfolio}
+                    id={"content_portfolio"}
+                    className={clsx(styles.wrapper_template)}
+                    style={{
+                      minWidth: "76%",
+                      transform: `translateX(${transactionContent})`,
+                    }}
+                    onScroll={handleShowScroll}
+                  >
+                    <div
+                      ref={wrapperTemplateContent}
+                      className={clsx(styles.wrapper_template_content)}
+                      id='wrapper_template_content'
+                    >
+                      {children}
 
-                    <Trash
-                      display={showTrash ? "flex" : "none"}
-                      id={"trash"}
-                    ></Trash>
+                      {/* <Grid space={2} gap='12px' backgroundColor='#ccc'></Grid> */}
+                    </div>
+                  </div>
+
+                  <EditorComponent
+                    style={{
+                      display: showEditorComponent ? "flex" : "none",
+                      // transform: widthMenu === "0" ? "translateX(-11%)" : "",
+                    }}
+                  ></EditorComponent>
+
+                  <Trash
+                    display={showTrash ? "flex" : "none"}
+                    id={"trash"}
+                  ></Trash>
+
+                  <div
+                    className={clsx(styles.go_to_top)}
+                    style={{
+                      display: goToTop ? "block" : "none",
+                      transform: widthMenu === "0" ? "translateX(-100px)" : "",
+                    }}
+                  >
+                    <TipSuggest content='Go to top'>
+                      <MdKeyboardArrowUp
+                        onClick={handleGoToTop}
+                      ></MdKeyboardArrowUp>
+                    </TipSuggest>
                   </div>
                 </div>
-                <div
-                  style={{
-                    display: "none",
-                    display: showPreview ? "block" : "none",
-                  }}
-                >
-                  <Preview
-                    setShowPreview={setShowPreview}
-                    showPreview={showPreview}
-                    items={items}
-                    heightTemplate={heightContent}
-                  ></Preview>
-                </div>
-              </NumberPages.Provider>
+              </div>
+              <div
+                style={{
+                  display: "none",
+                  display: showPreview ? "block" : "none",
+                }}
+              >
+                <Preview
+                  setShowPreview={setShowPreview}
+                  showPreview={showPreview}
+                  items={items}
+                  heightTemplate={heightContent}
+                ></Preview>
+              </div>
+              <Footer backgroundColor='#fff' showPreview={showPreview}></Footer>
             </ElementContentPortfolio.Provider>
           </ContextShowEditorComponent.Provider>
         </ContextItemsIngrid.Provider>

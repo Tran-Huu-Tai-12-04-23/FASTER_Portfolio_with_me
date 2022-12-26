@@ -38,6 +38,7 @@ export const DefaultItemInGridTemplate1 = [
       lineHeight: "26px",
       textAlign: "center",
       color: "#fff",
+      border: "1px solid #ccc",
     },
   },
 ];
