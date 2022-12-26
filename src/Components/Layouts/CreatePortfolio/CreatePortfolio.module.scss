@@ -17,7 +17,7 @@
   box-shadow: 5px 5px 15px 5px #170c0b;
   height: 80vh;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
   transition: all 0.4s ease-in-out;
 
   &::-webkit-scrollbar-track {
@@ -46,6 +46,7 @@
     max-width: 100%;
     width: 100%;
     overflow: hidden;
+    height: 100%;
   }
 }
 
@@ -143,5 +144,54 @@
     opacity: 1;
     width: 260px;
     height: 120px;
+  }
+}
+
+//
+.pages_add {
+  width: 200px;
+  height: 100%;
+  background-color: #757575;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  cursor: pointer;
+  -webkit-box-shadow: 5px 5px 15px 5px #170c0b;
+  box-shadow: 5px 5px 15px 5px #170c0b;
+  &:hover {
+    background-color: var(--primary);
+  }
+
+  svg {
+    color: #fff;
+    font-size: 30px;
+    cursor: pointer;
+  }
+
+  span {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+  }
+}
+
+.manager_pages {
+  width: 70%;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-box-shadow: 5px 5px 15px 5px #170c0b;
+  box-shadow: 5px 5px 15px 5px #170c0b;
+  cursor: pointer;
+  div {
+    width: 30px;
+    height: 80%;
+    background-color: #ccc;
   }
 }

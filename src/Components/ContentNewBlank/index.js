@@ -13,14 +13,21 @@ const contentTip = [
   "Create with normal templates",
   "Create with pink templates",
 ];
-function ContentNewBlank() {
+function ContentNewBlank({ setShowModalChooseTemplate }) {
   function renderTemplate() {
     return templates.map((temp, index) => {
       const nameTemplate = "/template" + (index + 2);
       return (
-        <Link key={index + 1} to={nameTemplate}>
+        <a
+          key={index + 1}
+          href={nameTemplate}
+          target='_blank'
+          onClick={(e) => {
+            setShowModalChooseTemplate(false);
+          }}
+        >
           <Template background={temp} content={contentTip[index]} />
-        </Link>
+        </a>
       );
     });
   }
@@ -30,13 +37,19 @@ function ContentNewBlank() {
       <h1 className={clsx(styles.heading)}>Choose Template</h1>
 
       <div className={clsx(styles.wrapper)}>
-        <Link to='/template1'>
+        <a
+          href='/template1'
+          target='_blank'
+          onClick={(e) => {
+            setShowModalChooseTemplate(false);
+          }}
+        >
           <Template
             key='0'
             content={contentTip[0]}
             icon={<FontAwesomeIcon icon={faAdd}></FontAwesomeIcon>}
           />
-        </Link>
+        </a>
         {renderTemplate()}
       </div>
     </Fragment>

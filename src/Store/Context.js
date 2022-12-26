@@ -8,3 +8,4 @@ export const HeightHeading = createContext();
 export const ShowOverlay = createContext();
 export const ContextItemsMultiIngrid = createContext();
 export const wrapperContent = createContext();
+export const NumberPages = createContext();

@@ -31,7 +31,9 @@ function Home() {
             setShowModalChooseTemplate(!showModalChooseTemplate);
           }}
         ></IoCloseOutline>
-        <ContentNewBlank />
+        <ContentNewBlank
+          setShowModalChooseTemplate={setShowModalChooseTemplate}
+        />
       </div>
       <Guide></Guide>
       <Footer></Footer>

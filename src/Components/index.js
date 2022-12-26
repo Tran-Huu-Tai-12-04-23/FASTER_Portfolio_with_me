@@ -11,7 +11,6 @@ import BoxMenu from "./BoxMenu";
 import Overlay from "./Overlay";
 import Trash from "./Trash";
 import EditorComponent from "./EditorComponent";
-import MultiItem from "./Item/MultiItem";
 
 import Template1Content from "./TemplatesContent/Template1Content";
 import Template2Content from "./TemplatesContent/Template2Content";
@@ -36,5 +35,4 @@ export {
   Overlay,
   Trash,
   EditorComponent,
-  MultiItem,
 };
