@@ -48,6 +48,8 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
   const [showTag, setShowTag] = useState(false);
   const wrapperContentPortfolio = useRef();
   const [heightOnScroll, setHeightOnScroll] = useState();
+  const [showRecovery, setShowRecovery] = useState(false);
+  const [dataRecovery, setDataRecovery] = useState({});
 
   const loadInStyleDefault = () => {
     // console.log("render");
@@ -105,11 +107,18 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
     data
       .then((data) => {
         if (data && data.length > 0) {
-          setItems(data);
+          if (
+            data.length !== DefaultComponent.length ||
+            JSON.stringify(DefaultComponent) !== JSON.stringify(data)
+          ) {
+            setDataRecovery(data);
+            setShowRecovery(true);
+          }
         }
       })
       .catch((err) => err);
   }, []);
+
   //auto focus for users
   useEffect(() => {
     if (inputAddHeight && inputAddHeight.current) {
@@ -210,7 +219,31 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
                   display: showPreview ? "none" : "block",
                 }}
               >
-                {showEditorComponent === false ? (
+                <div
+                  className={clsx(styles.wrapper_nofication)}
+                  style={{
+                    display:
+                      showEditorComponent || !showRecovery ? "none" : "flex",
+                  }}
+                >
+                  <h1>Web data recovery</h1>
+                  <button
+                    onClick={(e) => {
+                      setShowRecovery(false);
+                    }}
+                  >
+                    No
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      setItems(dataRecovery);
+                      setShowRecovery(false);
+                    }}
+                  >
+                    Yes
+                  </button>
+                </div>
+                {showEditorComponent === false && !showRecovery ? (
                   <Header setShowPreview={setShowPreview} />
                 ) : (
                   ""
@@ -327,6 +360,9 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
                   items={items}
                   heightTemplate={heightContent}
                 ></Preview>
+              </div>
+              <div>
+                
               </div>
               <Footer backgroundColor='#fff' showPreview={showPreview}></Footer>
             </ElementContentPortfolio.Provider>

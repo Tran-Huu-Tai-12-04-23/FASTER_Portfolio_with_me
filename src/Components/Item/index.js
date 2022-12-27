@@ -119,7 +119,7 @@ function Item({
       [styles.icon]: icon,
     },
     {
-      [styles.item_grid]: inGrid,
+      [styles.item_not_grid]: inGrid === false,
     },
     {
       [styles.icon_ingrid]: type === "icon" && inGrid,
@@ -130,7 +130,6 @@ function Item({
   );
   var left = stylesItem ? stylesItem.left : 0;
   var top = stylesItem ? stylesItem.top : 0;
-
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: inGrid ? "ITEM_IN_GRID" : "Item",
@@ -311,8 +310,8 @@ function Item({
   // handle when mouse up
   const handleMouseDown = (e) => {
     const itemResize = e.target.parentElement.children[0];
-    // setWidthContents(itemResize.offsetWidth);
-    // setHeightWrapperReSizeable(itemResize.offsetHeight);
+    setWidthContents(itemResize.offsetWidth);
+    setHeightWrapperReSizeable(itemResize.offsetHeight);
   };
   const handleMouseUp = (e) => {
     const itemResize = e.target.parentElement.children[0];
@@ -366,6 +365,35 @@ function Item({
       setWidthContents(widthContent ? widthContent : width);
     }
   });
+
+  useEffect(() => {
+    //work next
+    items.map((item) => {
+      const itemDomReal = document.getElementById(item.id);
+      if (itemDomReal) {
+        item.textValue = itemDomReal.textContent
+          ? itemDomReal.textContent
+          : item.value;
+        item.valueItem = itemDomReal.value
+          ? itemDomReal.value
+          : itemDomReal.textContent;
+        item.src = itemDomReal.src ? itemDomReal.src : item.src;
+        item.href = itemDomReal.href ? itemDomReal.href : item.href;
+        item.styleDefault.backgroundColor = itemDomReal.style.backgroundColor;
+        item.styleDefault.color = itemDomReal.style.color;
+        item.styleDefault.fontSize = itemDomReal.style.fontSize;
+        item.styleDefault.fontFamily = itemDomReal.style.fontFamily;
+        item.styleDefault.borderRadius = itemDomReal.style.borderRadius;
+        item.styleDefault.borderStyle = itemDomReal.style.borderStyle;
+        item.styleDefault.borderColor = itemDomReal.style.borderColor;
+        item.styleDefault.fontWeight = itemDomReal.style.fontWeight;
+        item.styleDefault.textAlign = itemDomReal.style.textAlign;
+        item.styleDefault.borderWidth = itemDomReal.style.borderWidth;
+        item.styleDefault.textTransform = itemDomReal.style.textTransform;
+        item.styleDefault.lineHeight = itemDomReal.style.lineHeight;
+      }
+    });
+  }, [items]);
   // render item
   const renderItem = () => {
     if (resizable && type !== "icon") {
@@ -389,19 +417,21 @@ function Item({
             <Type
               id={id}
               ref={draggable ? drag : null}
-              onClick={handleSelectItemToEdit}
+              onClick={(e) => {
+                if (type !== "input" && type !== "img") {
+                  e.preventDefault();
+                }
+                handleSelectItemToEdit(e);
+              }}
               className={classNamesItem}
               src={type === "img" && linkImg ? linkImg : null}
               value={type !== "img" ? value : undefined}
               onChange={type === "img" ? handleShowInputImg : handleChangeValue}
-              href={linkItemTypeA ? linkItemTypeA : ""}
+              href={linkItemTypeA ? linkItemTypeA : href}
               target={linkItemTypeA ? "_blank" : null}
               onBlur={handleBlurInput}
               style={{
-                textAlign: type === "button" ? "center" : "",
-                fontSize: fontSize,
                 position: position,
-                lineHeight: heading ? "24px" : "16px",
                 ...styleDefault,
               }}
               type={type === "img" ? "file" : "text"}
@@ -435,11 +465,6 @@ function Item({
           ref={drag}
           className={classNamesItem}
           style={{
-            ...stylesItem,
-            // opacity: isDragging ? "0.5" : "1",
-            width: isMulti ? "100%" : "40px",
-            height: "40px",
-            backgroundColor: "transparent",
             ...styleDefault,
           }}
           value={value}
@@ -466,7 +491,10 @@ function Item({
             <a
               id={id}
               ref={draggable ? drag : null}
-              onClick={handleSelectItemToEdit}
+              onClick={(e) => {
+                e.preventDefault();
+                handleSelectItemToEdit(e);
+              }}
               className={classNamesItem}
               target='_blank'
               href={linkIcon ? linkIcon : null}
@@ -555,24 +583,10 @@ function Item({
       );
     }
   };
-  useEffect(() => {
-    //work next
-    items.map((item) => {
-      const itemDomReal = document.getElementById(item.id);
-      if (itemDomReal) {
-        item.textValue = itemDomReal.textContent;
-        item.valueItem = itemDomReal.textContent;
-        item.src = itemDomReal.src;
-        item.href = itemDomReal.href;
-        item.styleDefault.backgroundColor = itemDomReal.style.backgroundColor;
-        item.styleDefault.color = itemDomReal.style.color;
-      }
-    });
-  }, [items]);
-
   return (
     <>
       {renderItem()}
+
       {type === "a" && inGrid && showModal ? (
         <div
           className={clsx(styles.modal)}

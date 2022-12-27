@@ -19,7 +19,7 @@ function Header({ setShowPreview }) {
 
   const handleDataTitleEmpty = (e) => {
     if (e.target.value === "") {
-      setTitle("Trang web không có tiêu đề");
+      setTitle("Title is empty");
     }
   };
 

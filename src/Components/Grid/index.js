@@ -51,9 +51,6 @@ function Grid(props) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
         const data = monitor.getDifferenceFromInitialOffset();
-        console.log(data);
-        console.log(delta);
-        console.log(item);
         let left = item.widthMenu ? delta.x - item.widthMenu : delta.x - 400;
         let top = delta.y - 100;
         if (left < 0) {
@@ -62,6 +59,7 @@ function Grid(props) {
         if (top < 0) {
           top = 0;
         }
+
         addItem(
           item.type,
           left,
@@ -94,8 +92,63 @@ function Grid(props) {
     width = 200,
     height = type === "a" ? 30 : 100
   ) => {
-    // setStyleDefault(styleDefault);
+    var styles = {};
+    var textValues = "";
+    var height;
+    var width;
 
+    if (type === "input") {
+      styles = {
+        backgroundColor: "transparent",
+        color: "#ccc",
+        borderWidth: "1px",
+        borderStyle: "outset",
+        borderColor: "var(--primary)",
+        padding: "12px",
+      };
+      textValues = "Enter text";
+      height = 60;
+      width = 200;
+    }
+    if (type === "button") {
+      styles = {
+        backgroundColor: "transparent",
+        color: "#ccc",
+        borderWidth: "1px",
+        borderStyle: "outset",
+        borderColor: "blue",
+        padding: "12px",
+        textAlign: "center",
+        textTransform: "uppercase",
+      };
+      textValues = "Enter name button";
+      height = 50;
+      width = 200;
+    }
+    if (type === "div") {
+      styles = {
+        border: " 1px solid #ccc",
+        backgroundColor: "rgb(175, 67, 67)",
+      };
+    }
+    if (type === "a") {
+      styles = {
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: "rgba(255,255,255)",
+        padding: "12px",
+      };
+    }
+    if (type === "icon") {
+      styles = {
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: "#FFCCFF",
+        padding: "12px",
+      };
+      height = 60;
+      width = 60;
+    }
     setItems((prev) => {
       return [
         ...prev,
@@ -104,20 +157,19 @@ function Grid(props) {
           left,
           top,
           id,
-          width,
-          height,
+          width: width,
+          height: height,
           inGrid: true,
           isMulti: false,
           InfoIcon,
-          styleDefault: {},
+          styleDefault: styles,
           src,
           href,
-          valueItem,
+          valueItem: textValues,
         },
       ];
     });
   };
-
   const moveItem = (id, left, top, inGrid, items) => {
     items.map((item) => {
       if (item.id === id) {
