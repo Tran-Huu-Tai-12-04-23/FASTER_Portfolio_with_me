@@ -103,7 +103,7 @@ function Preview({
             </a>
           );
         } else if (item.type === "icon") {
-          console.log(item);
+          // console.log(item);
           return (
             <div
               className={clsx(styles.icon)}

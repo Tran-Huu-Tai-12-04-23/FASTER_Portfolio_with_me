@@ -28,7 +28,6 @@ import { getData } from "~/Store/util";
 function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
   const [state, dispatch] = useContext(ContextReducer);
   const [items, setItems] = useState(DefaultComponent ? DefaultComponent : []);
-  const [itemMulti, setItemMulti] = useState([]);
   const [transactionContent, setTransactionContent] = useState("0");
   const [widthMenu, setWidthMenu] = useState("22%");
   const [goToTop, setGoToTop] = useState(false);
@@ -80,11 +79,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
         setStyle(item);
       }
     });
-    itemMulti.map((item) => {
-      if (item.id === state.id_item_selected) {
-        setStyle(item);
-      }
-    });
+
     // console.log(findItem(state.id_item_selected));
     localStorage.setItem(`items-${id}`, JSON.stringify(items));
   };
@@ -361,9 +356,7 @@ function CreatePortfolio({ DefaultComponent, heightDefault, id, children }) {
                   heightTemplate={heightContent}
                 ></Preview>
               </div>
-              <div>
-                
-              </div>
+              <div></div>
               <Footer backgroundColor='#fff' showPreview={showPreview}></Footer>
             </ElementContentPortfolio.Provider>
           </ContextShowEditorComponent.Provider>

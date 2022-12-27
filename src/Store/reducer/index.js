@@ -88,6 +88,19 @@ const reducer = (state, action) => {
       };
     }
 
+    case constantActions.SET_UNDO: {
+      return {
+        ...state,
+        undo: action.payload,
+      };
+    }
+    case constantActions.SET_REDO: {
+      return {
+        ...state,
+        redo: action.payload,
+      };
+    }
+
     default:
       throw new Error("Invalid action type");
   }

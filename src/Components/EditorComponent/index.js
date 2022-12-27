@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useLayoutEffect } from "react";
 import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
@@ -61,6 +61,22 @@ function EditorComponent({ style }) {
   const [lineHeight, setLineHeightItem] = useState(
     state.line_height ? parseInt(state.line_height) : 0
   );
+  const [backgroundColorItem, setBackgroundColorItem] = useState(
+    state.background_color ? state.background_color : "#873636"
+  );
+  const [colorItem, setColorItem] = useState(
+    state.color ? state.color : "#873636"
+  );
+  const [borderColorItem, setBorderColorItem] = useState(
+    state.border_color ? state.border_color : "#873636"
+  );
+  const [colorRange, setColorRange] = useState(colors);
+
+  useLayoutEffect(() => {
+    setBackgroundColor(state.background_color);
+    setColor(state.color);
+    setBorderColor(state.border_color);
+  }, [state]);
 
   useEffect(() => {
     if (state.border_radius) {
@@ -89,7 +105,6 @@ function EditorComponent({ style }) {
       dispatch(setLineHeight(`${lineHeight}px`));
     }
   }, [lineHeight]);
-
   //hidden editor each attribute
   useEffect(() => {
     const handleHiddenEditor = () => {
@@ -108,7 +123,7 @@ function EditorComponent({ style }) {
   }, []);
 
   const renderOptionColors = () => {
-    return colors.map((color, index) => {
+    return colorRange.map((color, index) => {
       return (
         <li
           key={index}
@@ -143,7 +158,7 @@ function EditorComponent({ style }) {
   };
 
   const renderOptionBorderColors = () => {
-    return colors.map((color, index) => {
+    return colorRange.map((color, index) => {
       return (
         <li
           key={index}
@@ -161,7 +176,7 @@ function EditorComponent({ style }) {
   };
 
   const renderOptionBackGroundColor = () => {
-    return colors.map((color, index) => {
+    return colorRange.map((color, index) => {
       return (
         <li
           onClick={(e) => {
@@ -222,7 +237,6 @@ function EditorComponent({ style }) {
       );
     });
   };
-
   const removeItemsIngrid = (e) => {
     e.stopPropagation();
     //remove dom real
@@ -246,6 +260,7 @@ function EditorComponent({ style }) {
     setShowEditFontStyle(false);
     setShowEditBorderSize(false);
   };
+
   return (
     <div
       className={clsx(styles.wrapper)}
@@ -298,6 +313,31 @@ function EditorComponent({ style }) {
           }}
         >
           {renderOptionBackGroundColor()}
+          <div className={clsx(styles.wrapper_input_color)}>
+            <input
+              className={clsx(styles.color_range)}
+              type='color'
+              value={backgroundColorItem}
+              onChange={(e) => {
+                setBackgroundColorItem(e.target.value);
+                dispatch(setBackgroundColor(e.target.value));
+              }}
+            ></input>
+            <TipSuggest content='Add your color'>
+              <IoIosAdd
+                className={clsx(styles.icon_add_color)}
+                onClick={(e) => {
+                  setColorRange((prev) => {
+                    if (!prev.includes(backgroundColorItem)) {
+                      return [...prev, backgroundColorItem];
+                    }
+                    alert("color is already");
+                    return [...prev];
+                  });
+                }}
+              ></IoIosAdd>
+            </TipSuggest>
+          </div>
         </ul>
       </div>
       <div
@@ -326,11 +366,40 @@ function EditorComponent({ style }) {
             display: showEditColor ? "flex" : "none",
           }}
           onClick={(e) => {
-            e.preventDefault();
+            // e.preventDefault();
             e.stopPropagation();
           }}
         >
           {renderOptionColors()}
+          <input
+            style={{
+              border: "none",
+              outline: "none",
+              borderRadius: "12px",
+              width: "100%",
+            }}
+            type='color'
+            value={colorItem}
+            onChange={(e) => {
+              setColorItem(e.target.value);
+              dispatch(setColor(e.target.value));
+            }}
+          ></input>
+          <TipSuggest content='Add your color'>
+            <IoIosAdd
+              className={clsx(styles.icon_add_color)}
+              onClick={(e) => {
+                setColorRange((prev) => {
+                  if (!prev.includes(colorItem)) {
+                    return [...prev, colorItem];
+                  }
+                  alert("color is already");
+
+                  return [...prev];
+                });
+              }}
+            ></IoIosAdd>
+          </TipSuggest>
         </ul>
       </div>
       <div
@@ -363,6 +432,34 @@ function EditorComponent({ style }) {
           }}
         >
           {renderOptionBorderColors()}
+          <input
+            style={{
+              border: "none",
+              outline: "none",
+              borderRadius: "12px",
+              width: "100%",
+            }}
+            type='color'
+            value={borderColorItem}
+            onChange={(e) => {
+              setBorderColorItem(e.target.value);
+              dispatch(setBorderColor(e.target.value));
+            }}
+          ></input>
+          <TipSuggest content='Add your color'>
+            <IoIosAdd
+              className={clsx(styles.icon_add_color)}
+              onClick={(e) => {
+                setColorRange((prev) => {
+                  if (!prev.includes(borderColorItem)) {
+                    return [...prev, borderColorItem];
+                  }
+                  alert("color is already");
+                  return [...prev];
+                });
+              }}
+            ></IoIosAdd>
+          </TipSuggest>
         </ul>
       </div>
       <div

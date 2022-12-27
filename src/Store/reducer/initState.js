@@ -12,5 +12,7 @@ const initState = {
   text_align: false,
   text_transform: false,
   id_item_selected: "",
+  undo: [],
+  redo: [],
 };
 export default initState;

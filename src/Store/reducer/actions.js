@@ -92,3 +92,16 @@ export const setIdItemSelected = (payload) => {
     payload,
   };
 };
+export const setUndo = (payload) => {
+  return {
+    type: constantActions.SET_UNDO,
+    payload,
+  };
+};
+
+export const setRedo = (payload) => {
+  return {
+    type: constantActions.SET_REDO,
+    payload,
+  };
+};

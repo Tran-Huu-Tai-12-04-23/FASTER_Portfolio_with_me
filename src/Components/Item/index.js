@@ -367,7 +367,7 @@ function Item({
   });
 
   useEffect(() => {
-    //work next
+    // work next
     items.map((item) => {
       const itemDomReal = document.getElementById(item.id);
       if (itemDomReal) {
@@ -379,6 +379,7 @@ function Item({
           : itemDomReal.textContent;
         item.src = itemDomReal.src ? itemDomReal.src : item.src;
         item.href = itemDomReal.href ? itemDomReal.href : item.href;
+
         item.styleDefault.backgroundColor = itemDomReal.style.backgroundColor;
         item.styleDefault.color = itemDomReal.style.color;
         item.styleDefault.fontSize = itemDomReal.style.fontSize;
@@ -395,6 +396,7 @@ function Item({
     });
   }, [items]);
   // render item
+
   const renderItem = () => {
     if (resizable && type !== "icon") {
       return (
@@ -497,7 +499,7 @@ function Item({
               }}
               className={classNamesItem}
               target='_blank'
-              href={linkIcon ? linkIcon : null}
+              href={linkIcon}
               style={{
                 ...styleDefault,
               }}
@@ -537,7 +539,7 @@ function Item({
               }}
             >
               <input
-                placeholder="After adding,you can't edit the item's style"
+                placeholder='Link'
                 ref={inputEditLinkIcon}
                 onChange={(e) => {
                   e.stopPropagation();

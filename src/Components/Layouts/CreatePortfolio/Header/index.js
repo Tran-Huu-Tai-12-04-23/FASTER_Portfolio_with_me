@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsArrowCounterclockwise, BsArrowClockwise } from "react-icons/bs";
+import { BiUndo, BiRedo } from "react-icons/bi";
 
 import styles from "./Header.module.scss";
 import { Button, TipSuggest } from "~/Components";
@@ -45,6 +46,22 @@ function Header({ setShowPreview }) {
       </div>
 
       <div className={clsx(styles.until_options)}>
+        <div>
+          <TipSuggest content='Undo'>
+            <BiUndo
+              style={{
+                fontSize: "36px",
+              }}
+            ></BiUndo>
+          </TipSuggest>
+          <TipSuggest content='Redo'>
+            <BiRedo
+              style={{
+                fontSize: "36px",
+              }}
+            ></BiRedo>
+          </TipSuggest>
+        </div>
         <TipSuggest content='Show preview'>
           <FontAwesomeIcon
             onClick={(e) => {
