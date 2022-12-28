@@ -10,9 +10,8 @@ import {
   ElementContentPortfolio,
   ShowOverlay,
   ContextReducer,
-  ContextItemsMultiIngrid,
-  wrapperContent,
 } from "~/Store/Context";
+import { setUndo } from "~/Store/reducer/actions";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
 
 function Grid(props) {
@@ -61,10 +60,10 @@ function Grid(props) {
         }
 
         addItem(
+          uuid(),
           item.type,
           left,
           top + valueScrollTop,
-          uuid(),
           item.InfoIcon ? item.InfoIcon.Name : "",
           item.styleDefault,
           item.src,
@@ -80,10 +79,10 @@ function Grid(props) {
   }));
 
   const addItem = (
+    id,
     type,
     left = "200px",
     top = "100px",
-    id,
     InfoIcon,
     styleDefault,
     src,
@@ -135,7 +134,7 @@ function Grid(props) {
       styles = {
         borderWidth: "1px",
         borderStyle: "solid",
-        borderColor: "rgba(255,255,255)",
+        borderColor: "#757575",
         padding: "12px",
       };
     }

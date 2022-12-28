@@ -91,10 +91,22 @@ const reducer = (state, action) => {
     case constantActions.SET_UNDO: {
       return {
         ...state,
-        undo: action.payload,
+        stackUndo: action.payload,
       };
     }
     case constantActions.SET_REDO: {
+      return {
+        ...state,
+        stackRedo: action.payload,
+      };
+    }
+    case constantActions.UNDO: {
+      return {
+        ...state,
+        undo: action.payload,
+      };
+    }
+    case constantActions.REDO: {
       return {
         ...state,
         redo: action.payload,

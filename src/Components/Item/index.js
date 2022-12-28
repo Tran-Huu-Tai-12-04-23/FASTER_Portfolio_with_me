@@ -160,10 +160,10 @@ function Item({
   let heightHeadingText, setHeightHeadingText;
   const handleChangeValue = (e) => {
     setValue(e.target.value);
-    const item = findItem(e.target.id);
-    if (item) {
-      item.valueItem = e.target.value;
-    }
+    // const item = findItem(e.target.id);
+    // if (item) {
+    //   item.valueItem = e.target.value;
+    // }
     // if (data) {
     //   [heightHeadingText, setHeightHeadingText] = data;
     //   setHeightHeadingText(e.target.scrollHeight);
@@ -365,7 +365,6 @@ function Item({
       setWidthContents(widthContent ? widthContent : width);
     }
   });
-
   useEffect(() => {
     // work next
     items.map((item) => {

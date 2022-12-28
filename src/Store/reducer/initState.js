@@ -14,5 +14,7 @@ const initState = {
   id_item_selected: "",
   undo: [],
   redo: [],
+  stackRedo: [],
+  stackUndo: [],
 };
 export default initState;

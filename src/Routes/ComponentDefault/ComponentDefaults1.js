@@ -1,11 +1,8 @@
 import uuid from "react-uuid";
-import backGroundHeader02 from "~/assets/img/backGroundHeader02.png";
-
-const leftDefaultText = 50;
-const leftDefaultTitle = 100;
 
 export const DefaultItemInGridTemplate1 = [
   {
+    id: uuid(),
     type: "div",
     left: 0,
     top: 0,
@@ -13,14 +10,26 @@ export const DefaultItemInGridTemplate1 = [
     height: 500,
     href: "",
     src: "",
-    id: uuid(),
     inGrid: true,
     isMulti: false,
     styleDefault: {
-      backgroundColor: "#669999",
+      backgroundColor: "rgb(102, 153, 153)",
+      borderColor: "",
+      borderRadius: "",
+      borderStyle: "",
+      borderWidth: "",
+      color: "",
+      fontFamily: "",
+      fontSize: "",
+      fontWeight: "",
+      lineHeight: "",
+      textAlign: "",
+      textTransform: "",
     },
+    valueItem: "",
   },
   {
+    id: uuid(),
     type: "input",
     left: "50%",
     top: 100,
@@ -28,21 +37,25 @@ export const DefaultItemInGridTemplate1 = [
     height: 80,
     href: "",
     src: "",
-    id: uuid(),
     inGrid: true,
     isMulti: false,
     valueItem: "[Header]",
     center: true,
     styleDefault: {
       backgroundColor: "transparent",
-      fontSize: 18,
-      textAlign: "center",
-      color: "#000",
+      borderColor: "rgb(204, 204, 204)",
+      borderRadius: "",
+      borderStyle: "solid",
+      borderWidth: "1px",
+      color: "rgb(255, 255, 255)",
       fontFamily: "Poppins",
+      fontSize: "18px",
+      fontWeight: "",
       lineHeight: "26px",
       textAlign: "center",
-      color: "#fff",
+      textTransform: "",
       border: "1px solid #ccc",
     },
+    textValue: "[Header]",
   },
 ];

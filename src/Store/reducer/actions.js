@@ -105,3 +105,15 @@ export const setRedo = (payload) => {
     payload,
   };
 };
+export const undo = (payload) => {
+  return {
+    type: constantActions.UNDO,
+    payload,
+  };
+};
+export const redo = (payload) => {
+  return {
+    type: constantActions.REDO,
+    payload,
+  };
+};

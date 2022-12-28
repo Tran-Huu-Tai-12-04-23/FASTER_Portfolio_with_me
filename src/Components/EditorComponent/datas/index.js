@@ -1,13 +1,4 @@
-export const colors = [
-  "rgba(0,0,0,0)",
-  "#000",
-  "#fff",
-  "#00FFFF",
-  "#FF0000",
-  "#757575",
-  "#000080",
-  "#000033",
-];
+
 export const fontFamilys = [
   "Poppins",
   "Monospace",

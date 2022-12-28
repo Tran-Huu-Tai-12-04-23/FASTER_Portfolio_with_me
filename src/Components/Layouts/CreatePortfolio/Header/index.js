@@ -1,18 +1,23 @@
+import { Link } from "react-router-dom";
+import clsx from "clsx";
+import { useState, useContext, useEffect } from "react";
 import { faComputer, faHomeLg } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import clsx from "clsx";
-import { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsArrowCounterclockwise, BsArrowClockwise } from "react-icons/bs";
 import { BiUndo, BiRedo } from "react-icons/bi";
 
 import styles from "./Header.module.scss";
 import { Button, TipSuggest } from "~/Components";
-import { Link } from "react-router-dom";
+import { undo, redo, setUndo, setRedo } from "~/Store/reducer/actions";
+import { ContextReducer, ContextItemsIngrid } from "~/Store/Context";
 
 function Header({ setShowPreview }) {
   const [title, setTitle] = useState("Enter title");
   const [showModal, setShowModal] = useState(false);
+  const [state, dispatch] = useContext(ContextReducer);
+  const [items, setItems] = useContext(ContextItemsIngrid);
+
   const handleDataTitle = (e) => {
     document.title = e.target.value;
     setTitle(e.target.value);
@@ -23,7 +28,46 @@ function Header({ setShowPreview }) {
       setTitle("Title is empty");
     }
   };
-
+  useEffect(() => {
+    if (state.undo.length > 0) {
+      setItems(state.undo);
+    }
+    if (state.redo.length > 0) {
+      setItems(state.redo);
+    }
+  }, [state]);
+  useEffect(() => {
+    const handleKeyUp = (e) => {
+      if (e.ctrlKey && e.key === "z") {
+        handleUndo();
+      }
+      if (e.ctrlKey && e.key === "y") {
+        handleRedo();
+      }
+    };
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  });
+  const handleUndo = () => {
+    if (state.stackUndo.length > 0) {
+      const [dataLoad, ...rest] = state.stackUndo;
+      dispatch(setRedo([structuredClone(dataLoad), ...state.stackRedo]));
+      dispatch(setUndo([...rest]));
+      dispatch(redo([]));
+      dispatch(undo(structuredClone(dataLoad)));
+    }
+  };
+  const handleRedo = () => {
+    if (state.stackRedo.length > 0) {
+      const [dataLoad, ...rest] = state.stackRedo;
+      dispatch(setRedo([...rest]));
+      dispatch(setUndo([structuredClone(dataLoad), ...state.stackUndo]));
+      dispatch(undo([]));
+      dispatch(redo(structuredClone(dataLoad)));
+    }
+  };
   return (
     <div className={clsx(styles.wrapper)}>
       <div className={clsx(styles.wrapper_input)}>
@@ -51,14 +95,18 @@ function Header({ setShowPreview }) {
             <BiUndo
               style={{
                 fontSize: "36px",
+                opacity: state.stackUndo.length > 0 ? 1 : 0.4,
               }}
+              onClick={handleUndo}
             ></BiUndo>
           </TipSuggest>
           <TipSuggest content='Redo'>
             <BiRedo
               style={{
                 fontSize: "36px",
+                opacity: state.stackRedo.length > 0 ? 1 : 0.4,
               }}
+              onClick={handleRedo}
             ></BiRedo>
           </TipSuggest>
         </div>

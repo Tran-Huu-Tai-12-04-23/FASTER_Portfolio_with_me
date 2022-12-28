@@ -20,8 +20,12 @@ import { TbLetterCaseUpper } from "react-icons/tb";
 import { IoIosAdd } from "react-icons/io";
 
 import styles from "./EditorComponent.module.scss";
-import { colors, fontFamilys, borderStyles } from "./datas";
-import { ContextReducer, ContextItemsIngrid } from "~/Store/Context";
+import { fontFamilys, borderStyles } from "./datas";
+import {
+  ContextReducer,
+  ContextItemsIngrid,
+  ColorRange,
+} from "~/Store/Context";
 import {
   setBackgroundColor,
   setColor,
@@ -35,6 +39,7 @@ import {
   setBorderSize,
   setTextTransform,
   setLineHeight,
+  setUndo,
 } from "~/Store/reducer/actions";
 import { TipSuggest } from "~/Components";
 import { ContextShowEditorComponent } from "~/Store/Context";
@@ -70,7 +75,7 @@ function EditorComponent({ style }) {
   const [borderColorItem, setBorderColorItem] = useState(
     state.border_color ? state.border_color : "#873636"
   );
-  const [colorRange, setColorRange] = useState(colors);
+  const [colorRange, setColorRange] = useContext(ColorRange);
 
   useLayoutEffect(() => {
     setBackgroundColor(state.background_color);
@@ -129,6 +134,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
+            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
             dispatch(setColor(color));
           }}
           data-color={color}
@@ -147,6 +153,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
+            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
             dispatch(setFontFamily(fontFamily));
           }}
           data-font-family={fontFamily + ", sans-serif"}
@@ -164,6 +171,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
+            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
             dispatch(setBorderColor(color));
           }}
           data-border-color={color}
@@ -174,6 +182,7 @@ function EditorComponent({ style }) {
       );
     });
   };
+  console.log(state);
 
   const renderOptionBackGroundColor = () => {
     return colorRange.map((color, index) => {
@@ -181,6 +190,7 @@ function EditorComponent({ style }) {
         <li
           onClick={(e) => {
             e.stopPropagation();
+            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
             dispatch(setBackgroundColor(color));
           }}
           key={index}
@@ -201,6 +211,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
+            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
             dispatch(setBorderSize(`${size}px`));
           }}
           style={{
@@ -226,6 +237,7 @@ function EditorComponent({ style }) {
         <li
           onClick={(e) => {
             e.stopPropagation();
+            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
             dispatch(setBorderStyle(style));
           }}
           key={index}
