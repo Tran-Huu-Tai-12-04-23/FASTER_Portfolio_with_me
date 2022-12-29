@@ -134,7 +134,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
+            state.stackUndo.push(structuredClone(items));
             dispatch(setColor(color));
           }}
           data-color={color}
@@ -153,7 +153,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
+            state.stackUndo.push(structuredClone(items));
             dispatch(setFontFamily(fontFamily));
           }}
           data-font-family={fontFamily + ", sans-serif"}
@@ -171,7 +171,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
+            state.stackUndo.push(structuredClone(items));
             dispatch(setBorderColor(color));
           }}
           data-border-color={color}
@@ -189,7 +189,7 @@ function EditorComponent({ style }) {
         <li
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
+            state.stackUndo.push(structuredClone(items));
             dispatch(setBackgroundColor(color));
           }}
           key={index}
@@ -210,7 +210,7 @@ function EditorComponent({ style }) {
           key={index}
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
+            state.stackUndo.push(structuredClone(items));
             dispatch(setBorderSize(`${size}px`));
           }}
           style={{
@@ -236,7 +236,7 @@ function EditorComponent({ style }) {
         <li
           onClick={(e) => {
             e.stopPropagation();
-            dispatch(setUndo([structuredClone(items), ...state.stackUndo]));
+            state.stackUndo.push(structuredClone(items));
             dispatch(setBorderStyle(style));
           }}
           key={index}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import clsx from "clsx";
 
@@ -10,6 +10,12 @@ import { getDataUserWeb } from "~/Store/util";
 function App() {
   const [displayLoading, setDisplayLoading] = useState(true);
   const [dataUserWeb, setDataUserWeb] = useState([]);
+  const [widthContent, setWidthContent] = useState();
+  const content = useRef();
+  useEffect(() => {
+    setWidthContent((content.current.offsetWidth * 76) / 100);
+  }, []);
+
   useEffect(() => {
     window.onload = () => {
       setDisplayLoading(false);
@@ -30,7 +36,11 @@ function App() {
               key={index}
               path={item.path}
               element={
-                <UserWeb items={item.items} heightTemplate={4000}></UserWeb>
+                <UserWeb
+                  widthContent={widthContent}
+                  items={item.items}
+                  heightTemplate={4000}
+                ></UserWeb>
               }
             ></Route>
           );
@@ -53,7 +63,7 @@ function App() {
   return (
     <>
       <Loading display={displayLoading}></Loading>
-      <div className={clsx(styles.wrapper)}>
+      <div className={clsx(styles.wrapper)} ref={content}>
         <Router>
           <Routes>
             {publicRoutes.map((page, index) => {

@@ -9,7 +9,7 @@ import {
 } from "react";
 
 import { ResizableBox as ReactResizableBox } from "react-resizable";
-import { RiEdit2Fill } from "react-icons/ri";
+import { RiContactsBookLine, RiEdit2Fill } from "react-icons/ri";
 import {
   GrFacebookOption,
   GrInstagram,
@@ -69,6 +69,7 @@ function Item({
   children,
   InfoIcon,
   widthMenu,
+  widthContentItem,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
@@ -141,6 +142,7 @@ function Item({
         type,
         isMulti,
         widthMenu,
+        widthContentItem,
         items,
         InfoIcon,
         icon,
@@ -499,9 +501,11 @@ function Item({
               className={classNamesItem}
               target='_blank'
               href={linkIcon}
-              style={{
-                ...styleDefault,
-              }}
+              style={
+                {
+                  // ...styleDefault,
+                }
+              }
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
             >

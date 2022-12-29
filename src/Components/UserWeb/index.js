@@ -1,3 +1,4 @@
+import { useEffect, useState, useLayoutEffect } from "react";
 import clsx from "clsx";
 import styles from "./UserWeb.module.scss";
 import {
@@ -11,12 +12,14 @@ import {
 function UserWeb({
   items = [],
   heightTemplate = 1000,
+  widthContent,
   width = "100%",
   height = "100%",
   setShowPreview,
   showPreview,
   children,
 }) {
+  const [data, setData] = useState(structuredClone(items));
   const icons = {
     Facebook: <GrFacebookOption />,
     Instagram: <GrInstagram />,
@@ -24,9 +27,16 @@ function UserWeb({
     Linkedin: <GrLinkedin />,
     Youtube: <GrYoutube />,
   };
+  useLayoutEffect(() => {
+    data.map((item) => {
+      if (!item.width.toString().includes("%")) {
+        item.width = `${(item.width / widthContent) * 100}%`;
+      }
+    });
+  }, []);
   const renderItem = () => {
-    if (items) {
-      return items.map((item, index) => {
+    if (data) {
+      return data.map((item, index) => {
         if (item.type === "img") {
           return (
             <img
@@ -125,7 +135,7 @@ function UserWeb({
                 style={{
                   width: "100%",
                   height: "100%",
-                  ...item.styleDefault,
+                  border: "none",
                 }}
               >
                 {item.InfoIcon ? icons[item.InfoIcon] : null}

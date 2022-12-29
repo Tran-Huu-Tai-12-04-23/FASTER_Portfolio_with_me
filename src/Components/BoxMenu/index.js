@@ -22,7 +22,7 @@ import { AiOutlineAlignLeft, AiOutlineLink } from "react-icons/ai";
 
 import styles from "./BoxMenu.module.scss";
 import { Item, TipSuggest } from "~/Components";
-import { wrapperContent } from "~/Store/Context";
+import { wrapperContent, ElementContentPortfolio } from "~/Store/Context";
 
 function BoxMenu() {
   const icons = [
@@ -50,7 +50,9 @@ function BoxMenu() {
 
   const wrapperContentPortfolio = useContext(wrapperContent);
   const [widthMenu, setWidthMenu] = useState();
-
+  const [contentPortfolio, setShowTrash, widthContent] = useContext(
+    ElementContentPortfolio
+  );
   /// resize set width content
   useEffect(() => {
     if (wrapperContentPortfolio.current) {
@@ -88,6 +90,7 @@ function BoxMenu() {
             type='icon'
             InfoIcon={Icon}
             widthMenu={widthMenu}
+            widthContentItem={widthContent}
             styleDefault={{
               position: "unset",
               border: "none",
@@ -130,6 +133,7 @@ function BoxMenu() {
             className={clsx(styles.item_text)}
             icon
             widthMenu={widthMenu}
+            widthContentItem={widthContent}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -154,6 +158,7 @@ function BoxMenu() {
             className={clsx(styles.item_link)}
             icon
             widthMenu={widthMenu}
+            widthContentItem={widthContent}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -179,6 +184,7 @@ function BoxMenu() {
             className={clsx(styles.item_img)}
             icon
             widthMenu={widthMenu}
+            widthContentItem={widthContent}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -203,6 +209,7 @@ function BoxMenu() {
             className={clsx(styles.item_button)}
             icon
             widthMenu={widthMenu}
+            widthContentItem={widthContent}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",
@@ -220,6 +227,7 @@ function BoxMenu() {
             className={clsx(styles.item_button)}
             icon
             widthMenu={widthMenu}
+            widthContentItem={widthContent}
             styleDefault={{
               position: "unset",
               backgroundColor: "var(primary_color_component)",

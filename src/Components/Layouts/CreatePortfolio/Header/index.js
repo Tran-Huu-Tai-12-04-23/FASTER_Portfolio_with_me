@@ -29,14 +29,14 @@ function Header({ setShowPreview }) {
       setTitle("Title is empty");
     }
   };
-  useEffect(() => {
-    if (state.undo.length > 0) {
-      setItems(state.undo);
-    }
-    if (state.redo.length > 0) {
-      setItems(state.redo);
-    }
-  }, [state]);
+  // useEffect(() => {
+  //   if (state.undo.length > 0) {
+  //     setItems(state.undo);
+  //   }
+  //   if (state.redo.length > 0) {
+  //     setItems(state.redo);
+  //   }
+  // }, [state]);
   useEffect(() => {
     const handleKeyUp = (e) => {
       if (e.ctrlKey && e.key === "z") {
@@ -53,20 +53,30 @@ function Header({ setShowPreview }) {
   });
   const handleUndo = () => {
     if (state.stackUndo.length > 0) {
-      const [dataLoad, ...rest] = state.stackUndo;
-      dispatch(setRedo([structuredClone(dataLoad), ...state.stackRedo]));
-      dispatch(setUndo([...rest]));
-      dispatch(redo([]));
-      dispatch(undo(structuredClone(dataLoad)));
+      // const [dataLoad, ...rest] = state.stackUndo;
+      // dispatch(setRedo([structuredClone(dataLoad), ...state.stackRedo]));
+      // dispatch(setUndo([...rest]));
+      // dispatch(redo([]));
+      // dispatch(undo(structuredClone(dataLoad)));
+      // console.log(state);
+      const data = state.stackUndo.pop();
+      state.stackRedo.push(structuredClone(items));
+      setItems(structuredClone(data));
+      console.log(state);
     }
   };
   const handleRedo = () => {
     if (state.stackRedo.length > 0) {
-      const [dataLoad, ...rest] = state.stackRedo;
-      dispatch(setRedo([...rest]));
-      dispatch(setUndo([structuredClone(dataLoad), ...state.stackUndo]));
-      dispatch(undo([]));
-      dispatch(redo(structuredClone(dataLoad)));
+      // const [dataLoad, ...rest] = state.stackRedo;
+      // dispatch(setUndo([structuredClone(dataLoad), ...state.stackUndo]));
+      // dispatch(setRedo([...rest]));
+      // dispatch(undo([]));
+      // dispatch(redo(structuredClone(dataLoad)));
+      // console.log(state.stackRedo.pop());
+      const data = state.stackRedo.pop();
+      state.stackUndo.push(structuredClone(items));
+      setItems(structuredClone(data));
+      console.log(state);
     }
   };
   return (

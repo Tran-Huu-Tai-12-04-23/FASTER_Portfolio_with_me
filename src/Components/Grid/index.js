@@ -1,5 +1,11 @@
 import clsx from "clsx";
-import { useState, useEffect, useContext, useLayoutEffect } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  useLayoutEffect,
+  useRef,
+} from "react";
 import { useDrop, useDragDropManager } from "react-dnd";
 import uuid from "react-uuid";
 
@@ -11,7 +17,7 @@ import {
   ShowOverlay,
   ContextReducer,
 } from "~/Store/Context";
-import { setUndo } from "~/Store/reducer/actions";
+import { setUndo, setRedo, undo, redo } from "~/Store/reducer/actions";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
 
 function Grid(props) {
@@ -21,6 +27,7 @@ function Grid(props) {
   const [contentPortfolio, setShowTrash, widthContent] = useContext(
     ElementContentPortfolio
   );
+  const grid = useRef();
   // console.log(widthContent);
   const [showOverlay, setShowOverlay] = useState(false);
 
@@ -31,11 +38,23 @@ function Grid(props) {
         const delta = monitor.getDifferenceFromInitialOffset();
         let left, top;
         if (item.left) {
-          left = item.left.toString().includes("%")
-            ? `calc(${item.left} + ${delta.x}px)`
-            : Math.round(item.left + delta.x);
+          let leftItem;
+          if (item.left.toString().includes("%")) {
+            leftItem = item.left.substring(0, item.left.length - 1);
+          } else {
+            leftItem = item.left;
+          }
+          const widthContentItem = grid.current.offsetWidth;
+          const leftIt =
+            (widthContentItem / 100) * parseInt(leftItem) + delta.x;
+          left = `${(parseInt(leftIt) / widthContentItem) * 100}%`;
+          console.log(left);
         } else {
-          left = Math.round(item.left + delta.x);
+          const widthContentItem = grid.current.offsetWidth;
+          left = `${
+            (Math.round(item.left + delta.x) / widthContentItem) * 100
+          }%`;
+          console.log(left);
         }
         if (item.top) {
           top = item.top.toString().includes("%")
@@ -44,7 +63,7 @@ function Grid(props) {
         } else {
           top = Math.round(item.top + delta.y);
         }
-        console.log(`check left: ${parseInt(left)} top: ${parseInt(top)} `);
+
         moveItem(item.id, left, top, item.inGrid, item.items);
       } else if (item.inGrid === false && item.isMulti === false) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
@@ -58,6 +77,9 @@ function Grid(props) {
         if (top < 0) {
           top = 0;
         }
+        const widthContentItem = grid.current.offsetWidth;
+        left = `${(left / widthContentItem) * 100}%`;
+        state.stackUndo.push(structuredClone(item.items));
 
         addItem(
           uuid(),
@@ -140,6 +162,7 @@ function Grid(props) {
     }
     if (type === "icon") {
       styles = {
+        border: "none",
         borderWidth: "1px",
         borderStyle: "solid",
         borderColor: "#FFCCFF",
@@ -223,6 +246,7 @@ function Grid(props) {
             styleDefault={item.styleDefault}
             InfoIcon={item.InfoIcon}
             textValue={item.textValue}
+            widthContentItem={item.widthContentItem}
             stylesItem={{
               top: item.top,
               left: item.left,
@@ -239,15 +263,23 @@ function Grid(props) {
   return (
     <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
       <div
-        ref={drop}
         style={{
-          backgroundColor,
+          width: "100%",
+          height: "100%",
         }}
-        className={clsx(styles.wrapper)}
-        id={props.id}
+        ref={grid}
       >
-        {items && renderItem()}
-        {props.children}
+        <div
+          ref={drop}
+          style={{
+            backgroundColor,
+          }}
+          className={clsx(styles.wrapper)}
+          id={props.id}
+        >
+          {items && renderItem()}
+          {props.children}
+        </div>
       </div>
     </ShowOverlay.Provider>
   );
