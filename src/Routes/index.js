@@ -1,4 +1,3 @@
-import { getData } from "~/Store/util";
 import {
   Home,
   CreatePortfolio,

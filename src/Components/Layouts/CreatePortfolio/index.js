@@ -25,8 +25,6 @@ import Footer from "../Footer";
 import Preview from "../Preview";
 import Tag from "./Tag";
 import { getData, getColors } from "~/Store/util";
-import { AiOutlineConsoleSql } from "react-icons/ai";
-import { json } from "react-router-dom";
 
 function CreatePortfolio({
   DefaultComponent = [],
@@ -49,6 +47,7 @@ function CreatePortfolio({
   const [heightContentChange, setHeightContentChange] = useState("");
   const [showTrash, setShowTrash] = useState(false);
   const [widthContent, setWidthContent] = useState();
+  const [widthContentBefore, setWidthContentBefore] = useState();
   const [showPreview, setShowPreview] = useState(false);
   const contentPortfolio = useRef();
   const wrapperTemplateContent = useRef();
@@ -162,11 +161,12 @@ function CreatePortfolio({
   useEffect(() => {
     if (wrapperTemplateContent.current) {
       setWidthContent(wrapperTemplateContent.current.offsetWidth);
+      setWidthContentBefore(wrapperTemplateContent.current.offsetWidth);
       // console.log(wrapperTemplateContent.current.offsetWidth);
     }
   }, []);
   //set size when window resize
-  useLayoutEffect(() => {
+  useEffect(() => {
     const handleResizeWindow = () => {
       // console.log(wrapperTemplateContent.current.offsetWidth);
       setWidthContent(wrapperTemplateContent.current.offsetWidth);
@@ -330,6 +330,11 @@ function CreatePortfolio({
                           <button onClick={handleSetHeightPage}>Enter</button>
                         </div>
                       </div>
+
+                      <Trash
+                        display={showTrash ? "flex" : "none"}
+                        id={"trash"}
+                      ></Trash>
                     </MenuUntil>
                     {showTag && widthMenu !== "0" ? (
                       <Tag content={contentTag}></Tag>
@@ -362,11 +367,6 @@ function CreatePortfolio({
                         // transform: widthMenu === "0" ? "translateX(-11%)" : "",
                       }}
                     ></EditorComponent>
-
-                    <Trash
-                      display={showTrash ? "flex" : "none"}
-                      id={"trash"}
-                    ></Trash>
 
                     <div
                       className={clsx(styles.go_to_top)}

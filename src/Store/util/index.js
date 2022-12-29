@@ -10,3 +10,10 @@ export const getColors = async (id) => {
     return JSON.parse(colors);
   }
 };
+
+export const getDataUserWeb = async () => {
+  const data = localStorage.getItem(`public`);
+  if (data) {
+    return JSON.parse(data);
+  }
+};

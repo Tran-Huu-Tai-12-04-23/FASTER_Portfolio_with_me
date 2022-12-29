@@ -11,12 +11,13 @@ import styles from "./Header.module.scss";
 import { Button, TipSuggest } from "~/Components";
 import { undo, redo, setUndo, setRedo } from "~/Store/reducer/actions";
 import { ContextReducer, ContextItemsIngrid } from "~/Store/Context";
+import ModalPublic from "./ModalPublic";
 
 function Header({ setShowPreview }) {
   const [title, setTitle] = useState("Enter title");
-  const [showModal, setShowModal] = useState(false);
   const [state, dispatch] = useContext(ContextReducer);
   const [items, setItems] = useContext(ContextItemsIngrid);
+  const [showModalPublic, setShowModalPublic] = useState(false);
 
   const handleDataTitle = (e) => {
     document.title = e.target.value;
@@ -69,92 +70,75 @@ function Header({ setShowPreview }) {
     }
   };
   return (
-    <div className={clsx(styles.wrapper)}>
-      <div className={clsx(styles.wrapper_input)}>
-        <TipSuggest content='Return Home'>
-          <Link to='/'>
+    <>
+      <div className={clsx(styles.wrapper)}>
+        <div className={clsx(styles.wrapper_input)}>
+          <TipSuggest content='Return Home'>
+            <Link to='/'>
+              <FontAwesomeIcon
+                className={clsx(styles.icon_home)}
+                icon={faHomeLg}
+              ></FontAwesomeIcon>
+            </Link>
+          </TipSuggest>
+
+          <TipSuggest classNames={clsx(styles.input)} content='Edit'>
+            <input
+              value={title}
+              onChange={handleDataTitle}
+              onBlur={handleDataTitleEmpty}
+            ></input>
+          </TipSuggest>
+        </div>
+
+        <div className={clsx(styles.until_options)}>
+          <div>
+            <TipSuggest content='Undo'>
+              <BiUndo
+                style={{
+                  fontSize: "36px",
+                  opacity: state.stackUndo.length > 0 ? 1 : 0.4,
+                }}
+                onClick={handleUndo}
+              ></BiUndo>
+            </TipSuggest>
+            <TipSuggest content='Redo'>
+              <BiRedo
+                style={{
+                  fontSize: "36px",
+                  opacity: state.stackRedo.length > 0 ? 1 : 0.4,
+                }}
+                onClick={handleRedo}
+              ></BiRedo>
+            </TipSuggest>
+          </div>
+          <TipSuggest content='Show preview'>
             <FontAwesomeIcon
-              className={clsx(styles.icon_home)}
-              icon={faHomeLg}
+              onClick={(e) => {
+                setShowPreview(true);
+              }}
+              icon={faComputer}
             ></FontAwesomeIcon>
-          </Link>
-        </TipSuggest>
-
-        <TipSuggest classNames={clsx(styles.input)} content='Edit'>
-          <input
-            value={title}
-            onChange={handleDataTitle}
-            onBlur={handleDataTitleEmpty}
-          ></input>
-        </TipSuggest>
-      </div>
-
-      <div className={clsx(styles.until_options)}>
-        <div>
-          <TipSuggest content='Undo'>
-            <BiUndo
-              style={{
-                fontSize: "36px",
-                opacity: state.stackUndo.length > 0 ? 1 : 0.4,
-              }}
-              onClick={handleUndo}
-            ></BiUndo>
           </TipSuggest>
-          <TipSuggest content='Redo'>
-            <BiRedo
-              style={{
-                fontSize: "36px",
-                opacity: state.stackRedo.length > 0 ? 1 : 0.4,
+
+          <TipSuggest content='Public'>
+            <Button
+              primary
+              className={clsx(styles.button)}
+              onClick={(e) => {
+                setShowModalPublic(true);
               }}
-              onClick={handleRedo}
-            ></BiRedo>
+            >
+              Public
+            </Button>
           </TipSuggest>
         </div>
-        <TipSuggest content='Show preview'>
-          <FontAwesomeIcon
-            onClick={(e) => {
-              setShowPreview(true);
-            }}
-            icon={faComputer}
-          ></FontAwesomeIcon>
-        </TipSuggest>
-
-        <TipSuggest content='Public'>
-          <Button
-            primary
-            className={clsx(styles.button)}
-            onClick={(e) => {
-              setShowModal(!showModal);
-            }}
-          >
-            Public
-          </Button>
-        </TipSuggest>
-        <div
-          className={clsx(styles.modal_public)}
-          style={{
-            display: showModal ? "block" : "none",
-          }}
-        >
-          I'm sorry. Updating......
-          <AiOutlineClose
-            onClick={(e) => {
-              setShowModal(!showModal);
-            }}
-            style={{
-              color: "#fff",
-              position: "absolute",
-              right: "50px",
-              top: "50%",
-              transform: " translateY(-50%)",
-              backgroundColor: "var(--primary)",
-              fontSize: "36px",
-              borderRadius: "6px",
-            }}
-          ></AiOutlineClose>
-        </div>
       </div>
-    </div>
+      <ModalPublic
+        show={showModalPublic}
+        setShowModalPublic={setShowModalPublic}
+      ></ModalPublic>
+    </>
   );
 }
 

@@ -1,0 +1,9 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(211, 199, 199);
+  z-index: 10000;
+  padding: 100px;
+  min-height: 1000px;
+}

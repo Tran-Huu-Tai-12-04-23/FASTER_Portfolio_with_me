@@ -32,7 +32,7 @@ export const DefaultItemInGridTemplate1 = [
     id: uuid(),
     type: "input",
     left: "50%",
-    top: 100,
+    top: 81,
     width: 500,
     height: 80,
     href: "",

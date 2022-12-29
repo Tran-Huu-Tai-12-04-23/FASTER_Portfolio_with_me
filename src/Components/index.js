@@ -12,6 +12,8 @@ import Overlay from "./Overlay";
 import Trash from "./Trash";
 import EditorComponent from "./EditorComponent";
 import Loading from "./Loading";
+import UserWeb from "./UserWeb";
+import Preview from "~/Components/Layouts/Preview";
 
 import Template1Content from "./TemplatesContent/Template1Content";
 import Template2Content from "./TemplatesContent/Template2Content";
@@ -37,4 +39,6 @@ export {
   Trash,
   EditorComponent,
   Loading,
+  UserWeb,
+  Preview,
 };

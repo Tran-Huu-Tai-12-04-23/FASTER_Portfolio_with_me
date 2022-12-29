@@ -182,7 +182,6 @@ function EditorComponent({ style }) {
       );
     });
   };
-  console.log(state);
 
   const renderOptionBackGroundColor = () => {
     return colorRange.map((color, index) => {
@@ -383,35 +382,37 @@ function EditorComponent({ style }) {
           }}
         >
           {renderOptionColors()}
-          <input
-            style={{
-              border: "none",
-              outline: "none",
-              borderRadius: "12px",
-              width: "100%",
-            }}
-            type='color'
-            value={colorItem}
-            onChange={(e) => {
-              setColorItem(e.target.value);
-              dispatch(setColor(e.target.value));
-            }}
-          ></input>
-          <TipSuggest content='Add your color'>
-            <IoIosAdd
-              className={clsx(styles.icon_add_color)}
-              onClick={(e) => {
-                setColorRange((prev) => {
-                  if (!prev.includes(colorItem)) {
-                    return [...prev, colorItem];
-                  }
-                  alert("color is already");
-
-                  return [...prev];
-                });
+          <div className={clsx(styles.wrapper_input_color)}>
+            <input
+              style={{
+                border: "none",
+                outline: "none",
+                borderRadius: "12px",
+                width: "100%",
               }}
-            ></IoIosAdd>
-          </TipSuggest>
+              type='color'
+              value={colorItem}
+              onChange={(e) => {
+                setColorItem(e.target.value);
+                dispatch(setColor(e.target.value));
+              }}
+            ></input>
+            <TipSuggest content='Add your color'>
+              <IoIosAdd
+                className={clsx(styles.icon_add_color)}
+                onClick={(e) => {
+                  setColorRange((prev) => {
+                    if (!prev.includes(colorItem)) {
+                      return [...prev, colorItem];
+                    }
+                    alert("color is already");
+
+                    return [...prev];
+                  });
+                }}
+              ></IoIosAdd>
+            </TipSuggest>
+          </div>
         </ul>
       </div>
       <div
@@ -444,34 +445,36 @@ function EditorComponent({ style }) {
           }}
         >
           {renderOptionBorderColors()}
-          <input
-            style={{
-              border: "none",
-              outline: "none",
-              borderRadius: "12px",
-              width: "100%",
-            }}
-            type='color'
-            value={borderColorItem}
-            onChange={(e) => {
-              setBorderColorItem(e.target.value);
-              dispatch(setBorderColor(e.target.value));
-            }}
-          ></input>
-          <TipSuggest content='Add your color'>
-            <IoIosAdd
-              className={clsx(styles.icon_add_color)}
-              onClick={(e) => {
-                setColorRange((prev) => {
-                  if (!prev.includes(borderColorItem)) {
-                    return [...prev, borderColorItem];
-                  }
-                  alert("color is already");
-                  return [...prev];
-                });
+          <div className={clsx(styles.wrapper_input_color)}>
+            <input
+              style={{
+                border: "none",
+                outline: "none",
+                borderRadius: "12px",
+                width: "100%",
               }}
-            ></IoIosAdd>
-          </TipSuggest>
+              type='color'
+              value={borderColorItem}
+              onChange={(e) => {
+                setBorderColorItem(e.target.value);
+                dispatch(setBorderColor(e.target.value));
+              }}
+            ></input>
+            <TipSuggest content='Add your color'>
+              <IoIosAdd
+                className={clsx(styles.icon_add_color)}
+                onClick={(e) => {
+                  setColorRange((prev) => {
+                    if (!prev.includes(borderColorItem)) {
+                      return [...prev, borderColorItem];
+                    }
+                    alert("color is already");
+                    return [...prev];
+                  });
+                }}
+              ></IoIosAdd>
+            </TipSuggest>
+          </div>
         </ul>
       </div>
       <div

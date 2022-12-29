@@ -3,8 +3,9 @@
   height: 100px;
   // background-color: transparent;
   position: absolute;
-  top: 83vh;
-  left: 55%;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   justify-content: center;
   align-items: center;
