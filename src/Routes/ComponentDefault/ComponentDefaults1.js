@@ -32,12 +32,13 @@ export const DefaultItemInGridTemplate1 = [
   {
     id: uuid(),
     type: "input",
-    left: "31.62274618585299%",
+    left: "50%",
     top: 136,
     width: 548,
     height: 80,
     inGrid: true,
     isMulti: false,
+    center: true,
     InfoIcon: "",
     styleDefault: {
       backgroundColor: "rgba(0, 0, 0, 0)",
