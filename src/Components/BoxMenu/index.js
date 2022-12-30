@@ -69,6 +69,7 @@ function BoxMenu() {
   const [heightItem, setHeightItem] = useState(0);
   const [topItem, setTopItem] = useState(0);
   const [leftItem, setLeftItem] = useState(0);
+  const [widthItem, setWidthItem] = useState(0);
   const [color, setColor] = useState("#fff");
 
   const findItem = (id) => {
@@ -109,11 +110,15 @@ function BoxMenu() {
     if (item) {
       setHeightItem(item.height);
       setTopItem(item.top);
+
       if (item.left.toString().includes("%")) {
         const leftIt = item.left.toString().substring(0, item.left.length - 1);
         setLeftItem(Math.round(leftIt));
       } else {
         setLeftItem(item.left);
+      }
+      if (!item.width.toString().includes("%")) {
+        setWidthItem(item.width);
       }
     }
   }, [state]);
@@ -154,6 +159,20 @@ function BoxMenu() {
     }
     if (itemDomReal) {
       itemDomReal.parentElement.style.left = e.target.value + "%";
+    }
+  };
+
+  const handleUpdateWidthItem = (e) => {
+    setWidthItem(e.target.value);
+    const item = findItem(state.id_item_selected);
+    const itemDomReal = document.getElementById(state.id_item_selected);
+    if (item) {
+      if (!item.width.toString().includes("%")) {
+        item.width = e.target.value;
+      }
+    }
+    if (itemDomReal) {
+      itemDomReal.parentElement.style.width = e.target.value + "px";
     }
   };
 
@@ -431,6 +450,23 @@ function BoxMenu() {
             onChange={handleUpdateHeightItem}
           ></input>
         </div>
+        <div
+          style={{
+            display:
+              typeItemSelected === "background" ||
+              typeItemSelected === "backgroundImage"
+                ? "none"
+                : "block",
+          }}
+        >
+          <span>Width:</span>
+          <input
+            value={widthItem}
+            onChange={handleUpdateWidthItem}
+            type='number'
+            placeholder='Width..'
+          ></input>
+        </div>
         <div>
           <span>Top:</span>
           <input
@@ -440,6 +476,7 @@ function BoxMenu() {
             placeholder='Top..'
           ></input>
         </div>
+
         <div
           style={{
             display:
