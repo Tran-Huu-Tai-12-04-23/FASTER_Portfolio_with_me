@@ -17,6 +17,9 @@ function App() {
     window.onload = () => {
       setDisplayLoading(false);
     };
+    setTimeout(() => {
+      setDisplayLoading(false);
+    }, 3000);
   }, []);
   const data = getDataUserWeb();
   data
