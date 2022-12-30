@@ -19,7 +19,7 @@ function App() {
     };
     setTimeout(() => {
       setDisplayLoading(false);
-    }, 3000);
+    }, 1000);
   }, []);
   const data = getDataUserWeb();
   data
