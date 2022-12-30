@@ -16,5 +16,11 @@ const initState = {
   redo: [],
   stackRedo: [],
   stackUndo: [],
+  width: null,
+  height: null,
+  top: null,
+  left: null,
+  src: "",
+  type: "",
 };
 export default initState;

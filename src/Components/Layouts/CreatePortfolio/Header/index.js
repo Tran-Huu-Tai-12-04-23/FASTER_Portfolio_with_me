@@ -38,20 +38,20 @@ function Header({ setShowPreview, heightDefault }) {
     }
   };
 
-  useEffect(() => {
-    const handleKeyUp = (e) => {
-      if (e.ctrlKey && e.key === "z") {
-        handleUndo();
-      }
-      if (e.ctrlKey && e.key === "y") {
-        handleRedo();
-      }
-    };
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  });
+  // useEffect(() => {
+  //   const handleKeyUp = (e) => {
+  //     if (e.ctrlKey && e.key === "z") {
+  //       handleUndo();
+  //     }
+  //     if (e.ctrlKey && e.key === "y") {
+  //       handleRedo();
+  //     }
+  //   };
+  //   window.addEventListener("keyup", handleKeyUp);
+  //   return () => {
+  //     window.removeEventListener("keyup", handleKeyUp);
+  //   };
+  // });
   const handleUndo = () => {
     if (state.stackUndo.length > 0) {
       state.stackRedo.push(structuredClone(items));
@@ -147,7 +147,7 @@ function Header({ setShowPreview, heightDefault }) {
               {renderYourLink()}
             </div>
           </div>
-          <div>
+          {/* <div>
             <TipSuggest content='Undo'>
               <BiUndo
                 style={{
@@ -167,7 +167,7 @@ function Header({ setShowPreview, heightDefault }) {
                 onClick={handleRedo}
               ></BiRedo>
             </TipSuggest>
-          </div>
+          </div> */}
           <TipSuggest content='Show preview'>
             <FontAwesomeIcon
               onClick={(e) => {

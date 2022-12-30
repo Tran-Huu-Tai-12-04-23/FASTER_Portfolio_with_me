@@ -21,4 +21,10 @@ export const constantActions = {
   SET_UNDO: "set_undo",
   UNDO: "undo",
   REDO: "redo",
+  SET_TOP: "set_top",
+  SET_LEFT: "set_left",
+  SET_HEIGHT: "set_height",
+  SET_WIDTH: "set_width",
+  SET_SRC: "set_src",
+  SET_TYPE: "set_type",
 };

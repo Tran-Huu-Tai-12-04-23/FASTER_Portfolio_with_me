@@ -70,8 +70,10 @@ function Item({
   InfoIcon,
   widthMenu,
   widthContentItem,
+  itemsDrag,
 }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
+  itemsDrag = items;
   const [value, setValue] = useState(valueItem ? valueItem : "Enter text !!!");
   const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href : "");
   const [nameItemLink, setNameItemLink] = useState(
@@ -111,7 +113,7 @@ function Item({
       [styles.heading]: type === "h1",
     },
     {
-      [styles.input_file]: type === "img",
+      [styles.input_file]: type === "img" || type === "backgroundImage",
     },
     {
       [styles.box]: type === "div",
@@ -143,7 +145,7 @@ function Item({
         isMulti,
         widthMenu,
         widthContentItem,
-        items,
+        itemsDrag,
         InfoIcon,
         icon,
         styleDefault,
@@ -327,7 +329,7 @@ function Item({
   useEffect(() => {
     setType(icon ? "div" : type);
     setType(type === "button" ? "input" : type);
-    if (type === "img") {
+    if (type === "img" || type === "backgroundImage") {
       setType(src ? "img" : "input");
       propsTypeLink.type = "file";
     }
@@ -369,32 +371,34 @@ function Item({
   });
   useEffect(() => {
     // work next
-    items.map((item) => {
-      const itemDomReal = document.getElementById(item.id);
-      if (itemDomReal) {
-        item.textValue = itemDomReal.textContent
-          ? itemDomReal.textContent
-          : item.value;
-        item.valueItem = itemDomReal.value
-          ? itemDomReal.value
-          : itemDomReal.textContent;
-        item.src = itemDomReal.src ? itemDomReal.src : item.src;
-        item.href = itemDomReal.href ? itemDomReal.href : item.href;
+    if (items) {
+      items.map((item) => {
+        const itemDomReal = document.getElementById(item.id);
+        if (itemDomReal) {
+          item.textValue = itemDomReal.textContent
+            ? itemDomReal.textContent
+            : item.value;
+          item.valueItem = itemDomReal.value
+            ? itemDomReal.value
+            : itemDomReal.textContent;
+          item.src = itemDomReal.src ? itemDomReal.src : item.src;
+          item.href = itemDomReal.href ? itemDomReal.href : item.href;
 
-        item.styleDefault.backgroundColor = itemDomReal.style.backgroundColor;
-        item.styleDefault.color = itemDomReal.style.color;
-        item.styleDefault.fontSize = itemDomReal.style.fontSize;
-        item.styleDefault.fontFamily = itemDomReal.style.fontFamily;
-        item.styleDefault.borderRadius = itemDomReal.style.borderRadius;
-        item.styleDefault.borderStyle = itemDomReal.style.borderStyle;
-        item.styleDefault.borderColor = itemDomReal.style.borderColor;
-        item.styleDefault.fontWeight = itemDomReal.style.fontWeight;
-        item.styleDefault.textAlign = itemDomReal.style.textAlign;
-        item.styleDefault.borderWidth = itemDomReal.style.borderWidth;
-        item.styleDefault.textTransform = itemDomReal.style.textTransform;
-        item.styleDefault.lineHeight = itemDomReal.style.lineHeight;
-      }
-    });
+          item.styleDefault.backgroundColor = itemDomReal.style.backgroundColor;
+          item.styleDefault.color = itemDomReal.style.color;
+          item.styleDefault.fontSize = itemDomReal.style.fontSize;
+          item.styleDefault.fontFamily = itemDomReal.style.fontFamily;
+          item.styleDefault.borderRadius = itemDomReal.style.borderRadius;
+          item.styleDefault.borderStyle = itemDomReal.style.borderStyle;
+          item.styleDefault.borderColor = itemDomReal.style.borderColor;
+          item.styleDefault.fontWeight = itemDomReal.style.fontWeight;
+          item.styleDefault.textAlign = itemDomReal.style.textAlign;
+          item.styleDefault.borderWidth = itemDomReal.style.borderWidth;
+          item.styleDefault.textTransform = itemDomReal.style.textTransform;
+          item.styleDefault.lineHeight = itemDomReal.style.lineHeight;
+        }
+      });
+    }
   }, [items]);
   // render item
 
@@ -421,15 +425,29 @@ function Item({
               id={id}
               ref={draggable ? drag : null}
               onClick={(e) => {
-                if (type !== "input" && type !== "img") {
+                if (
+                  type !== "input" &&
+                  type !== "img" &&
+                  type !== "backgroundImage"
+                ) {
                   e.preventDefault();
                 }
                 handleSelectItemToEdit(e);
               }}
               className={classNamesItem}
-              src={type === "img" && linkImg ? linkImg : null}
-              value={type !== "img" ? value : undefined}
-              onChange={type === "img" ? handleShowInputImg : handleChangeValue}
+              src={
+                (type === "img" || type === "backgroundImage") && linkImg
+                  ? linkImg
+                  : null
+              }
+              value={
+                type !== "img" && type !== "backgroundImage" ? value : undefined
+              }
+              onChange={
+                type === "img" || type === "backgroundImage"
+                  ? handleShowInputImg
+                  : handleChangeValue
+              }
               href={linkItemTypeA ? linkItemTypeA : href}
               target={linkItemTypeA ? "_blank" : null}
               onBlur={handleBlurInput}
@@ -437,7 +455,9 @@ function Item({
                 position: position,
                 ...styleDefault,
               }}
-              type={type === "img" ? "file" : "text"}
+              type={
+                type === "img" || type === "backgroundImage" ? "file" : "text"
+              }
               accept={type !== "img" ? null : "image/*"}
             >
               {nameItemLink ? nameItemLink : null}

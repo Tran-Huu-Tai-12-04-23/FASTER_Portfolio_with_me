@@ -112,6 +112,42 @@ const reducer = (state, action) => {
         redo: action.payload,
       };
     }
+    case constantActions.SET_WIDTH: {
+      return {
+        ...state,
+        width: action.payload,
+      };
+    }
+    case constantActions.SET_HEIGHT: {
+      return {
+        ...state,
+        height: action.payload,
+      };
+    }
+    case constantActions.SET_TOP: {
+      return {
+        ...state,
+        top: action.payload,
+      };
+    }
+    case constantActions.SET_LEFT: {
+      return {
+        ...state,
+        left: action.payload,
+      };
+    }
+    case constantActions.SET_SRC: {
+      return {
+        ...state,
+        src: action.payload,
+      };
+    }
+    case constantActions.SET_TYPE: {
+      return {
+        ...state,
+        type: action.payload,
+      };
+    }
 
     default:
       throw new Error("Invalid action type");

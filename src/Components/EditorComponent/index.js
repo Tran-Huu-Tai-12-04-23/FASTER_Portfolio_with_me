@@ -128,7 +128,7 @@ function EditorComponent({ style }) {
     };
   }, []);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const item = findItem(state.id_item_selected);
     if (item) {
       setTypeItemSelected(item.type);

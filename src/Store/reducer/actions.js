@@ -6,12 +6,7 @@ export const setBackgroundColor = (payload) => {
     payload,
   };
 };
-export const setTop = (payload) => {
-  return {
-    type: constantActions.SET_TOP,
-    payload,
-  };
-};
+
 export const setLeft = (payload) => {
   return {
     type: constantActions.SET_LEFT,
@@ -114,6 +109,36 @@ export const undo = (payload) => {
 export const redo = (payload) => {
   return {
     type: constantActions.REDO,
+    payload,
+  };
+};
+export const setWidth = (payload) => {
+  return {
+    type: constantActions.SET_WIDTH,
+    payload,
+  };
+};
+export const setHeight = (payload) => {
+  return {
+    type: constantActions.SET_HEIGHT,
+    payload,
+  };
+};
+export const setTop = (payload) => {
+  return {
+    type: constantActions.SET_TOP,
+    payload,
+  };
+};
+export const setSRC = (payload) => {
+  return {
+    type: constantActions.SET_SRC,
+    payload,
+  };
+};
+export const setType = (payload) => {
+  return {
+    type: constantActions.SET_TYPE,
     payload,
   };
 };

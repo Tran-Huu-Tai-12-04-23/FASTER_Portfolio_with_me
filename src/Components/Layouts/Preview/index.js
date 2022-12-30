@@ -28,7 +28,7 @@ function Preview({
   const renderItem = () => {
     if (items) {
       return items.map((item, index) => {
-        if (item.type === "img") {
+        if (item.type === "img" || item.type === "backgroundImage") {
           return (
             <img
               key={index}
@@ -132,6 +132,23 @@ function Preview({
                 {item.InfoIcon ? icons[item.InfoIcon] : null}
               </a>
             </div>
+          );
+        } else if (item.type === "background") {
+          return (
+            <div
+              key={index}
+              style={{
+                position: "absolute",
+                top: item.top,
+                left: item.left,
+                height: item.height,
+                width: item.width,
+                ...item.styleDefault,
+                padding: "0",
+                border: "none",
+                zIndex: 1,
+              }}
+            ></div>
           );
         }
       });

@@ -18,6 +18,7 @@ import {
   ContextReducer,
 } from "~/Store/Context";
 import { setUndo, setRedo, undo, redo } from "~/Store/reducer/actions";
+import { TfiHandOpen } from "react-icons/tfi";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
 
 function Grid(props) {
@@ -48,37 +49,27 @@ function Grid(props) {
           const leftIt =
             (widthContentItem / 100) * parseInt(leftItem) + delta.x;
           left = `${(parseInt(leftIt) / widthContentItem) * 100}%`;
-          const check = leftIt + delta.x;
-          if (check < 0) {
-            left = "0%";
-          }
         } else {
           const widthContentItem = grid.current.offsetWidth;
           left = `${
             (Math.round(item.left + delta.x) / widthContentItem) * 100
           }%`;
-          const check =
-            (Math.round(item.left + delta.x) / widthContentItem) * 100;
-          if (check < 0) {
-            left = "0%";
-          }
         }
         if (item.top) {
           top = item.top.toString().includes("%")
             ? `calc(${item.top} + ${delta.y}px)`
             : Math.round(item.top + delta.y);
-          const check = top + delta.y;
-          if (top < 0) {
-            top = 0;
-          }
         } else {
           top = Math.round(item.top + delta.y);
-          if (top < 0) {
+        }
+        state.stackUndo.push(structuredClone(item.itemsDrag));
+        if (item.type === "background" || item.type === "backgroundImage") {
+          left = "0%";
+          if (top < 0 && top) {
             top = 0;
           }
         }
-        state.stackUndo.push(structuredClone(item.items));
-        moveItem(item.id, left, top, item.inGrid, item.items, item.stylesItem);
+        moveItem(item.id, left, top, item.inGrid, item.itemsDrag);
       } else if (item.inGrid === false && item.isMulti === false) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
@@ -88,13 +79,18 @@ function Grid(props) {
         if (left < 0) {
           left = 0;
         }
-        if (top < 0) {
+        if (top < 0 && top) {
           top = 0;
         }
         const widthContentItem = grid.current.offsetWidth;
         left = `${(left / widthContentItem) * 100}%`;
-
-        state.stackUndo.push(structuredClone(item.items));
+        if (item.type === "background" || item.type === "backgroundImage") {
+          top -= 50;
+          if (top < 0) {
+            top = 0;
+          }
+        }
+        state.stackUndo.push(structuredClone(item.itemsDrag));
 
         addItem(
           uuid(),
@@ -185,6 +181,24 @@ function Grid(props) {
       height = 60;
       width = 60;
     }
+    if (type === "background") {
+      styles = {
+        border: "none",
+        backgroundColor: "#ccc",
+      };
+      height = 400;
+      width = "100%";
+      left = "0%";
+    }
+    if (type === "backgroundImage") {
+      styles = {
+        border: "none",
+        width: "110%",
+      };
+      height = 400;
+      width = "100%";
+      left = "0%";
+    }
     setItems((prev) => {
       return [
         ...prev,
@@ -206,22 +220,12 @@ function Grid(props) {
       ];
     });
   };
-  const moveItem = (id, left, top, inGrid, itemsItem, stylesItem) => {
+  const moveItem = (id, left, top, inGrid, itemsItem) => {
     itemsItem.map((item) => {
       if (item.id === id) {
         console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
-        if (
-          stylesItem.width > 600 &&
-          stylesItem.height > 300 &&
-          top === 0 &&
-          left === "0%"
-        ) {
-          item.width = "100%";
-        }
+        item.left = left;
         item.top = top;
-        if (left) {
-          item.left = left;
-        }
       }
     });
   };
@@ -249,7 +253,6 @@ function Grid(props) {
       itemDomReal.style.backgroundColor = state.background_color;
     }
   }, [state]);
-
   const renderItem = () => {
     if (items) {
       return items.map((item, index) => {
@@ -269,6 +272,7 @@ function Grid(props) {
             InfoIcon={item.InfoIcon}
             textValue={item.textValue}
             widthContentItem={item.widthContentItem}
+            itemsDrag={items}
             stylesItem={{
               top: item.top,
               left: item.left,

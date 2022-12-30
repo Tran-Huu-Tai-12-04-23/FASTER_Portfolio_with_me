@@ -49,3 +49,31 @@
   justify-content: space-evenly;
   align-items: center;
 }
+
+.wrapper_edit_background {
+  width: 100%;
+  padding-top: 50px;
+
+  div {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+
+    span {
+      display: block;
+      min-width: 90px;
+    }
+    input {
+      width: 40%;
+      border: none;
+      border: 1px outset #ccc;
+      padding: 4px 8px;
+      outline: none;
+      &:focus {
+        border-color: var(--primary);
+      }
+    }
+  }
+}
