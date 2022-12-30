@@ -27,19 +27,21 @@ function UserWeb({
     Linkedin: <GrLinkedin />,
     Youtube: <GrYoutube />,
   };
-  useLayoutEffect(() => {
-    data.map((item) => {
-      if (!item.width.toString().includes("%")) {
-        item.width = `${(item.width / widthContent) * 100 + 6}%`;
-      }
-      if (!item.height.toString().includes("%")) {
-        item.height = `${(item.height / heightTemplate) * 100}%`;
-      }
-      if (!item.top.toString().includes("%")) {
-        item.top = `${(item.top / heightTemplate) * 100}%`;
-      }
-    });
-  }, []);
+  useEffect(() => {
+    if (data) {
+      data.map((item) => {
+        if (!item.height.toString().includes("%")) {
+          item.height = `${(item.height / heightTemplate) * 100}%`;
+        }
+        if (!item.width.toString().includes("%")) {
+          item.width = `${(item.width / widthContent) * 100}%`;
+        }
+        if (!item.top.toString().includes("%")) {
+          item.top = `${(item.top / heightTemplate) * 100}%`;
+        }
+      });
+    }
+  });
   const renderItem = () => {
     if (data) {
       return data.map((item, index) => {
@@ -129,7 +131,6 @@ function UserWeb({
                 left: item.left,
                 height: item.height,
                 width: item.width,
-                ...item.styleDefault,
                 padding: "0",
                 border: "none",
                 zIndex: 2,
@@ -142,6 +143,7 @@ function UserWeb({
                   width: "100%",
                   height: "100%",
                   border: "none",
+                  ...item.styleDefault,
                 }}
               >
                 {item.InfoIcon ? icons[item.InfoIcon] : null}
@@ -159,7 +161,7 @@ function UserWeb({
         height: heightTemplate ? heightTemplate + 500 : 1000,
       }}
     >
-      {items && renderItem()}
+      {data && renderItem()}
     </div>
   );
 }

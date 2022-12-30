@@ -37,6 +37,33 @@ function Header({ setShowPreview, heightDefault }) {
       setTitle("Title is empty");
     }
   };
+
+  useEffect(() => {
+    const handleKeyUp = (e) => {
+      if (e.ctrlKey && e.key === "z") {
+        handleUndo();
+      }
+      if (e.ctrlKey && e.key === "y") {
+        handleRedo();
+      }
+    };
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  });
+  const handleUndo = () => {
+    if (state.stackUndo.length > 0) {
+      state.stackRedo.push(structuredClone(items));
+      setItems(structuredClone(state.stackUndo.pop()));
+    }
+  };
+  const handleRedo = () => {
+    if (state.stackRedo.length > 0) {
+      state.stackUndo.push(structuredClone(items));
+      setItems(structuredClone(state.stackRedo.pop()));
+    }
+  };
   const renderYourLink = (e) => {
     if (dataUserWeb) {
       if (Array.isArray(dataUserWeb)) {
@@ -64,32 +91,6 @@ function Header({ setShowPreview, heightDefault }) {
           You haven't public your website
         </li>
       );
-    }
-  };
-  useEffect(() => {
-    const handleKeyUp = (e) => {
-      if (e.ctrlKey && e.key === "z") {
-        handleUndo();
-      }
-      if (e.ctrlKey && e.key === "y") {
-        handleRedo();
-      }
-    };
-    window.addEventListener("keyup", handleKeyUp);
-    return () => {
-      window.removeEventListener("keyup", handleKeyUp);
-    };
-  });
-  const handleUndo = () => {
-    if (state.stackUndo.length > 0) {
-      state.stackRedo.push(structuredClone(items));
-      setItems(structuredClone(state.stackUndo.pop()));
-    }
-  };
-  const handleRedo = () => {
-    if (state.stackRedo.length > 0) {
-      state.stackUndo.push(structuredClone(items));
-      setItems(structuredClone(state.stackRedo.pop()));
     }
   };
   return (

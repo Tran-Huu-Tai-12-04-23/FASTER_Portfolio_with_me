@@ -114,7 +114,7 @@ function Preview({
                 left: item.left,
                 height: item.height,
                 width: item.width,
-                ...item.styleDefault,
+                // ...item.styleDefault,
                 padding: "0",
                 border: "none",
                 zIndex: 2,

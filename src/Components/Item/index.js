@@ -154,7 +154,6 @@ function Item({
       },
       collect: (monitor) => ({
         isDragging: monitor.isDragging(),
-        // opacity: monitor.isDragging() ? 0.6 : 1,
       }),
     }),
     [id, left, top, inGrid, isMulti]
@@ -502,11 +501,9 @@ function Item({
               className={classNamesItem}
               target='_blank'
               href={linkIcon}
-              style={
-                {
-                  // ...styleDefault,
-                }
-              }
+              style={{
+                ...styleDefault,
+              }}
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
             >

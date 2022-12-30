@@ -56,6 +56,7 @@ function EditorComponent({ style }) {
   const [showEditBorderSize, setShowEditBorderSize] = useState(false);
   const [showEditBorderStyle, setShowEditBorderStyle] = useState(false);
   const [showEditFontStyle, setShowEditFontStyle] = useState(false);
+  const [typeItemSelected, setTypeItemSelected] = useState("input");
 
   const [valueBorderRadius, setValueBorderRadius] = useState(
     state.border_radius ? state.border_radius : 0
@@ -127,6 +128,22 @@ function EditorComponent({ style }) {
     };
   }, []);
 
+  useLayoutEffect(() => {
+    const item = findItem(state.id_item_selected);
+    if (item) {
+      setTypeItemSelected(item.type);
+    }
+  }, [state]);
+  const findItem = (id) => {
+    var item;
+    items.forEach((element) => {
+      if (element.id === id) {
+        item = element;
+      }
+    });
+    return item;
+  };
+
   const renderOptionColors = () => {
     return colorRange.map((color, index) => {
       return (
@@ -145,7 +162,6 @@ function EditorComponent({ style }) {
       );
     });
   };
-
   const renderFontFamily = () => {
     return fontFamilys.map((fontFamily, index) => {
       return (
@@ -351,70 +367,73 @@ function EditorComponent({ style }) {
           </div>
         </ul>
       </div>
-      <div
-        className={clsx(styles.icon, styles.icon_color)}
-        onClick={(e) => {
-          e.stopPropagation();
-          setShowEditColor(!showEditColor);
-          setShowSetBackground(false);
-          setShowEditBorderStyle(false);
-          setShowEditFontStyle(false);
-          setShowEditBorderColor(false);
-          setShowEditBorderSize(false);
-        }}
-      >
-        <TipSuggest content='Edit color' position='bottom'>
-          <AiOutlineFontColors></AiOutlineFontColors>
-        </TipSuggest>
-        <FontAwesomeIcon
-          className={clsx(styles.icon__arrow_down)}
-          icon={faChevronDown}
-        ></FontAwesomeIcon>
-        <ul
-          className={clsx(styles.color_options)}
-          id='color_options'
-          style={{
-            display: showEditColor ? "flex" : "none",
-          }}
+      {typeItemSelected !== "img" && typeItemSelected !== "div" && (
+        <div
+          className={clsx(styles.icon, styles.icon_color)}
           onClick={(e) => {
-            // e.preventDefault();
             e.stopPropagation();
+            setShowEditColor(!showEditColor);
+            setShowSetBackground(false);
+            setShowEditBorderStyle(false);
+            setShowEditFontStyle(false);
+            setShowEditBorderColor(false);
+            setShowEditBorderSize(false);
           }}
         >
-          {renderOptionColors()}
-          <div className={clsx(styles.wrapper_input_color)}>
-            <input
-              style={{
-                border: "none",
-                outline: "none",
-                borderRadius: "12px",
-                width: "100%",
-              }}
-              type='color'
-              value={colorItem}
-              onChange={(e) => {
-                setColorItem(e.target.value);
-                dispatch(setColor(e.target.value));
-              }}
-            ></input>
-            <TipSuggest content='Add your color'>
-              <IoIosAdd
-                className={clsx(styles.icon_add_color)}
-                onClick={(e) => {
-                  setColorRange((prev) => {
-                    if (!prev.includes(colorItem)) {
-                      return [...prev, colorItem];
-                    }
-                    alert("color is already");
-
-                    return [...prev];
-                  });
+          <TipSuggest content='Edit color' position='bottom'>
+            <AiOutlineFontColors></AiOutlineFontColors>
+          </TipSuggest>
+          <FontAwesomeIcon
+            className={clsx(styles.icon__arrow_down)}
+            icon={faChevronDown}
+          ></FontAwesomeIcon>
+          <ul
+            className={clsx(styles.color_options)}
+            id='color_options'
+            style={{
+              display: showEditColor ? "flex" : "none",
+            }}
+            onClick={(e) => {
+              // e.preventDefault();
+              e.stopPropagation();
+            }}
+          >
+            {renderOptionColors()}
+            <div className={clsx(styles.wrapper_input_color)}>
+              <input
+                style={{
+                  border: "none",
+                  outline: "none",
+                  borderRadius: "12px",
+                  width: "100%",
                 }}
-              ></IoIosAdd>
-            </TipSuggest>
-          </div>
-        </ul>
-      </div>
+                type='color'
+                value={colorItem}
+                onChange={(e) => {
+                  setColorItem(e.target.value);
+                  dispatch(setColor(e.target.value));
+                }}
+              ></input>
+              <TipSuggest content='Add your color'>
+                <IoIosAdd
+                  className={clsx(styles.icon_add_color)}
+                  onClick={(e) => {
+                    setColorRange((prev) => {
+                      if (!prev.includes(colorItem)) {
+                        return [...prev, colorItem];
+                      }
+                      alert("color is already");
+
+                      return [...prev];
+                    });
+                  }}
+                ></IoIosAdd>
+              </TipSuggest>
+            </div>
+          </ul>
+        </div>
+      )}
+
       <div
         className={clsx(styles.icon, styles.icon_border_color)}
         onClick={(e) => {
@@ -477,90 +496,98 @@ function EditorComponent({ style }) {
           </div>
         </ul>
       </div>
-      <div
-        className={clsx(styles.icon, styles.font_size_options)}
-        onClick={handleHiddenEditor}
-      >
-        <TipSuggest content='Edit fontsize'>
-          <GoTextSize
-            style={{
-              border: "none",
-            }}
-          ></GoTextSize>
-        </TipSuggest>
-        <AiOutlineMinus
-          onClick={(e) => {
-            state.stackUndo.push(structuredClone(items));
-            setFontSizeItem((prev) => {
-              return parseInt(prev) - 1;
-            });
-          }}
-        />
-        <input
-          type='number'
-          style={{
-            color: "#000",
-          }}
-          onChange={(e) => {
-            state.stackUndo.push(structuredClone(items));
-            setFontSizeItem(e.target.value);
-          }}
-          value={fontSize}
-        ></input>
-        <IoIosAdd
-          style={{
-            borderRight: "none",
-          }}
-          onClick={(e) => {
-            state.stackUndo.push(structuredClone(items));
-            setFontSizeItem((prev) => {
-              return parseInt(prev) + 1;
-            });
-          }}
-        />
-      </div>
-      <div
-        className={clsx(styles.icon, styles.line_height_options)}
-        onClick={handleHiddenEditor}
-      >
-        <TipSuggest content='Edit line height'>
-          <RxLineHeight
-            style={{
-              border: "none",
-            }}
-          ></RxLineHeight>
-        </TipSuggest>
-        <AiOutlineMinus
-          onClick={(e) => {
-            state.stackUndo.push(structuredClone(items));
-            setLineHeightItem((prev) => {
-              return parseInt(prev) - 1;
-            });
-          }}
-        />
-        <input
-          type='number'
-          style={{
-            color: "#000",
-          }}
-          onChange={(e) => {
-            state.stackUndo.push(structuredClone(items));
-            setLineHeightItem(e.target.value);
-          }}
-          value={lineHeight}
-        ></input>
-        <IoIosAdd
-          style={{
-            borderRight: "none",
-          }}
-          onClick={(e) => {
-            state.stackUndo.push(structuredClone(items));
-            setLineHeightItem((prev) => {
-              return parseInt(prev) + 1;
-            });
-          }}
-        />
-      </div>
+      {typeItemSelected !== "img" &&
+        typeItemSelected !== "div" &&
+        typeItemSelected !== "icon" && (
+          <div
+            className={clsx(styles.icon, styles.font_size_options)}
+            onClick={handleHiddenEditor}
+          >
+            <TipSuggest content='Edit fontsize'>
+              <GoTextSize
+                style={{
+                  border: "none",
+                }}
+              ></GoTextSize>
+            </TipSuggest>
+            <AiOutlineMinus
+              onClick={(e) => {
+                state.stackUndo.push(structuredClone(items));
+                setFontSizeItem((prev) => {
+                  return parseInt(prev) - 1;
+                });
+              }}
+            />
+            <input
+              type='number'
+              style={{
+                color: "#000",
+              }}
+              onChange={(e) => {
+                state.stackUndo.push(structuredClone(items));
+                setFontSizeItem(e.target.value);
+              }}
+              value={fontSize}
+            ></input>
+            <IoIosAdd
+              style={{
+                borderRight: "none",
+              }}
+              onClick={(e) => {
+                state.stackUndo.push(structuredClone(items));
+                setFontSizeItem((prev) => {
+                  return parseInt(prev) + 1;
+                });
+              }}
+            />
+          </div>
+        )}
+      {typeItemSelected !== "img" &&
+        typeItemSelected !== "div" &&
+        typeItemSelected !== "icon" && (
+          <div
+            className={clsx(styles.icon, styles.line_height_options)}
+            onClick={handleHiddenEditor}
+          >
+            <TipSuggest content='Edit line height'>
+              <RxLineHeight
+                style={{
+                  border: "none",
+                }}
+              ></RxLineHeight>
+            </TipSuggest>
+            <AiOutlineMinus
+              onClick={(e) => {
+                state.stackUndo.push(structuredClone(items));
+                setLineHeightItem((prev) => {
+                  return parseInt(prev) - 1;
+                });
+              }}
+            />
+            <input
+              type='number'
+              style={{
+                color: "#000",
+              }}
+              onChange={(e) => {
+                state.stackUndo.push(structuredClone(items));
+                setLineHeightItem(e.target.value);
+              }}
+              value={lineHeight}
+            ></input>
+            <IoIosAdd
+              style={{
+                borderRight: "none",
+              }}
+              onClick={(e) => {
+                state.stackUndo.push(structuredClone(items));
+                setLineHeightItem((prev) => {
+                  return parseInt(prev) + 1;
+                });
+              }}
+            />
+          </div>
+        )}
 
       <div
         className={clsx(styles.icon, styles.border_radius_options)}
@@ -606,6 +633,7 @@ function EditorComponent({ style }) {
           }}
         />
       </div>
+
       <div
         className={clsx(styles.icon, styles.icon_border_size)}
         onClick={(e) => {
@@ -675,93 +703,107 @@ function EditorComponent({ style }) {
           {renderBorderStyle()}
         </ul>
       </div>
-      <div
-        className={clsx(styles.icon, styles.icon_font_weight)}
-        onClick={(e) => {
-          e.stopPropagation();
-          state.stackUndo.push(structuredClone(items));
-          dispatch(setFontWeight(!state.font_weight));
-          handleHiddenEditor();
-        }}
-      >
-        <FaBold></FaBold>
-      </div>
-      <div
-        className={clsx(styles.icon, styles.icon_align_center)}
-        onClick={(e) => {
-          e.stopPropagation();
-          state.stackUndo.push(structuredClone(items));
-          handleHiddenEditor();
-          dispatch(setTextAlign(!state.text_align));
-        }}
-      >
-        <TipSuggest content='Text center'>
-          <FiAlignCenter
-            style={{
-              marginTop: "8px",
-            }}
-          ></FiAlignCenter>
-        </TipSuggest>
-      </div>
-      <div
-        className={clsx(styles.icon, styles.icon_upper_letter)}
-        style={{
-          marginRight: 12,
-        }}
-        onClick={(e) => {
-          e.stopPropagation();
-          state.stackUndo.push(structuredClone(items));
-          handleHiddenEditor();
-          dispatch(setTextTransform(!state.text_transform));
-        }}
-      >
-        <TipSuggest content='Letter uppercase'>
-          <TbLetterCaseUpper
-            style={{
-              marginTop: 8,
-            }}
-          ></TbLetterCaseUpper>
-        </TipSuggest>
-      </div>
+      {typeItemSelected !== "img" &&
+        typeItemSelected !== "div" &&
+        typeItemSelected !== "icon" && (
+          <>
+            <div
+              className={clsx(styles.icon, styles.icon_font_weight)}
+              onClick={(e) => {
+                e.stopPropagation();
+                state.stackUndo.push(structuredClone(items));
+                dispatch(setFontWeight(!state.font_weight));
+                handleHiddenEditor();
+              }}
+            >
+              <FaBold></FaBold>
+            </div>
+            <div
+              className={clsx(styles.icon, styles.icon_align_center)}
+              onClick={(e) => {
+                e.stopPropagation();
+                state.stackUndo.push(structuredClone(items));
+                handleHiddenEditor();
+                dispatch(setTextAlign(!state.text_align));
+              }}
+            >
+              <TipSuggest content='Text center'>
+                <FiAlignCenter
+                  style={{
+                    marginTop: "8px",
+                  }}
+                ></FiAlignCenter>
+              </TipSuggest>
+            </div>
+            <div
+              className={clsx(styles.icon, styles.icon_upper_letter)}
+              style={{
+                marginRight: 12,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                state.stackUndo.push(structuredClone(items));
+                handleHiddenEditor();
+                dispatch(setTextTransform(!state.text_transform));
+              }}
+            >
+              <TipSuggest content='Letter uppercase'>
+                <TbLetterCaseUpper
+                  style={{
+                    marginTop: 8,
+                  }}
+                ></TbLetterCaseUpper>
+              </TipSuggest>
+            </div>
+            <div
+              className={clsx(styles.icon, styles.icon_font_style)}
+              onClick={(e) => {
+                setShowEditFontStyle(!showEditFontStyle);
+                setShowEditBorderColor(false);
+                setShowEditColor(false);
+                setShowSetBackground(false);
+                setShowEditBorderStyle(false);
+                setShowEditBorderSize(false);
+              }}
+            >
+              <TipSuggest content='Edit font styles'>
+                <BiFontFamily
+                  style={{
+                    marginTop: 8,
+                  }}
+                ></BiFontFamily>
+              </TipSuggest>
+              <FontAwesomeIcon
+                className={clsx(styles.icon__arrow_down)}
+                icon={faChevronDown}
+              ></FontAwesomeIcon>
+              <ul
+                className={clsx(styles.font_style_options)}
+                id='font_style_options'
+                style={{
+                  display: showEditFontStyle ? "block" : "none",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+              >
+                {renderFontFamily()}
+              </ul>
+            </div>
+          </>
+        )}
 
-      <div
-        className={clsx(styles.icon, styles.icon_font_style)}
-        onClick={(e) => {
-          setShowEditFontStyle(!showEditFontStyle);
-          setShowEditBorderColor(false);
-          setShowEditColor(false);
-          setShowSetBackground(false);
-          setShowEditBorderStyle(false);
-          setShowEditBorderSize(false);
-        }}
-      >
-        <TipSuggest content='Edit font styles'>
-          <BiFontFamily
-            style={{
-              marginTop: 8,
-            }}
-          ></BiFontFamily>
-        </TipSuggest>
-        <FontAwesomeIcon
-          className={clsx(styles.icon__arrow_down)}
-          icon={faChevronDown}
-        ></FontAwesomeIcon>
-        <ul
-          className={clsx(styles.font_style_options)}
-          id='font_style_options'
-          style={{
-            display: showEditFontStyle ? "block" : "none",
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-          }}
-        >
-          {renderFontFamily()}
-        </ul>
-      </div>
       <FcFullTrash
         onClick={removeItemsIngrid}
         className={clsx(styles.icon_trash)}
+        style={{
+          transform:
+            typeItemSelected === "img" ||
+            typeItemSelected === "div" ||
+            typeItemSelected === "icon"
+              ? "translateX(30px)"
+              : "translateX(0)",
+        }}
       ></FcFullTrash>
     </div>
   );

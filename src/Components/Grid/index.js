@@ -48,24 +48,37 @@ function Grid(props) {
           const leftIt =
             (widthContentItem / 100) * parseInt(leftItem) + delta.x;
           left = `${(parseInt(leftIt) / widthContentItem) * 100}%`;
-          console.log(left);
+          const check = leftIt + delta.x;
+          if (check < 0) {
+            left = "0%";
+          }
         } else {
           const widthContentItem = grid.current.offsetWidth;
           left = `${
             (Math.round(item.left + delta.x) / widthContentItem) * 100
           }%`;
-          console.log(left);
+          const check =
+            (Math.round(item.left + delta.x) / widthContentItem) * 100;
+          if (check < 0) {
+            left = "0%";
+          }
         }
         if (item.top) {
           top = item.top.toString().includes("%")
             ? `calc(${item.top} + ${delta.y}px)`
             : Math.round(item.top + delta.y);
+          const check = top + delta.y;
+          if (top < 0) {
+            top = 0;
+          }
         } else {
           top = Math.round(item.top + delta.y);
+          if (top < 0) {
+            top = 0;
+          }
         }
         state.stackUndo.push(structuredClone(item.items));
-        console.log(item);
-        moveItem(item.id, left, top, item.inGrid, item.items);
+        moveItem(item.id, left, top, item.inGrid, item.items, item.stylesItem);
       } else if (item.inGrid === false && item.isMulti === false) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
         const delta = monitor.getClientOffset();
@@ -193,10 +206,18 @@ function Grid(props) {
       ];
     });
   };
-  const moveItem = (id, left, top, inGrid, items) => {
-    items.map((item) => {
+  const moveItem = (id, left, top, inGrid, itemsItem, stylesItem) => {
+    itemsItem.map((item) => {
       if (item.id === id) {
         console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
+        if (
+          stylesItem.width > 600 &&
+          stylesItem.height > 300 &&
+          top === 0 &&
+          left === "0%"
+        ) {
+          item.width = "100%";
+        }
         item.top = top;
         if (left) {
           item.left = left;
