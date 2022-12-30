@@ -91,7 +91,7 @@ function Grid(props) {
           }
         }
         state.stackUndo.push(structuredClone(item.itemsDrag));
-
+        left = `${(left / grid.current.offsetWidth) * 100}%`;
         addItem(
           uuid(),
           item.type,
