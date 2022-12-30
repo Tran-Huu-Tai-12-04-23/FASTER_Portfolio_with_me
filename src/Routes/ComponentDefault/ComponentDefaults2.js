@@ -57,6 +57,7 @@ export const DefaultItemInGridTemplate2 = [
       borderSize: "1px",
     },
     valueItem: "Portf",
+    textValue: "Portf",
   },
   {
     id: uuid(),
@@ -85,11 +86,12 @@ export const DefaultItemInGridTemplate2 = [
       borderSize: "1px",
     },
     valueItem: "olio",
+    textValue: "olio",
   },
   {
     id: uuid(),
     type: "a",
-    left: "25.93619972260749%",
+    left: "29%",
     top: 30,
     width: 100,
     height: 30,
@@ -119,7 +121,7 @@ export const DefaultItemInGridTemplate2 = [
   {
     id: uuid(),
     type: "a",
-    left: "34.60471567267684%",
+    left: "38%",
     top: 30,
     width: 100,
     height: 30,
@@ -149,7 +151,7 @@ export const DefaultItemInGridTemplate2 = [
   {
     id: uuid(),
     type: "a",
-    left: "43.89736477115118%",
+    left: "47%",
     top: 30,
     width: 100,
     height: 30,
@@ -179,7 +181,7 @@ export const DefaultItemInGridTemplate2 = [
   {
     id: uuid(),
     type: "a",
-    left: "50.83217753120665%",
+    left: "55%",
     top: 30,
     width: 100,
     height: 30,
@@ -209,9 +211,9 @@ export const DefaultItemInGridTemplate2 = [
   {
     id: uuid(),
     type: "a",
-    left: "59.084604715672675%",
+    left: "63%",
     top: 30,
-    width: "120",
+    width: 120,
     height: 30,
     inGrid: true,
     isMulti: false,
@@ -239,8 +241,8 @@ export const DefaultItemInGridTemplate2 = [
   {
     id: uuid(),
     type: "button",
-    left: "80.58252427184466%",
-    top: 32,
+    left: "87.1012482662968%",
+    top: 34,
     width: 100,
     height: 35,
     inGrid: true,
@@ -259,7 +261,7 @@ export const DefaultItemInGridTemplate2 = [
       fontFamily: "",
       borderRadius: "12px",
       fontWeight: "",
-      lineHeight: "",
+      lineHeight: "18px",
       borderSize: "1px",
     },
     src: "",
@@ -379,6 +381,7 @@ export const DefaultItemInGridTemplate2 = [
       borderSize: "1px",
     },
     valueItem: "Enter your email  ",
+    textValue: "Enter your email  ",
   },
   {
     id: uuid(),
@@ -551,6 +554,7 @@ export const DefaultItemInGridTemplate2 = [
       borderSize: "1px",
     },
     valueItem: "About me ",
+    textValue: "About me ",
   },
   {
     id: uuid(),
@@ -579,6 +583,7 @@ export const DefaultItemInGridTemplate2 = [
       borderSize: "1px",
     },
     valueItem: "enter text",
+    textValue: "enter text",
   },
   {
     id: uuid(),
@@ -636,6 +641,7 @@ export const DefaultItemInGridTemplate2 = [
       borderSize: "1px",
     },
     valueItem: "Our Services",
+    textValue: "Our Services",
   },
   {
     id: uuid(),
