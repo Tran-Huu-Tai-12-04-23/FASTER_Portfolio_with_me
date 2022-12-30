@@ -38,22 +38,11 @@ function Grid(props) {
       if (item.inGrid) {
         const delta = monitor.getDifferenceFromInitialOffset();
         let left, top;
+        console.log(item.left);
         if (item.left) {
-          let leftItem;
-          if (item.left.toString().includes("%")) {
-            leftItem = item.left.substring(0, item.left.length - 1);
-          } else {
-            leftItem = item.left;
-          }
-          const widthContentItem = grid.current.offsetWidth;
-          const leftIt =
-            (widthContentItem / 100) * parseInt(leftItem) + delta.x;
-          left = `${(parseInt(leftIt) / widthContentItem) * 100}%`;
+          left = item.left + delta.x;
         } else {
-          const widthContentItem = grid.current.offsetWidth;
-          left = `${
-            (Math.round(item.left + delta.x) / widthContentItem) * 100
-          }%`;
+          left = Math.round(item.left + delta.x);
         }
         if (item.top) {
           top = item.top.toString().includes("%")
@@ -63,8 +52,10 @@ function Grid(props) {
           top = Math.round(item.top + delta.y);
         }
         state.stackUndo.push(structuredClone(item.itemsDrag));
+        console.log(left);
+        console.log(top);
         if (item.type === "background" || item.type === "backgroundImage") {
-          left = "0%";
+          left = 0;
           if (top < 0 && top) {
             top = 0;
           }
@@ -82,8 +73,7 @@ function Grid(props) {
         if (top < 0 && top) {
           top = 0;
         }
-        const widthContentItem = grid.current.offsetWidth;
-        left = `${(left / widthContentItem) * 100}%`;
+
         if (item.type === "background" || item.type === "backgroundImage") {
           top -= 50;
           if (top < 0) {
@@ -193,12 +183,13 @@ function Grid(props) {
     if (type === "backgroundImage") {
       styles = {
         border: "none",
-        width: "110%",
+        width: "100%",
       };
       height = 400;
       width = "100%";
       left = "0%";
     }
+
     setItems((prev) => {
       return [
         ...prev,

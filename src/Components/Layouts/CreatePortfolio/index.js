@@ -282,7 +282,7 @@ function CreatePortfolio({
                     <Header
                       widthContent={widthContent}
                       setShowPreview={setShowPreview}
-                      heightDefault={heightDefault}
+                      heightDefault={heightContent}
                     />
                   ) : (
                     ""

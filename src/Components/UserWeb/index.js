@@ -38,7 +38,9 @@ function UserWeb({
       if (!item.top.toString().includes("%")) {
         item.top = `${(item.top / heightTemplate) * 100}%`;
       }
-      console.log(item.width);
+      if (!item.left.toString().includes("%")) {
+        item.left = `${(item.left / widthContent) * 100}%`;
+      }
       if (item.type === "background" || item.type === "backgroundImage") {
         item.width = "100%";
       }

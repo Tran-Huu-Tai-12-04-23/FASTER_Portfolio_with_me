@@ -28,14 +28,8 @@ function ModalPublic({
     setShowLink(true);
     const prevPublic = localStorage.getItem("public");
     if (prevPublic) {
-      if (Array.isArray(JSON.parse(prevPublic))) {
-        const newData = JSON.parse(prevPublic);
-        newData.push(data);
-        localStorage.setItem("public", JSON.stringify(newData));
-      } else {
-        const newData = [{ ...JSON.parse(prevPublic) }, { ...data }];
-        localStorage.setItem("public", JSON.stringify(newData));
-      }
+      localStorage.removeItem("public");
+      localStorage.setItem("public", [JSON.stringify(data)]);
     } else {
       localStorage.setItem("public", [JSON.stringify(data)]);
     }
