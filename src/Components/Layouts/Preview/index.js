@@ -13,7 +13,7 @@ import {
 function Preview({
   items,
   heightTemplate = 1000,
-  width = "76%",
+  width = "75%",
   setShowPreview,
   showPreview,
   children,
@@ -172,7 +172,6 @@ function Preview({
         style={{
           width: width,
           height: heightTemplate,
-          width: "76%",
         }}
         id='preview'
       >

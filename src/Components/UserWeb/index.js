@@ -19,7 +19,7 @@ function UserWeb({
   showPreview,
   children,
 }) {
-  const [data, setData] = useState(structuredClone(items));
+  const [data, setData] = useState(items);
   const icons = {
     Facebook: <GrFacebookOption />,
     Instagram: <GrInstagram />,
@@ -28,20 +28,22 @@ function UserWeb({
     Youtube: <GrYoutube />,
   };
   useEffect(() => {
-    if (data) {
-      data.map((item) => {
-        if (!item.height.toString().includes("%")) {
-          item.height = `${(item.height / heightTemplate) * 100}%`;
-        }
-        if (!item.width.toString().includes("%")) {
-          item.width = `${(item.width / widthContent) * 100}%`;
-        }
-        if (!item.top.toString().includes("%")) {
-          item.top = `${(item.top / heightTemplate) * 100}%`;
-        }
-      });
-    }
-  });
+    data.map((item) => {
+      if (!item.height.toString().includes("%") && item.height) {
+        item.height = `${(item.height / heightTemplate) * 100}%`;
+      }
+      if (!item.width.toString().includes("%") && item.width) {
+        item.width = `${(item.width / widthContent) * 100}%`;
+      }
+      if (!item.top.toString().includes("%")) {
+        item.top = `${(item.top / heightTemplate) * 100}%`;
+      }
+      console.log(item.width);
+      if (item.type === "background" || item.type === "backgroundImage") {
+        item.width = "100%";
+      }
+    });
+  }, []);
   const renderItem = () => {
     if (data) {
       return data.map((item, index) => {

@@ -12,10 +12,6 @@ function App() {
   const [displayLoading, setDisplayLoading] = useState(true);
   const [dataUserWeb, setDataUserWeb] = useState([]);
   const [widthContent, setWidthContent] = useState();
-  const content = useRef();
-  useEffect(() => {
-    setWidthContent((content.current.offsetWidth * 76) / 100);
-  }, []);
 
   useEffect(() => {
     window.onload = () => {
@@ -28,6 +24,7 @@ function App() {
       setDataUserWeb(data);
     })
     .catch((error) => console.error(error));
+
   const renderUserWeb = () => {
     if (dataUserWeb) {
       if (Array.isArray(dataUserWeb)) {
@@ -38,9 +35,9 @@ function App() {
               path={item.path}
               element={
                 <UserWeb
-                  widthContent={widthContent}
+                  widthContent={item.widthContent}
                   heightTemplate={item.heightDefault}
-                  items={item.items}
+                  items={structuredClone(item.items)}
                 ></UserWeb>
               }
             ></Route>
@@ -54,6 +51,7 @@ function App() {
               <UserWeb
                 items={dataUserWeb.items}
                 heightTemplate={dataUserWeb.heightDefault}
+                widthContent={dataUserWeb.widthContent}
               ></UserWeb>
             }
           ></Route>
@@ -64,7 +62,7 @@ function App() {
   return (
     <ItemsLocalStore.Provider value={dataUserWeb}>
       <Loading display={displayLoading}></Loading>
-      <div className={clsx(styles.wrapper)} ref={content}>
+      <div className={clsx(styles.wrapper)}>
         <Router>
           <Routes>
             {publicRoutes.map((page, index) => {

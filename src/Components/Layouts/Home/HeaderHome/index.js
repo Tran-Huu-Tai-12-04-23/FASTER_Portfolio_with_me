@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faClose, faSearch } from "@fortawesome/free-solid-svg-icons";
 import styles from "./HeaderHome.module.scss";
-import logo_tdtu from "~/assets/img/icon__tdtu.png";
+import iconFinal from "~/assets/img/iconFinal.png";
 import logoHuutai from "~/assets/img/logoHuutai.png";
 
 function Header() {
@@ -35,10 +35,10 @@ function Header() {
           <h4>Contact</h4>
         </a>
       </div>
-      
+
       <img
         className={clsx(styles.icon__university)}
-        src={logo_tdtu}
+        src={iconFinal}
         alt='tdtu'
       ></img>
     </div>

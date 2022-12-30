@@ -19,7 +19,7 @@ import {
 } from "~/Store/Context";
 import ModalPublic from "./ModalPublic";
 
-function Header({ setShowPreview, heightDefault }) {
+function Header({ setShowPreview, heightDefault, widthContent }) {
   const [title, setTitle] = useState("Enter title");
   const [state, dispatch] = useContext(ContextReducer);
   const [items, setItems] = useContext(ContextItemsIngrid);
@@ -191,6 +191,7 @@ function Header({ setShowPreview, heightDefault }) {
         </div>
       </div>
       <ModalPublic
+        widthContent={widthContent}
         show={showModalPublic}
         setShowModalPublic={setShowModalPublic}
         heightDefault={heightDefault}

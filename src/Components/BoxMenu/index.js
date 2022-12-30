@@ -113,9 +113,13 @@ function BoxMenu() {
   // load style change
   const handleUpdateHeightItem = (e) => {
     setHeightItem(e.target.value);
-    const item = document.getElementById(state.id_item_selected);
+    const item = findItem(state.id_item_selected);
+    const itemReal = document.getElementById(state.id_item_selected);
     if (item) {
-      item.parentElement.style.height = e.target.value + "px";
+      item.height = parseInt(e.target.value);
+    }
+    if (itemReal) {
+      itemReal.parentElement.style.height = e.target.value + "px";
     }
   };
 
@@ -125,9 +129,10 @@ function BoxMenu() {
     const itemDomReal = document.getElementById(state.id_item_selected);
     if (item) {
       item.top = parseInt(e.target.value);
+    }
+    if (itemDomReal) {
       itemDomReal.parentElement.style.top = e.target.value + "px";
     }
-    console.log(item);
   };
 
   const handleChangeColor = (e) => {
@@ -310,6 +315,16 @@ function BoxMenu() {
             </Item>
           </TipSuggest>
         </div>
+        <span
+          style={{
+            width: "100%",
+            textAlign: "center",
+            color: "#FF6600",
+            fontWeight: "600",
+          }}
+        >
+          Background
+        </span>
         <div
           style={{
             marginTop: 6,
@@ -404,7 +419,7 @@ function BoxMenu() {
           ></input>
         </div>
 
-        <div
+        {/* <div
           style={{
             display: typeItemSelected === "backgroundImage" ? "flex" : "none",
             justifyContent: "center",
@@ -416,7 +431,7 @@ function BoxMenu() {
             style={{ textAlign: "center", width: "80%" }}
             placeholder='url..'
           ></input>
-        </div>
+        </div> */}
         <div
           style={{
             display: typeItemSelected === "background" ? "flex" : "none",

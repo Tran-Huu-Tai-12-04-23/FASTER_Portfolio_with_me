@@ -350,7 +350,7 @@ function Item({
     if (heading) {
       setValue("Enter title");
     }
-    if (type === "icon") {
+    if (type === "icon" || type === "background") {
       setType("div");
     }
   }, [linkImg]);

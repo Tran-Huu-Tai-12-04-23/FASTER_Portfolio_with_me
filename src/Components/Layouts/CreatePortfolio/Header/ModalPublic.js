@@ -6,7 +6,12 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { ContextItemsIngrid } from "~/Store/Context";
 import { MdAirlineSeatIndividualSuite } from "react-icons/md";
 
-function ModalPublic({ show, setShowModalPublic, heightDefault }) {
+function ModalPublic({
+  show,
+  setShowModalPublic,
+  heightDefault,
+  widthContent,
+}) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState("");
   const [showLink, setShowLink] = useState(false);
@@ -15,6 +20,7 @@ function ModalPublic({ show, setShowModalPublic, heightDefault }) {
     path: "",
     items: "",
     heightDefault: heightDefault,
+    widthContent: widthContent,
   });
 
   const handleSubmit = (e) => {
@@ -103,6 +109,7 @@ function ModalPublic({ show, setShowModalPublic, heightDefault }) {
                 path: e.target.value,
                 items: items,
                 heightDefault,
+                widthContent,
               });
               setValue(e.target.value);
             }}

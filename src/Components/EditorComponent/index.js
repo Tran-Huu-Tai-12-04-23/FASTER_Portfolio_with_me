@@ -367,72 +367,75 @@ function EditorComponent({ style }) {
           </div>
         </ul>
       </div>
-      {typeItemSelected !== "img" && typeItemSelected !== "div" && (
-        <div
-          className={clsx(styles.icon, styles.icon_color)}
-          onClick={(e) => {
-            e.stopPropagation();
-            setShowEditColor(!showEditColor);
-            setShowSetBackground(false);
-            setShowEditBorderStyle(false);
-            setShowEditFontStyle(false);
-            setShowEditBorderColor(false);
-            setShowEditBorderSize(false);
-          }}
-        >
-          <TipSuggest content='Edit color' position='bottom'>
-            <AiOutlineFontColors></AiOutlineFontColors>
-          </TipSuggest>
-          <FontAwesomeIcon
-            className={clsx(styles.icon__arrow_down)}
-            icon={faChevronDown}
-          ></FontAwesomeIcon>
-          <ul
-            className={clsx(styles.color_options)}
-            id='color_options'
-            style={{
-              display: showEditColor ? "flex" : "none",
-            }}
+      {typeItemSelected !== "img" &&
+        typeItemSelected !== "div" &&
+        typeItemSelected !== "background" &&
+        typeItemSelected !== "backgroundImage" && (
+          <div
+            className={clsx(styles.icon, styles.icon_color)}
             onClick={(e) => {
-              // e.preventDefault();
               e.stopPropagation();
+              setShowEditColor(!showEditColor);
+              setShowSetBackground(false);
+              setShowEditBorderStyle(false);
+              setShowEditFontStyle(false);
+              setShowEditBorderColor(false);
+              setShowEditBorderSize(false);
             }}
           >
-            {renderOptionColors()}
-            <div className={clsx(styles.wrapper_input_color)}>
-              <input
-                style={{
-                  border: "none",
-                  outline: "none",
-                  borderRadius: "12px",
-                  width: "100%",
-                }}
-                type='color'
-                value={colorItem}
-                onChange={(e) => {
-                  setColorItem(e.target.value);
-                  dispatch(setColor(e.target.value));
-                }}
-              ></input>
-              <TipSuggest content='Add your color'>
-                <IoIosAdd
-                  className={clsx(styles.icon_add_color)}
-                  onClick={(e) => {
-                    setColorRange((prev) => {
-                      if (!prev.includes(colorItem)) {
-                        return [...prev, colorItem];
-                      }
-                      alert("color is already");
-
-                      return [...prev];
-                    });
+            <TipSuggest content='Edit color' position='bottom'>
+              <AiOutlineFontColors></AiOutlineFontColors>
+            </TipSuggest>
+            <FontAwesomeIcon
+              className={clsx(styles.icon__arrow_down)}
+              icon={faChevronDown}
+            ></FontAwesomeIcon>
+            <ul
+              className={clsx(styles.color_options)}
+              id='color_options'
+              style={{
+                display: showEditColor ? "flex" : "none",
+              }}
+              onClick={(e) => {
+                // e.preventDefault();
+                e.stopPropagation();
+              }}
+            >
+              {renderOptionColors()}
+              <div className={clsx(styles.wrapper_input_color)}>
+                <input
+                  style={{
+                    border: "none",
+                    outline: "none",
+                    borderRadius: "12px",
+                    width: "100%",
                   }}
-                ></IoIosAdd>
-              </TipSuggest>
-            </div>
-          </ul>
-        </div>
-      )}
+                  type='color'
+                  value={colorItem}
+                  onChange={(e) => {
+                    setColorItem(e.target.value);
+                    dispatch(setColor(e.target.value));
+                  }}
+                ></input>
+                <TipSuggest content='Add your color'>
+                  <IoIosAdd
+                    className={clsx(styles.icon_add_color)}
+                    onClick={(e) => {
+                      setColorRange((prev) => {
+                        if (!prev.includes(colorItem)) {
+                          return [...prev, colorItem];
+                        }
+                        alert("color is already");
+
+                        return [...prev];
+                      });
+                    }}
+                  ></IoIosAdd>
+                </TipSuggest>
+              </div>
+            </ul>
+          </div>
+        )}
 
       <div
         className={clsx(styles.icon, styles.icon_border_color)}
@@ -498,95 +501,95 @@ function EditorComponent({ style }) {
       </div>
       {typeItemSelected !== "img" &&
         typeItemSelected !== "div" &&
-        typeItemSelected !== "icon" && (
-          <div
-            className={clsx(styles.icon, styles.font_size_options)}
-            onClick={handleHiddenEditor}
-          >
-            <TipSuggest content='Edit fontsize'>
-              <GoTextSize
-                style={{
-                  border: "none",
+        typeItemSelected !== "icon" &&
+        typeItemSelected !== "background" &&
+        typeItemSelected !== "backgroundImage" && (
+          <>
+            <div
+              className={clsx(styles.icon, styles.font_size_options)}
+              onClick={handleHiddenEditor}
+            >
+              <TipSuggest content='Edit fontsize'>
+                <GoTextSize
+                  style={{
+                    border: "none",
+                  }}
+                ></GoTextSize>
+              </TipSuggest>
+              <AiOutlineMinus
+                onClick={(e) => {
+                  state.stackUndo.push(structuredClone(items));
+                  setFontSizeItem((prev) => {
+                    return parseInt(prev) - 1;
+                  });
                 }}
-              ></GoTextSize>
-            </TipSuggest>
-            <AiOutlineMinus
-              onClick={(e) => {
-                state.stackUndo.push(structuredClone(items));
-                setFontSizeItem((prev) => {
-                  return parseInt(prev) - 1;
-                });
-              }}
-            />
-            <input
-              type='number'
-              style={{
-                color: "#000",
-              }}
-              onChange={(e) => {
-                state.stackUndo.push(structuredClone(items));
-                setFontSizeItem(e.target.value);
-              }}
-              value={fontSize}
-            ></input>
-            <IoIosAdd
-              style={{
-                borderRight: "none",
-              }}
-              onClick={(e) => {
-                state.stackUndo.push(structuredClone(items));
-                setFontSizeItem((prev) => {
-                  return parseInt(prev) + 1;
-                });
-              }}
-            />
-          </div>
-        )}
-      {typeItemSelected !== "img" &&
-        typeItemSelected !== "div" &&
-        typeItemSelected !== "icon" && (
-          <div
-            className={clsx(styles.icon, styles.line_height_options)}
-            onClick={handleHiddenEditor}
-          >
-            <TipSuggest content='Edit line height'>
-              <RxLineHeight
+              />
+              <input
+                type='number'
                 style={{
-                  border: "none",
+                  color: "#000",
                 }}
-              ></RxLineHeight>
-            </TipSuggest>
-            <AiOutlineMinus
-              onClick={(e) => {
-                state.stackUndo.push(structuredClone(items));
-                setLineHeightItem((prev) => {
-                  return parseInt(prev) - 1;
-                });
-              }}
-            />
-            <input
-              type='number'
-              style={{
-                color: "#000",
-              }}
-              onChange={(e) => {
-                state.stackUndo.push(structuredClone(items));
-                setLineHeightItem(e.target.value);
-              }}
-              value={lineHeight}
-            ></input>
-            <IoIosAdd
-              style={{
-                borderRight: "none",
-              }}
-              onClick={(e) => {
-                state.stackUndo.push(structuredClone(items));
-                setLineHeightItem((prev) => {
-                  return parseInt(prev) + 1;
-                });
-              }}
-            />
-          </div>
+                onChange={(e) => {
+                  state.stackUndo.push(structuredClone(items));
+                  setFontSizeItem(e.target.value);
+                }}
+                value={fontSize}
+              ></input>
+              <IoIosAdd
+                style={{
+                  borderRight: "none",
+                }}
+                onClick={(e) => {
+                  state.stackUndo.push(structuredClone(items));
+                  setFontSizeItem((prev) => {
+                    return parseInt(prev) + 1;
+                  });
+                }}
+              />
+            </div>
+            <div
+              className={clsx(styles.icon, styles.line_height_options)}
+              onClick={handleHiddenEditor}
+            >
+              <TipSuggest content='Edit line height'>
+                <RxLineHeight
+                  style={{
+                    border: "none",
+                  }}
+                ></RxLineHeight>
+              </TipSuggest>
+              <AiOutlineMinus
+                onClick={(e) => {
+                  state.stackUndo.push(structuredClone(items));
+                  setLineHeightItem((prev) => {
+                    return parseInt(prev) - 1;
+                  });
+                }}
+              />
+              <input
+                type='number'
+                style={{
+                  color: "#000",
+                }}
+                onChange={(e) => {
+                  state.stackUndo.push(structuredClone(items));
+                  setLineHeightItem(e.target.value);
+                }}
+                value={lineHeight}
+              ></input>
+              <IoIosAdd
+                style={{
+                  borderRight: "none",
+                }}
+                onClick={(e) => {
+                  state.stackUndo.push(structuredClone(items));
+                  setLineHeightItem((prev) => {
+                    return parseInt(prev) + 1;
+                  });
+                }}
+              />
+            </div>
+          </>
         )}
 
       <div
@@ -705,7 +708,9 @@ function EditorComponent({ style }) {
       </div>
       {typeItemSelected !== "img" &&
         typeItemSelected !== "div" &&
-        typeItemSelected !== "icon" && (
+        typeItemSelected !== "icon" &&
+        typeItemSelected !== "background" &&
+        typeItemSelected !== "backgroundImage" && (
           <>
             <div
               className={clsx(styles.icon, styles.icon_font_weight)}
@@ -800,7 +805,9 @@ function EditorComponent({ style }) {
           transform:
             typeItemSelected === "img" ||
             typeItemSelected === "div" ||
-            typeItemSelected === "icon"
+            typeItemSelected === "icon" ||
+            typeItemSelected !== "background" ||
+            typeItemSelected !== "backgroundImage"
               ? "translateX(30px)"
               : "translateX(0)",
         }}
