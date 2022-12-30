@@ -9,3 +9,4 @@ export const ShowOverlay = createContext();
 export const ContextItemsMultiIngrid = createContext();
 export const wrapperContent = createContext();
 export const ColorRange = createContext();
+export const ItemsLocalStore = createContext();

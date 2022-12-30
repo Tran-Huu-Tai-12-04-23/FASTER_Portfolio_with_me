@@ -161,6 +161,7 @@ function Item({
   );
   let heightHeadingText, setHeightHeadingText;
   const handleChangeValue = (e) => {
+    state.stackUndo.push(structuredClone(items));
     setValue(e.target.value);
     // const item = findItem(e.target.id);
     // if (item) {
@@ -181,8 +182,8 @@ function Item({
   };
 
   const handleShowInputImg = (e) => {
+    state.stackUndo.push(structuredClone(items));
     var item = findItem(e.target.id);
-
     const reader = new FileReader();
     var url;
     reader.onload = () => {

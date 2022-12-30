@@ -63,7 +63,8 @@ function Grid(props) {
         } else {
           top = Math.round(item.top + delta.y);
         }
-
+        state.stackUndo.push(structuredClone(item.items));
+        console.log(item);
         moveItem(item.id, left, top, item.inGrid, item.items);
       } else if (item.inGrid === false && item.isMulti === false) {
         const valueScrollTop = contentPortfolio.current.scrollTop;
@@ -79,6 +80,7 @@ function Grid(props) {
         }
         const widthContentItem = grid.current.offsetWidth;
         left = `${(left / widthContentItem) * 100}%`;
+
         state.stackUndo.push(structuredClone(item.items));
 
         addItem(
@@ -99,7 +101,6 @@ function Grid(props) {
       canDrop: monitor.canDrop(),
     }),
   }));
-
   const addItem = (
     id,
     type,

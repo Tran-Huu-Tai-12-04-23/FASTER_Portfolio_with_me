@@ -279,7 +279,10 @@ function CreatePortfolio({
                     </button>
                   </div>
                   {showEditorComponent === false && !showRecovery ? (
-                    <Header setShowPreview={setShowPreview} />
+                    <Header
+                      setShowPreview={setShowPreview}
+                      heightDefault={heightDefault}
+                    />
                   ) : (
                     ""
                   )}

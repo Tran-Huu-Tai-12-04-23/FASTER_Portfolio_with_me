@@ -6,18 +6,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiOutlineClose } from "react-icons/ai";
 import { BsArrowCounterclockwise, BsArrowClockwise } from "react-icons/bs";
 import { BiUndo, BiRedo } from "react-icons/bi";
+import { CgWebsite } from "react-icons/cg";
+import { getDataUserWeb } from "~/Store/util/index";
 
 import styles from "./Header.module.scss";
 import { Button, TipSuggest } from "~/Components";
 import { undo, redo, setUndo, setRedo } from "~/Store/reducer/actions";
-import { ContextReducer, ContextItemsIngrid } from "~/Store/Context";
+import {
+  ContextReducer,
+  ContextItemsIngrid,
+  ItemsLocalStore,
+} from "~/Store/Context";
 import ModalPublic from "./ModalPublic";
 
-function Header({ setShowPreview }) {
+function Header({ setShowPreview, heightDefault }) {
   const [title, setTitle] = useState("Enter title");
   const [state, dispatch] = useContext(ContextReducer);
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [showModalPublic, setShowModalPublic] = useState(false);
+  const [showLinkYourWebsite, setShowLinkYourWebsite] = useState(false);
+  const dataUserWeb = useContext(ItemsLocalStore);
 
   const handleDataTitle = (e) => {
     document.title = e.target.value;
@@ -29,14 +37,35 @@ function Header({ setShowPreview }) {
       setTitle("Title is empty");
     }
   };
-  // useEffect(() => {
-  //   if (state.undo.length > 0) {
-  //     setItems(state.undo);
-  //   }
-  //   if (state.redo.length > 0) {
-  //     setItems(state.redo);
-  //   }
-  // }, [state]);
+  const renderYourLink = (e) => {
+    if (dataUserWeb) {
+      if (Array.isArray(dataUserWeb)) {
+        return dataUserWeb.map((item, index) => {
+          return (
+            <a key={index} href={item.path} target='_blank'>
+              <li>/{item.path}</li>
+            </a>
+          );
+        });
+      } else {
+        return (
+          <a href={dataUserWeb.path} target='_blank'>
+            <li>/{dataUserWeb.path}</li>
+          </a>
+        );
+      }
+    } else {
+      return (
+        <li
+          style={{
+            textAlign: "center",
+          }}
+        >
+          You haven't public your website
+        </li>
+      );
+    }
+  };
   useEffect(() => {
     const handleKeyUp = (e) => {
       if (e.ctrlKey && e.key === "z") {
@@ -53,30 +82,14 @@ function Header({ setShowPreview }) {
   });
   const handleUndo = () => {
     if (state.stackUndo.length > 0) {
-      // const [dataLoad, ...rest] = state.stackUndo;
-      // dispatch(setRedo([structuredClone(dataLoad), ...state.stackRedo]));
-      // dispatch(setUndo([...rest]));
-      // dispatch(redo([]));
-      // dispatch(undo(structuredClone(dataLoad)));
-      // console.log(state);
-      const data = state.stackUndo.pop();
       state.stackRedo.push(structuredClone(items));
-      setItems(structuredClone(data));
-      console.log(state);
+      setItems(structuredClone(state.stackUndo.pop()));
     }
   };
   const handleRedo = () => {
     if (state.stackRedo.length > 0) {
-      // const [dataLoad, ...rest] = state.stackRedo;
-      // dispatch(setUndo([structuredClone(dataLoad), ...state.stackUndo]));
-      // dispatch(setRedo([...rest]));
-      // dispatch(undo([]));
-      // dispatch(redo(structuredClone(dataLoad)));
-      // console.log(state.stackRedo.pop());
-      const data = state.stackRedo.pop();
       state.stackUndo.push(structuredClone(items));
-      setItems(structuredClone(data));
-      console.log(state);
+      setItems(structuredClone(state.stackRedo.pop()));
     }
   };
   return (
@@ -102,6 +115,37 @@ function Header({ setShowPreview }) {
         </div>
 
         <div className={clsx(styles.until_options)}>
+          <div
+            className={clsx(styles.your_website)}
+            onClick={(e) => {
+              setShowLinkYourWebsite(true);
+            }}
+          >
+            <TipSuggest content='Link your website'>
+              <CgWebsite
+                style={{
+                  display: showLinkYourWebsite ? "none" : "block",
+                }}
+              ></CgWebsite>
+            </TipSuggest>
+            <AiOutlineClose
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowLinkYourWebsite(false);
+              }}
+              style={{
+                display: showLinkYourWebsite ? "block" : "none",
+              }}
+            ></AiOutlineClose>
+            <div
+              className={clsx(styles.wrapper_manager_link)}
+              style={{
+                display: showLinkYourWebsite ? "block" : "none",
+              }}
+            >
+              {renderYourLink()}
+            </div>
+          </div>
           <div>
             <TipSuggest content='Undo'>
               <BiUndo
@@ -112,6 +156,7 @@ function Header({ setShowPreview }) {
                 onClick={handleUndo}
               ></BiUndo>
             </TipSuggest>
+
             <TipSuggest content='Redo'>
               <BiRedo
                 style={{
@@ -147,6 +192,7 @@ function Header({ setShowPreview }) {
       <ModalPublic
         show={showModalPublic}
         setShowModalPublic={setShowModalPublic}
+        heightDefault={heightDefault}
       ></ModalPublic>
     </>
   );

@@ -57,7 +57,7 @@
 }
 
 .until_options {
-  width: 24%;
+  width: 30%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -190,6 +190,48 @@
       &:hover {
         color: var(--primary);
         cursor: pointer;
+      }
+    }
+  }
+}
+
+.your_website {
+  position: relative;
+  width: 40px;
+  height: 100%;
+  z-index: 10;
+
+  svg {
+    font-size: 30px;
+  }
+
+  .wrapper_manager_link {
+    position: absolute;
+    bottom: -150px;
+    left: -200px;
+    width: 300px;
+    height: 150px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 12px 0;
+    overflow: scroll;
+    -webkit-box-shadow: 5px 5px 15px 5px #000000;
+    box-shadow: 5px 5px 15px 5px #000000;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    li {
+      display: block;
+      width: 100%;
+      padding: 6px 12px;
+      color: blue;
+      text-decoration: dotted;
+      font-size: 20px;
+      &:hover {
+        background-color: #ccc;
+        cursor: pointer;
+        color: var(--primary);
       }
     }
   }

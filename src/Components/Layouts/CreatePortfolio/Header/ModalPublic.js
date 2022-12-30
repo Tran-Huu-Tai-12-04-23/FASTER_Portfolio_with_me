@@ -6,7 +6,7 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { ContextItemsIngrid } from "~/Store/Context";
 import { MdAirlineSeatIndividualSuite } from "react-icons/md";
 
-function ModalPublic({ show, setShowModalPublic }) {
+function ModalPublic({ show, setShowModalPublic, heightDefault }) {
   const [items, setItems] = useContext(ContextItemsIngrid);
   const [value, setValue] = useState("");
   const [showLink, setShowLink] = useState(false);
@@ -14,22 +14,22 @@ function ModalPublic({ show, setShowModalPublic }) {
   const [data, setData] = useState({
     path: "",
     items: "",
+    heightDefault: heightDefault,
   });
-  let config = {
-    headers: {
-      "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-    },
-  };
 
   const handleSubmit = (e) => {
     setValue("");
     setShowLink(true);
     const prevPublic = localStorage.getItem("public");
     if (prevPublic) {
-      console.log(JSON.parse(prevPublic));
-      const newData = [{ ...JSON.parse(prevPublic) }, { ...data }];
-      localStorage.setItem("public", JSON.stringify(newData));
+      if (Array.isArray(JSON.parse(prevPublic))) {
+        const newData = JSON.parse(prevPublic);
+        newData.push(data);
+        localStorage.setItem("public", JSON.stringify(newData));
+      } else {
+        const newData = [{ ...JSON.parse(prevPublic) }, { ...data }];
+        localStorage.setItem("public", JSON.stringify(newData));
+      }
     } else {
       localStorage.setItem("public", [JSON.stringify(data)]);
     }
@@ -102,6 +102,7 @@ function ModalPublic({ show, setShowModalPublic }) {
               setData({
                 path: e.target.value,
                 items: items,
+                heightDefault,
               });
               setValue(e.target.value);
             }}

@@ -490,6 +490,7 @@ function EditorComponent({ style }) {
         </TipSuggest>
         <AiOutlineMinus
           onClick={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setFontSizeItem((prev) => {
               return parseInt(prev) - 1;
             });
@@ -501,6 +502,7 @@ function EditorComponent({ style }) {
             color: "#000",
           }}
           onChange={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setFontSizeItem(e.target.value);
           }}
           value={fontSize}
@@ -510,6 +512,7 @@ function EditorComponent({ style }) {
             borderRight: "none",
           }}
           onClick={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setFontSizeItem((prev) => {
               return parseInt(prev) + 1;
             });
@@ -529,6 +532,7 @@ function EditorComponent({ style }) {
         </TipSuggest>
         <AiOutlineMinus
           onClick={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setLineHeightItem((prev) => {
               return parseInt(prev) - 1;
             });
@@ -540,6 +544,7 @@ function EditorComponent({ style }) {
             color: "#000",
           }}
           onChange={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setLineHeightItem(e.target.value);
           }}
           value={lineHeight}
@@ -549,6 +554,7 @@ function EditorComponent({ style }) {
             borderRight: "none",
           }}
           onClick={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setLineHeightItem((prev) => {
               return parseInt(prev) + 1;
             });
@@ -571,6 +577,7 @@ function EditorComponent({ style }) {
         </TipSuggest>
         <AiOutlineMinus
           onClick={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setValueBorderRadius((prev) => {
               return parseInt(prev) - 1;
             });
@@ -582,6 +589,7 @@ function EditorComponent({ style }) {
             color: "#000",
           }}
           onChange={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setValueBorderRadius(e.target.value);
           }}
           value={valueBorderRadius}
@@ -591,6 +599,7 @@ function EditorComponent({ style }) {
             borderRight: "none",
           }}
           onClick={(e) => {
+            state.stackUndo.push(structuredClone(items));
             setValueBorderRadius((prev) => {
               return parseInt(prev) + 1;
             });
@@ -670,6 +679,7 @@ function EditorComponent({ style }) {
         className={clsx(styles.icon, styles.icon_font_weight)}
         onClick={(e) => {
           e.stopPropagation();
+          state.stackUndo.push(structuredClone(items));
           dispatch(setFontWeight(!state.font_weight));
           handleHiddenEditor();
         }}
@@ -680,6 +690,7 @@ function EditorComponent({ style }) {
         className={clsx(styles.icon, styles.icon_align_center)}
         onClick={(e) => {
           e.stopPropagation();
+          state.stackUndo.push(structuredClone(items));
           handleHiddenEditor();
           dispatch(setTextAlign(!state.text_align));
         }}
@@ -699,6 +710,7 @@ function EditorComponent({ style }) {
         }}
         onClick={(e) => {
           e.stopPropagation();
+          state.stackUndo.push(structuredClone(items));
           handleHiddenEditor();
           dispatch(setTextTransform(!state.text_transform));
         }}

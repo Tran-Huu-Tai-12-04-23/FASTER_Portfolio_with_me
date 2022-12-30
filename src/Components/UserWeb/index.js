@@ -30,7 +30,13 @@ function UserWeb({
   useLayoutEffect(() => {
     data.map((item) => {
       if (!item.width.toString().includes("%")) {
-        item.width = `${(item.width / widthContent) * 100}%`;
+        item.width = `${(item.width / widthContent) * 100 + 6}%`;
+      }
+      if (!item.height.toString().includes("%")) {
+        item.height = `${(item.height / heightTemplate) * 100}%`;
+      }
+      if (!item.top.toString().includes("%")) {
+        item.top = `${(item.top / heightTemplate) * 100}%`;
       }
     });
   }, []);
@@ -150,7 +156,7 @@ function UserWeb({
     <div
       className={clsx(styles.wrapper)}
       style={{
-        height: heightTemplate ? heightTemplate : 1000,
+        height: heightTemplate ? heightTemplate + 500 : 1000,
       }}
     >
       {items && renderItem()}

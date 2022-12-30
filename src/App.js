@@ -6,6 +6,7 @@ import { publicRoutes } from "./Routes";
 import styles from "./App.module.scss";
 import { Loading, UserWeb, Preview } from "~/Components";
 import { getDataUserWeb } from "~/Store/util";
+import { ItemsLocalStore } from "./Store/Context";
 
 function App() {
   const [displayLoading, setDisplayLoading] = useState(true);
@@ -38,8 +39,8 @@ function App() {
               element={
                 <UserWeb
                   widthContent={widthContent}
+                  heightTemplate={item.heightDefault}
                   items={item.items}
-                  heightTemplate={4000}
                 ></UserWeb>
               }
             ></Route>
@@ -52,7 +53,7 @@ function App() {
             element={
               <UserWeb
                 items={dataUserWeb.items}
-                heightTemplate={4000}
+                heightTemplate={dataUserWeb.heightDefault}
               ></UserWeb>
             }
           ></Route>
@@ -61,7 +62,7 @@ function App() {
     }
   };
   return (
-    <>
+    <ItemsLocalStore.Provider value={dataUserWeb}>
       <Loading display={displayLoading}></Loading>
       <div className={clsx(styles.wrapper)} ref={content}>
         <Router>
@@ -79,7 +80,7 @@ function App() {
           </Routes>
         </Router>
       </div>
-    </>
+    </ItemsLocalStore.Provider>
   );
 }
 
