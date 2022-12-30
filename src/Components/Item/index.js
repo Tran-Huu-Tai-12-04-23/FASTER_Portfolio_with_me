@@ -316,6 +316,13 @@ function Item({
     }
   };
 
+  //show, hidden trash
+  useEffect(() => {
+    if (isDragging) {
+      setEditorComponent(false);
+    }
+  }, [isDragging]);
+
   useEffect(() => {
     setType(icon ? "div" : type);
     setType(type === "button" ? "input" : type);
