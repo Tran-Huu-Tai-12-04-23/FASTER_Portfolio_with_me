@@ -38,11 +38,21 @@ function Grid(props) {
       if (item.inGrid) {
         const delta = monitor.getDifferenceFromInitialOffset();
         let left, top;
-        console.log(item.left);
         if (item.left) {
-          left = item.left + delta.x;
+          // left = item.left + delta.x;
+          let leftIt;
+          if (item.left.toString().includes("%")) {
+            leftIt = item.left.toString().substring(0, item.left.length - 1);
+            console.log(leftIt);
+            left = `${
+              (((leftIt / 100) * grid.current.offsetWidth + delta.x) /
+                grid.current.offsetWidth) *
+              100
+            }%`;
+          }
         } else {
-          left = Math.round(item.left + delta.x);
+          left = `${(delta.x / grid.current.offsetWidth) * 100}%`;
+          // left = Math.round(item.left + delta.x);
         }
         if (item.top) {
           top = item.top.toString().includes("%")
@@ -244,6 +254,14 @@ function Grid(props) {
       itemDomReal.style.backgroundColor = state.background_color;
     }
   }, [state]);
+  // useEffect(() => {
+  //   console.log("check");
+  //   items.map((item) => {
+  //     console.log(item.left);
+  //     console.log((item.left / grid.current.offsetWidth) * 100);
+  //   });
+  //   console.log("check end");
+  // }, []);
   const renderItem = () => {
     if (items) {
       return items.map((item, index) => {

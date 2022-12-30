@@ -164,16 +164,6 @@ function Item({
   const handleChangeValue = (e) => {
     state.stackUndo.push(structuredClone(items));
     setValue(e.target.value);
-    // const item = findItem(e.target.id);
-    // if (item) {
-    //   item.valueItem = e.target.value;
-    // }
-    // if (data) {
-    //   [heightHeadingText, setHeightHeadingText] = data;
-    //   setHeightHeadingText(e.target.scrollHeight);
-    //   const itemResize = e.target.parentElement.children[0];
-    //   setWidthContents(itemResize.offsetWidth);
-    // }
   };
 
   const handleBlurInput = (e) => {

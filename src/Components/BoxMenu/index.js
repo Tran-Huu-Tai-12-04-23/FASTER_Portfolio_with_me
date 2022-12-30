@@ -68,6 +68,7 @@ function BoxMenu() {
   const [typeItemSelected, setTypeItemSelected] = useState("input");
   const [heightItem, setHeightItem] = useState(0);
   const [topItem, setTopItem] = useState(0);
+  const [leftItem, setLeftItem] = useState(0);
   const [color, setColor] = useState("#fff");
 
   const findItem = (id) => {
@@ -108,6 +109,12 @@ function BoxMenu() {
     if (item) {
       setHeightItem(item.height);
       setTopItem(item.top);
+      if (item.left.toString().includes("%")) {
+        const leftIt = item.left.toString().substring(0, item.left.length - 1);
+        setLeftItem(Math.round(leftIt));
+      } else {
+        setLeftItem(item.left);
+      }
     }
   }, [state]);
   // load style change
@@ -132,6 +139,21 @@ function BoxMenu() {
     }
     if (itemDomReal) {
       itemDomReal.parentElement.style.top = e.target.value + "px";
+    }
+  };
+  const handleUpdateLeftItem = (e) => {
+    setLeftItem(e.target.value);
+    const item = findItem(state.id_item_selected);
+    const itemDomReal = document.getElementById(state.id_item_selected);
+    if (item) {
+      if (item.left.toString().includes("%")) {
+        item.left = `${e.target.value}%`;
+      } else {
+        item.left = parseInt(e.target.value);
+      }
+    }
+    if (itemDomReal) {
+      itemDomReal.parentElement.style.left = e.target.value + "%";
     }
   };
 
@@ -416,6 +438,23 @@ function BoxMenu() {
             onChange={handleUpdateTopItem}
             type='number'
             placeholder='Top..'
+          ></input>
+        </div>
+        <div
+          style={{
+            display:
+              typeItemSelected === "background" ||
+              typeItemSelected === "backgroundImage"
+                ? "none"
+                : "block",
+          }}
+        >
+          <span>left:</span>
+          <input
+            value={leftItem}
+            onChange={handleUpdateLeftItem}
+            type='number'
+            placeholder='Left..'
           ></input>
         </div>
 
