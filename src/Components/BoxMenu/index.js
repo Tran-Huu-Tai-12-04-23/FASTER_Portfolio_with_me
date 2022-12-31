@@ -198,13 +198,13 @@ function BoxMenu() {
     setWidthItem(e.target.value);
     const item = findItem(state.id_item_selected);
     const itemDomReal = document.getElementById(state.id_item_selected);
-    if (item) {
-      if (!item.width.toString().includes("%")) {
-        item.width = e.target.value;
-      }
-    }
     if (itemDomReal) {
       itemDomReal.parentElement.style.width = e.target.value + "px";
+    }
+    if (item) {
+      if (!item.width.toString().includes("%")) {
+        item.width = parseInt(e.target.value);
+      }
     }
   };
 
