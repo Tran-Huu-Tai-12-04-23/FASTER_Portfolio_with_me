@@ -276,6 +276,7 @@ function EditorComponent({ style }) {
         return item.id !== state.id_item_selected;
       });
     });
+    setEditorComponent(false);
   };
 
   //handle hidden and show edit component when i click display
