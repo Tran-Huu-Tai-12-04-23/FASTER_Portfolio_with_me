@@ -148,7 +148,9 @@ function BoxMenu() {
       setTypeImage(item.src ? "image" : "choose");
       setHrefItem(item.href ? item.href : "");
       if (item.textValue || item.valueItem) {
-        setNameLinkItem(item.textValue ? item.textValue : item.valueItem);
+        setNameLinkItem(
+          item.textValue ? item.textValue : item.valueItem ? item.valueItem : ""
+        );
       }
     }
   }, [state]);
@@ -238,7 +240,7 @@ function BoxMenu() {
       item.href = hrefItem;
     }
     if (itemReal) {
-      console.log(itemReal);
+      // console.log(itemReal);
       itemReal.href = hrefItem;
     }
     setShowEditHref(false);
@@ -659,11 +661,11 @@ function BoxMenu() {
             justifyContent: "center",
           }}
         >
-          <span style={{ textAlign: "center", width: "80%" }}>Href:</span>
+          <span style={{ textAlign: "center", width: "80%" }}>Name Link:</span>
           <input
-            type='url'
+            type='text'
             style={{ textAlign: "center", width: "80%" }}
-            placeholder='name link..'
+            placeholder='Name link..'
             value={nameLinkItem}
             onChange={(e) => {
               setNameLinkItem(e.target.value);
@@ -693,7 +695,7 @@ function BoxMenu() {
           <input
             type='url'
             style={{ textAlign: "center", width: "80%" }}
-            placeholder='href..'
+            placeholder='Href..'
             value={hrefItem}
             onChange={(e) => {
               setHrefItem(e.target.value);

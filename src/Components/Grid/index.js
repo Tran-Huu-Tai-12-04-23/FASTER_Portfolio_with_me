@@ -53,7 +53,7 @@ function Grid(props) {
           let leftIt;
           if (item.left.toString().includes("%")) {
             leftIt = item.left.toString().substring(0, item.left.length - 1);
-            console.log(leftIt);
+            // console.log(leftIt);
             left = `${
               (((leftIt / 100) * grid.current.offsetWidth + delta.x) /
                 grid.current.offsetWidth) *
@@ -71,9 +71,9 @@ function Grid(props) {
         } else {
           top = Math.round(item.top + delta.y);
         }
-        state.stackUndo.push(structuredClone(item.itemsDrag));
-        console.log(left);
-        console.log(top);
+        // state.stackUndo.push(structuredClone(item.itemsDrag));
+        // console.log(left);
+        // console.log(top);
         if (item.type === "background" || item.type === "backgroundImage") {
           left = 0;
           if (top < 0 && top) {
@@ -237,7 +237,7 @@ function Grid(props) {
   const moveItem = (id, left, top, inGrid, itemsItem) => {
     itemsItem.map((item) => {
       if (item.id === id) {
-        console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
+        // console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
         item.left = left;
         item.top = top;
       }

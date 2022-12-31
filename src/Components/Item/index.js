@@ -537,7 +537,7 @@ function Item({
               {InfoIcon ? icons[InfoIcon] : null}
             </a>
 
-            <div
+            {/* <div
               className={clsx(styles.item_edit)}
               onClick={(e) => {
                 e.stopPropagation();
@@ -607,7 +607,7 @@ function Item({
               >
                 Enter
               </button>
-            </div>
+            </div> */}
           </>
         </ReactResizableBox>
       );
