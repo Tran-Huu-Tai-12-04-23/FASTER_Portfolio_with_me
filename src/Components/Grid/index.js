@@ -229,6 +229,7 @@ function Grid(props) {
       styles = {
         border: "none",
         backgroundColor: "#ccc",
+        width: "100%",
       };
       height = 400;
       width = "100%";
