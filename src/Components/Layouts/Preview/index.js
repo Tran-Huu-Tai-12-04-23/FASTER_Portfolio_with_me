@@ -40,7 +40,7 @@ function Preview({
                 top: item.top,
                 left: item.left,
                 ...item.styleDefault,
-                zIndex: 1,
+                zIndex: item.type === "img" ? 2 : 1,
                 transform: item.center ? "translateX(-50%)" : "",
               }}
             ></img>
@@ -75,7 +75,7 @@ function Preview({
                 width: item.width,
                 transform: item.center ? "translateX(-50%)" : "",
                 ...item.styleDefault,
-                zIndex: 1,
+                zIndex: 2,
               }}
             ></div>
           );
