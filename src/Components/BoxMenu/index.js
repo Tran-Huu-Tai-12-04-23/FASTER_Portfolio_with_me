@@ -103,6 +103,7 @@ function BoxMenu() {
     };
     reader.readAsDataURL(e.target.files[0]);
     setShowChooseLinkImage(true);
+    setShowEditUrl(true);
   };
   /// resize set width content
   useEffect(() => {
