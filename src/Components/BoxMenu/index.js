@@ -578,25 +578,32 @@ function BoxMenu() {
             placeholder='Left..'
           ></input>
         </div>
-        <select
+        <div
           style={{
-            width: "100%",
-            padding: 12,
-            margin: "24px 0 12px 0",
+            justifyContent: "flex-start",
+            alignItems: "center",
             display:
               typeItemSelected === "backgroundImage" ||
               typeItemSelected === "img"
-                ? "block"
+                ? "flex"
                 : "none",
           }}
-          onChange={(e) => {
-            setTypeImage(e.target.value);
-          }}
-          value={typeImage}
         >
-          <option value={"choose"}>Choose file</option>
-          <option value={"image"}>Image</option>
-        </select>
+          <span>Select</span>
+          <select
+            style={{
+              width: "50%",
+              padding: 4,
+            }}
+            onChange={(e) => {
+              setTypeImage(e.target.value);
+            }}
+            value={typeImage}
+          >
+            <option value={"choose"}>Choose file</option>
+            <option value={"image"}>Image</option>
+          </select>
+        </div>
         <div
           style={{
             display:
@@ -608,10 +615,10 @@ function BoxMenu() {
             justifyContent: "center",
           }}
         >
-          <span style={{ textAlign: "center", width: "80%" }}>Url:</span>
+          <span style={{ textAlign: "center", width: "100%" }}>Url:</span>
           <input
             type='url'
-            style={{ textAlign: "center", width: "80%" }}
+            style={{ textAlign: "center", width: "100%" }}
             placeholder='url..'
             value={urlItem}
             onChange={(e) => {
@@ -717,13 +724,26 @@ function BoxMenu() {
         <div
           style={{
             display: typeItemSelected === "background" ? "flex" : "none",
+            marginTop: 10,
+            justifyContent: "space-around",
           }}
         >
-          <span>Color:</span>
+          <span
+            style={{
+              width: "20%",
+            }}
+          >
+            Color:
+          </span>
           <input
             type={"color"}
             onChange={handleChangeColor}
             value={color}
+            style={{
+              height: "20px",
+              padding: 0,
+              width: "50%",
+            }}
           ></input>
         </div>
       </div>

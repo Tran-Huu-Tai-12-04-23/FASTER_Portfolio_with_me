@@ -271,6 +271,7 @@ function CreatePortfolio({
                     </button>
                     <button
                       onClick={(e) => {
+                        e.stopPropagation();
                         setItems(dataRecovery);
                         setShowRecovery(false);
                       }}
