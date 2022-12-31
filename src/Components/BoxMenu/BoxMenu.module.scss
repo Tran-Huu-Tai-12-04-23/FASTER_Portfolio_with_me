@@ -79,3 +79,16 @@
     }
   }
 }
+
+.button {
+  width: 50%;
+  margin-top: 10px;
+  padding: 4px 10px;
+  border: 1px outset var(--primary);
+  background-color: rgba(0, 0, 0, 0.3);
+  color: #fff;
+  &:hover {
+    background-color: var(--primary);
+    cursor: pointer;
+  }
+}

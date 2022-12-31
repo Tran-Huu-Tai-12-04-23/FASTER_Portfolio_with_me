@@ -70,6 +70,12 @@ function BoxMenu() {
   const [topItem, setTopItem] = useState(0);
   const [leftItem, setLeftItem] = useState(0);
   const [widthItem, setWidthItem] = useState(0);
+  const [urlItem, setUrlItem] = useState(0);
+  const [hrefItem, setHrefItem] = useState(0);
+  const [nameLinkItem, setNameLinkItem] = useState(0);
+  const [showEditHref, setShowEditHref] = useState(true);
+  const [showEditUrl, setShowEditUrl] = useState(true);
+  const [showEditNameLink, setShowNameLinkItem] = useState(true);
   const [color, setColor] = useState("#fff");
 
   const findItem = (id) => {
@@ -119,6 +125,15 @@ function BoxMenu() {
       }
       if (!item.width.toString().includes("%")) {
         setWidthItem(item.width);
+      }
+      if (item.src) {
+        setUrlItem(item.src);
+      }
+      if (item.href) {
+        setHrefItem(item.href);
+      }
+      if (item.textValue || item.valueItem) {
+        setNameLinkItem(item.textValue ? item.textValue : item.valueItem);
       }
     }
   }, [state]);
@@ -174,6 +189,42 @@ function BoxMenu() {
     if (itemDomReal) {
       itemDomReal.parentElement.style.width = e.target.value + "px";
     }
+  };
+
+  const handleChangeUrlItem = (e) => {
+    const item = findItem(state.id_item_selected);
+    const itemReal = document.getElementById(state.id_item_selected);
+    if (item) {
+      item.src = urlItem;
+    }
+    if (itemReal) {
+      itemReal.src = urlItem;
+    }
+    setShowEditUrl(false);
+  };
+  const handleChangeHrefItem = (e) => {
+    const item = findItem(state.id_item_selected);
+    const itemReal = document.getElementById(state.id_item_selected);
+    if (item) {
+      item.href = hrefItem;
+    }
+    if (itemReal) {
+      console.log(itemReal);
+      itemReal.href = hrefItem;
+    }
+    setShowEditHref(false);
+  };
+  const handleChangeNameLinkItem = (e) => {
+    const item = findItem(state.id_item_selected);
+    const itemReal = document.getElementById(state.id_item_selected);
+    if (item) {
+      item.valueItem = nameLinkItem;
+      item.textValue = nameLinkItem;
+    }
+    if (itemReal) {
+      itemReal.textContent = nameLinkItem;
+    }
+    setShowNameLinkItem(false);
   };
 
   const handleChangeColor = (e) => {
@@ -495,9 +546,13 @@ function BoxMenu() {
           ></input>
         </div>
 
-        {/* <div
+        <div
           style={{
-            display: typeItemSelected === "backgroundImage" ? "flex" : "none",
+            display:
+              typeItemSelected === "backgroundImage" ||
+              typeItemSelected === "img"
+                ? "flex"
+                : "none",
             justifyContent: "center",
           }}
         >
@@ -506,8 +561,79 @@ function BoxMenu() {
             type='url'
             style={{ textAlign: "center", width: "80%" }}
             placeholder='url..'
+            value={urlItem}
+            onChange={(e) => {
+              setUrlItem(e.target.value);
+              setShowEditUrl(true);
+            }}
           ></input>
-        </div> */}
+          <button
+            className={clsx(styles.button)}
+            onClick={handleChangeUrlItem}
+            style={{
+              display: showEditUrl ? "block" : "none",
+            }}
+          >
+            Save
+          </button>
+        </div>
+        <div
+          style={{
+            display: typeItemSelected === "a" ? "flex" : "none",
+            justifyContent: "center",
+          }}
+        >
+          <span style={{ textAlign: "center", width: "80%" }}>Href:</span>
+          <input
+            type='url'
+            style={{ textAlign: "center", width: "80%" }}
+            placeholder='name link..'
+            value={nameLinkItem}
+            onChange={(e) => {
+              setNameLinkItem(e.target.value);
+              setShowNameLinkItem(true);
+            }}
+          ></input>
+          <button
+            className={clsx(styles.button)}
+            onClick={handleChangeNameLinkItem}
+            style={{
+              display: showEditNameLink ? "block" : "none",
+            }}
+          >
+            Save
+          </button>
+        </div>
+        <div
+          style={{
+            display:
+              typeItemSelected === "a" || typeItemSelected === "icon"
+                ? "flex"
+                : "none",
+            justifyContent: "center",
+          }}
+        >
+          <span style={{ textAlign: "center", width: "80%" }}>Href:</span>
+          <input
+            type='url'
+            style={{ textAlign: "center", width: "80%" }}
+            placeholder='href..'
+            value={hrefItem}
+            onChange={(e) => {
+              setHrefItem(e.target.value);
+              setShowEditHref(true);
+            }}
+          ></input>
+          <button
+            className={clsx(styles.button)}
+            onClick={handleChangeHrefItem}
+            style={{
+              display: showEditHref ? "block" : "none",
+            }}
+          >
+            Save
+          </button>
+        </div>
         <div
           style={{
             display: typeItemSelected === "background" ? "flex" : "none",
