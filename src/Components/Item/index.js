@@ -421,6 +421,7 @@ function Item({
             ...stylesItem,
             transform: center ? "translateX(-50%)" : "none",
             maxWidth: "102%",
+            zIndex: type === "background" || type === "backgroundImage" ? 0 : 1,
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}

@@ -91,6 +91,9 @@ function BoxMenu() {
     return item;
   };
   const handleShowInputImg = (e) => {
+    console.log(URL.createObjectURL(e.target.files[0]));
+    setShowChooseLinkImage(true);
+    setShowEditUrl(true);
     const reader = new FileReader();
     var url;
     reader.onload = () => {
@@ -102,8 +105,6 @@ function BoxMenu() {
       }
     };
     reader.readAsDataURL(e.target.files[0]);
-    setShowChooseLinkImage(true);
-    setShowEditUrl(true);
   };
   /// resize set width content
   useEffect(() => {
