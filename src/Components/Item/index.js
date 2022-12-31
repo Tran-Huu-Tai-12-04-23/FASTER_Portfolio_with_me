@@ -321,11 +321,11 @@ function Item({
   };
 
   //show, hidden trash
-  useEffect(() => {
-    if (isDragging) {
-      setEditorComponent(true);
-    }
-  }, [isDragging]);
+  // useEffect(() => {
+  //   if (isDragging) {
+  //     setEditorComponent(true);
+  //   }
+  // }, [isDragging]);
 
   useEffect(() => {
     setType(icon ? "div" : type);

@@ -132,6 +132,7 @@ function Grid(props) {
       canDrop: monitor.canDrop(),
     }),
   }));
+
   const addItem = (
     id,
     type,
@@ -265,6 +266,8 @@ function Grid(props) {
     });
   };
   const moveItem = (id, left, top, inGrid, itemsItem) => {
+    setEditorComponent(true);
+    dispatch(setIdItemSelected(id));
     itemsItem.map((item) => {
       if (item.id === id) {
         // console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
@@ -297,6 +300,14 @@ function Grid(props) {
       itemDomReal.style.backgroundColor = state.background_color;
     }
   }, [state]);
+
+  useLayoutEffect(() => {
+    // if (isDragging && !canDrop) {
+    //   setEditorComponent(isOver && canDrop);
+    // }
+    // if( isDragging ) {
+    // }
+  }, [{ isOver, isDragging }]);
   // useEffect(() => {
   //   console.log("check");
   //   items.map((item) => {
