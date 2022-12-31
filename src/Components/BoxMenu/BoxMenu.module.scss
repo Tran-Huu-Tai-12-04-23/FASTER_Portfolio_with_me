@@ -92,3 +92,30 @@
     cursor: pointer;
   }
 }
+
+.input_file {
+  background-color: transparent;
+  z-index: unset;
+  height: 40px;
+  padding: 0 !important;
+
+  &[type="file"]::file-selector-button {
+    color: #fff;
+    width: calc(100% - 16px);
+    height: 20px;
+    margin: 8px;
+    border: none;
+    background: var(--primary);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease-in-out;
+    line-height: 100%;
+    margin-right: 20px;
+    font-size: 12px;
+  }
+  &[type="file"] {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

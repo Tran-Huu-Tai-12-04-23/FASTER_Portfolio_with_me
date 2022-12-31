@@ -30,6 +30,7 @@ import {
   ContextReducer,
   ContextItemsIngrid,
 } from "~/Store/Context";
+import { setType } from "~/Store/reducer/actions";
 
 function BoxMenu() {
   const icons = [
@@ -64,18 +65,20 @@ function BoxMenu() {
   const [showEditorComponent, setEditorComponent] = useContext(
     ContextShowEditorComponent
   );
-  const [typeBackground, setTypeBackground] = useState("image");
+  const [typeImage, setTypeImage] = useState("choose");
   const [typeItemSelected, setTypeItemSelected] = useState("input");
   const [heightItem, setHeightItem] = useState(0);
   const [topItem, setTopItem] = useState(0);
   const [leftItem, setLeftItem] = useState(0);
   const [widthItem, setWidthItem] = useState(0);
-  const [urlItem, setUrlItem] = useState(0);
-  const [hrefItem, setHrefItem] = useState(0);
-  const [nameLinkItem, setNameLinkItem] = useState(0);
+  const [urlItem, setUrlItem] = useState("");
+  const [hrefItem, setHrefItem] = useState("");
+  const [nameLinkItem, setNameLinkItem] = useState("");
+  const [linkImage, setLinkImage] = useState("");
   const [showEditHref, setShowEditHref] = useState(true);
   const [showEditUrl, setShowEditUrl] = useState(true);
   const [showEditNameLink, setShowNameLinkItem] = useState(true);
+  const [showChooseLinkImage, setShowChooseLinkImage] = useState(true);
   const [color, setColor] = useState("#fff");
 
   const findItem = (id) => {
@@ -86,6 +89,19 @@ function BoxMenu() {
       }
     });
     return item;
+  };
+  const handleShowInputImg = (e) => {
+    const reader = new FileReader();
+    var url;
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        url = reader.result;
+        setLinkImage(url);
+        alert(url);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+    setShowChooseLinkImage(true);
   };
   /// resize set width content
   useEffect(() => {
@@ -126,12 +142,10 @@ function BoxMenu() {
       if (!item.width.toString().includes("%")) {
         setWidthItem(item.width);
       }
-      if (item.src) {
-        setUrlItem(item.src ? item.src : "");
-      }
-      if (item.href) {
-        setHrefItem(item.href ? item.href : "");
-      }
+
+      setUrlItem(item.src ? item.src : "");
+      console.log(showEditUrl);
+      setHrefItem(item.href ? item.href : "");
       if (item.textValue || item.valueItem) {
         setNameLinkItem(item.textValue ? item.textValue : item.valueItem);
       }
@@ -199,8 +213,21 @@ function BoxMenu() {
     }
     if (itemReal) {
       itemReal.src = urlItem;
+      // itemReal.replaceTag("img");
     }
     setShowEditUrl(false);
+  };
+  const handleSaveLinkImage = (e) => {
+    const item = findItem(state.id_item_selected);
+    const itemReal = document.getElementById(state.id_item_selected);
+    if (item) {
+      item.src = linkImage;
+    }
+    if (itemReal) {
+      itemReal.src = linkImage;
+      // itemReal.replaceTag("img");
+    }
+    setShowChooseLinkImage(false);
   };
   const handleChangeHrefItem = (e) => {
     const item = findItem(state.id_item_selected);
@@ -545,12 +572,25 @@ function BoxMenu() {
             placeholder='Left..'
           ></input>
         </div>
-
+        <select
+          style={{
+            width: "100%",
+            padding: 12,
+            margin: "24px 0 12px 0",
+          }}
+          onChange={(e) => {
+            setTypeImage(e.target.value);
+          }}
+        >
+          <option value={"choose"}>Choose file</option>
+          <option value={"image"}>Image</option>
+        </select>
         <div
           style={{
             display:
-              typeItemSelected === "backgroundImage" ||
-              typeItemSelected === "img"
+              (typeItemSelected === "backgroundImage" ||
+                typeItemSelected === "img") &&
+              typeImage !== "choose"
                 ? "flex"
                 : "none",
             justifyContent: "center",
@@ -572,6 +612,34 @@ function BoxMenu() {
             onClick={handleChangeUrlItem}
             style={{
               display: showEditUrl ? "block" : "none",
+            }}
+          >
+            Save
+          </button>
+        </div>
+        <div
+          style={{
+            display:
+              (typeItemSelected === "backgroundImage" ||
+                typeItemSelected === "img") &&
+              typeImage === "choose"
+                ? "flex"
+                : "none",
+            justifyContent: "center",
+          }}
+        >
+          <input
+            className={clsx(styles.input_file)}
+            type='file'
+            style={{ textAlign: "center", width: "80%" }}
+            onChange={handleShowInputImg}
+            accept={"image/*"}
+          ></input>
+          <button
+            className={clsx(styles.button)}
+            onClick={handleSaveLinkImage}
+            style={{
+              display: showChooseLinkImage ? "block" : "none",
             }}
           >
             Save

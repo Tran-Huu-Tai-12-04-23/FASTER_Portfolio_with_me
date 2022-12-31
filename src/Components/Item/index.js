@@ -80,7 +80,11 @@ function Item({
     textValue ? textValue : href ? href.name : ""
   );
   const [Type, setType] = useState("div");
-  const [linkImg, setLinkImg] = useState(src ? src : "");
+  const [linkImg, setLinkImg] = useState(
+    src
+      ? src
+      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq9zZ0dsOIYyjwZdkWKTE_kuxtRplsy9dexPnXEzCsMRNXXATXEmrELQz9i7z1aeStYJI&usqp=CAU"
+  );
   const [state, dispatch] = useContext(ContextReducer);
   const [showModal, setShowModal] = useState(href ? false : true);
   const [showEditLinkIcon, setShowEditLinkIcon] = useState(false);
@@ -173,7 +177,7 @@ function Item({
   };
 
   const handleShowInputImg = (e) => {
-    state.stackUndo.push(structuredClone(items));
+    // state.stackUndo.push(structuredClone(items));d
     var item = findItem(e.target.id);
     const reader = new FileReader();
     var url;
@@ -319,7 +323,7 @@ function Item({
   //show, hidden trash
   useEffect(() => {
     if (isDragging) {
-      setEditorComponent(false);
+      setEditorComponent(true);
     }
   }, [isDragging]);
 
@@ -327,16 +331,14 @@ function Item({
     setType(icon ? "div" : type);
     setType(type === "button" ? "input" : type);
     if (type === "img" || type === "backgroundImage") {
-      setType(src ? "img" : "input");
+      setType(linkImg ? "img" : "input");
       propsTypeLink.type = "file";
     }
 
     if (icon) {
       setType("div");
     }
-    if (linkImg) {
-      setType("img");
-    }
+
     if (type === "input" && !icon) {
       setType("textarea");
     }
@@ -351,6 +353,13 @@ function Item({
       setType("div");
     }
   }, [linkImg]);
+  //change type when have src
+  useLayoutEffect(() => {
+    // setLinkImg(src);
+    // setType("img");
+    // setNameItemLink(null);
+    // console.log(nameItemLink);
+  }, [src]);
 
   let contentPortfolio, setShowTrash, widthContent;
   //get width wrapper content
@@ -398,7 +407,6 @@ function Item({
     }
   }, [items]);
   // render item
-
   const renderItem = () => {
     if (resizable && type !== "icon") {
       return (
@@ -441,9 +449,9 @@ function Item({
                 type !== "img" && type !== "backgroundImage" ? value : undefined
               }
               onChange={
-                type === "img" || type === "backgroundImage"
-                  ? handleShowInputImg
-                  : handleChangeValue
+                type !== "img" && type !== "backgroundImage"
+                  ? handleChangeValue
+                  : null
               }
               href={linkItemTypeA ? linkItemTypeA : href}
               target={linkItemTypeA ? "_blank" : null}
@@ -453,7 +461,9 @@ function Item({
                 ...styleDefault,
               }}
               type={
-                type === "img" || type === "backgroundImage" ? "file" : "text"
+                (type === "img" || type === "backgroundImage") && !src
+                  ? "file"
+                  : "text"
               }
               accept={type !== "img" ? null : "image/*"}
             >
