@@ -267,12 +267,33 @@ function Grid(props) {
   };
   const moveItem = (id, left, top, inGrid, itemsItem) => {
     setEditorComponent(true);
-    dispatch(setIdItemSelected(id));
+    const loadStyleComponentInInitState = (styles) => {
+      dispatch(
+        setBackgroundColor(styles.backgroundColor ? styles.backgroundColor : "")
+      );
+      dispatch(setColor(styles.color ? styles.color : ""));
+      dispatch(setFontSize(styles.fontSize ? styles.fontSize : ""));
+      dispatch(setFontFamily(styles.fontFamily ? styles.fontFamily : ""));
+      dispatch(setBorderRadius(styles.borderRadius ? styles.borderRadius : ""));
+      dispatch(setBorderStyle(styles.borderStyle ? styles.borderStyle : ""));
+      dispatch(setBorderColor(styles.borderColor ? styles.borderColor : ""));
+      dispatch(setFontWeight(styles.fontWeight === "bold" ? true : false));
+      dispatch(setTextAlign(styles.textAlign === "center" ? true : false));
+      dispatch(setBorderSize(styles.borderWidth ? styles.borderWidth : ""));
+      dispatch(
+        setTextTransform(styles.textTransform === "uppercase" ? true : false)
+      );
+      dispatch(setLineHeight(styles.lineHeight ? styles.lineHeight : ""));
+    };
     itemsItem.map((item) => {
       if (item.id === id) {
         // console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
         item.left = left;
         item.top = top;
+        if (item) {
+          loadStyleComponentInInitState(item.styleDefault);
+          dispatch(setIdItemSelected(id));
+        }
       }
     });
   };
