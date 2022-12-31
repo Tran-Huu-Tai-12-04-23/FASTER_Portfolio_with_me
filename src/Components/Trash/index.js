@@ -6,9 +6,17 @@ import clsx from "clsx";
 import { FcEmptyTrash } from "react-icons/fc";
 
 import styles from "./Trash.module.scss";
-import { ContextItemsIngrid } from "~/Store/Context";
+import {
+  ContextItemsIngrid,
+  ContextShowEditorComponent,
+} from "~/Store/Context";
 
 function Trash({ id, display }) {
+  const [showEditorComponent, setEditorComponent] = useContext(
+    ContextShowEditorComponent
+  );
+  const [items, setItems] = useContext(ContextItemsIngrid);
+  const [idRemoved, setIdRemoved] = useState();
   //item in grid
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: ["ITEM_IN_GRID", "MULTI_ITEM"],
@@ -23,14 +31,12 @@ function Trash({ id, display }) {
     }),
   }));
 
-  const [items, setItems] = useContext(ContextItemsIngrid);
-  const [idRemoved, setIdRemoved] = useState();
-
   useEffect(() => {
     const newItems = items.filter((item) => {
       return item.id !== idRemoved;
     });
     setItems(newItems);
+    setEditorComponent(false);
   }, [idRemoved]);
   return (
     <div

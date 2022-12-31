@@ -97,7 +97,8 @@ function BoxMenu() {
       if (reader.readyState === 2) {
         url = reader.result;
         setLinkImage(url);
-        alert(url);
+        setUrlItem(url);
+        setTypeImage("image");
       }
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -144,7 +145,7 @@ function BoxMenu() {
       }
 
       setUrlItem(item.src ? item.src : "");
-      console.log(showEditUrl);
+      setTypeImage(item.src ? "image" : "choose");
       setHrefItem(item.href ? item.href : "");
       if (item.textValue || item.valueItem) {
         setNameLinkItem(item.textValue ? item.textValue : item.valueItem);
@@ -227,6 +228,7 @@ function BoxMenu() {
       itemReal.src = linkImage;
       // itemReal.replaceTag("img");
     }
+    setUrlItem(linkImage);
     setShowChooseLinkImage(false);
   };
   const handleChangeHrefItem = (e) => {
@@ -577,10 +579,16 @@ function BoxMenu() {
             width: "100%",
             padding: 12,
             margin: "24px 0 12px 0",
+            display:
+              typeItemSelected === "backgroundImage" ||
+              typeItemSelected === "img"
+                ? "block"
+                : "none",
           }}
           onChange={(e) => {
             setTypeImage(e.target.value);
           }}
+          value={typeImage}
         >
           <option value={"choose"}>Choose file</option>
           <option value={"image"}>Image</option>
