@@ -24,6 +24,18 @@ import {
   undo,
   redo,
   setIdItemSelected,
+  setColor,
+  setFontSize,
+  setFontFamily,
+  setBorderRadius,
+  setBorderStyle,
+  setBorderColor,
+  setFontWeight,
+  setTextAlign,
+  setBorderSize,
+  setLineHeight,
+  setTextTransform,
+  setBackgroundColor,
 } from "~/Store/reducer/actions";
 import { TfiHandOpen } from "react-icons/tfi";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
@@ -31,7 +43,7 @@ import { TfiHandOpen } from "react-icons/tfi";
 function Grid(props) {
   const [state, dispatch] = useContext(ContextReducer);
   const [items, setItems] = useContext(ContextItemsIngrid);
-  const [backgroundColor, setBackgroundColor] = useState("#fff");
+  const [backgroundColor, setBackgroundColorGrid] = useState("#fff");
   const [contentPortfolio, setShowTrash, widthContent] = useContext(
     ElementContentPortfolio
   );
@@ -135,6 +147,24 @@ function Grid(props) {
   ) => {
     setEditorComponent(!showEditorComponent);
     dispatch(setIdItemSelected(id));
+    const loadStyleComponentInInitState = (styles) => {
+      dispatch(
+        setBackgroundColor(styles.backgroundColor ? styles.backgroundColor : "")
+      );
+      dispatch(setColor(styles.color ? styles.color : ""));
+      dispatch(setFontSize(styles.fontSize ? styles.fontSize : ""));
+      dispatch(setFontFamily(styles.fontFamily ? styles.fontFamily : ""));
+      dispatch(setBorderRadius(styles.borderRadius ? styles.borderRadius : ""));
+      dispatch(setBorderStyle(styles.borderStyle ? styles.borderStyle : ""));
+      dispatch(setBorderColor(styles.borderColor ? styles.borderColor : ""));
+      dispatch(setFontWeight(styles.fontWeight === "bold" ? true : false));
+      dispatch(setTextAlign(styles.textAlign === "center" ? true : false));
+      dispatch(setBorderSize(styles.borderWidth ? styles.borderWidth : ""));
+      dispatch(
+        setTextTransform(styles.textTransform === "uppercase" ? true : false)
+      );
+      dispatch(setLineHeight(styles.lineHeight ? styles.lineHeight : ""));
+    };
     var styles = {};
     var textValues = "";
     var height;
@@ -212,7 +242,7 @@ function Grid(props) {
       width = "100%";
       left = "0%";
     }
-
+    loadStyleComponentInInitState(styles);
     setItems((prev) => {
       return [
         ...prev,
