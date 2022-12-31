@@ -460,7 +460,7 @@ function Item({
               {nameItemLink ? nameItemLink : null}
             </Type>
 
-            {type === "a" ? (
+            {/* {type === "a" ? (
               <div
                 id={id}
                 className={clsx(styles.item_edit)}
@@ -470,7 +470,7 @@ function Item({
                   <RiEdit2Fill onClick={handleEditLink}></RiEdit2Fill>
                 </TipSuggest>
               </div>
-            ) : undefined}
+            ) : undefined} */}
           </>
         </ReactResizableBox>
       );

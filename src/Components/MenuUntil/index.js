@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 import {
   faArrowAltCircleLeft,
@@ -9,10 +9,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import clsx from "clsx";
 import styles from "./MenuUntil.module.scss";
 import { BoxMenu, TipSuggest } from "~/Components";
+import { ContextShowEditorComponent } from "~/Store/Context";
 
 function MenuUntil({ state, valueState, children }) {
   const [show, setShow] = useState(true);
   const [showMenuUtil, setShowMenuUtil] = useState(true);
+  const [showEditorComponent, setEditorComponent] = useContext(
+    ContextShowEditorComponent
+  );
 
   const handleChangeMenu = () => {
     setShow(!show);
@@ -38,7 +42,7 @@ function MenuUntil({ state, valueState, children }) {
           [styles.hidden]: !show,
         })}
       >
-        Components
+        {showEditorComponent ? "Editor" : "Components"}
       </h1>
       {/* //contenm */}
       <div className={clsx(styles.wrapper_component)}>

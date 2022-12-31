@@ -127,10 +127,10 @@ function BoxMenu() {
         setWidthItem(item.width);
       }
       if (item.src) {
-        setUrlItem(item.src);
+        setUrlItem(item.src ? item.src : "");
       }
       if (item.href) {
-        setHrefItem(item.href);
+        setHrefItem(item.href ? item.href : "");
       }
       if (item.textValue || item.valueItem) {
         setNameLinkItem(item.textValue ? item.textValue : item.valueItem);

@@ -16,8 +16,15 @@ import {
   ElementContentPortfolio,
   ShowOverlay,
   ContextReducer,
+  ContextShowEditorComponent,
 } from "~/Store/Context";
-import { setUndo, setRedo, undo, redo } from "~/Store/reducer/actions";
+import {
+  setUndo,
+  setRedo,
+  undo,
+  redo,
+  setIdItemSelected,
+} from "~/Store/reducer/actions";
 import { TfiHandOpen } from "react-icons/tfi";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
 
@@ -27,6 +34,9 @@ function Grid(props) {
   const [backgroundColor, setBackgroundColor] = useState("#fff");
   const [contentPortfolio, setShowTrash, widthContent] = useContext(
     ElementContentPortfolio
+  );
+  const [showEditorComponent, setEditorComponent] = useContext(
+    ContextShowEditorComponent
   );
   const grid = useRef();
   // console.log(widthContent);
@@ -123,6 +133,8 @@ function Grid(props) {
     width = 200,
     height = type === "a" ? 30 : 100
   ) => {
+    setEditorComponent(!showEditorComponent);
+    dispatch(setIdItemSelected(id));
     var styles = {};
     var textValues = "";
     var height;
@@ -168,6 +180,7 @@ function Grid(props) {
         borderStyle: "solid",
         borderColor: "#757575",
         padding: "12px",
+        color: "#757575",
       };
     }
     if (type === "icon") {
