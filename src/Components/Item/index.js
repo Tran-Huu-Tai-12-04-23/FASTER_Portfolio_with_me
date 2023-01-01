@@ -528,6 +528,7 @@ function Item({
           }
           style={{
             ...stylesItem,
+            zIndex: 1,
           }}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
