@@ -383,7 +383,9 @@ function Item({
           width.toString().substring(0, width.toString().length - 1)
         );
         if (widthNumber) {
-          setWidthContents((widthNumber / 100) * parseInt(widthContent));
+          setWidthContents(
+            parseInt((widthNumber / 100) * parseInt(widthContent))
+          );
         }
       }
     }
@@ -425,9 +427,11 @@ function Item({
     if (resizable && type !== "icon") {
       return (
         <ReactResizableBox
-          width={widthContents ? parseInt(widthContents) : width}
+          width={widthContents ? parseInt(widthContents) : parseInt(width)}
           height={
-            heightWrapperReSizeable ? parseInt(heightWrapperReSizeable) : height
+            heightWrapperReSizeable
+              ? parseInt(heightWrapperReSizeable)
+              : parseInt(height)
           }
           // onClick={handleSelectItemToEdit}
 
@@ -522,9 +526,11 @@ function Item({
     } else if (type === "icon" && inGrid && isChild === false) {
       return (
         <ReactResizableBox
-          width={widthContents ? parseInt(widthContents) : width}
+          width={widthContents ? parseInt(widthContents) : parseInt(width)}
           height={
-            heightWrapperReSizeable ? parseInt(heightWrapperReSizeable) : height
+            heightWrapperReSizeable
+              ? parseInt(heightWrapperReSizeable)
+              : parseInt(height)
           }
           style={{
             ...stylesItem,

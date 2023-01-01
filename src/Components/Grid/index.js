@@ -225,6 +225,28 @@ function Grid(props) {
         borderColor: "#FFCCFF",
         padding: "12px",
       };
+      if (InfoIcon.trim() === "Facebook") {
+        styles = {
+          ...styles,
+          color: "blue",
+          backgroundColor: "rgba(255, 255, 255)",
+        };
+      }
+      if (InfoIcon.trim() === "Github") {
+        styles = {
+          ...styles,
+          color: "#000",
+          backgroundColor: "rgba(255, 255, 255)",
+        };
+      }
+      if (InfoIcon.trim() === "Linkedin") {
+        styles = { ...styles, color: "#00FFFF" };
+      }
+      if (InfoIcon.trim() === "Youtube" || InfoIcon.trim() === "Instagram") {
+        styles = { ...styles, color: "red" };
+      }
+
+      console.log(styles);
       height = 60;
       width = 60;
     }
