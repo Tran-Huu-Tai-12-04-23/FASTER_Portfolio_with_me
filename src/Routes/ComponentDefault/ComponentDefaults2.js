@@ -2,7 +2,7 @@ import uuid from "react-uuid";
 
 export const DefaultItemInGridTemplate2 = [
   {
-    id: uuid(),
+    id: "9b4011da-66bd-e02b-e731-9414b9d67d98",
     type: "background",
     left: "0%",
     top: 0,
@@ -31,7 +31,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "f2a7b923-1e58-134a-8248-de798e79e201",
     type: "input",
     left: "3.6061026352288486%",
     top: 30,
@@ -60,7 +60,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "Portf",
   },
   {
-    id: uuid(),
+    id: "d3b73986-0722-2a65-8843-60f8c6f70aa5",
     type: "input",
     left: "8.668515950069349%",
     top: 30,
@@ -89,7 +89,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "olio",
   },
   {
-    id: uuid(),
+    id: "9b3551c3-f7eb-03c7-a978-f5399b1fa8cd",
     type: "a",
     left: "29%",
     top: 30,
@@ -119,7 +119,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "Home",
   },
   {
-    id: uuid(),
+    id: "e07e6365-e0af-72e4-3ca3-c84f05225708",
     type: "a",
     left: "38%",
     top: 30,
@@ -149,7 +149,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "About us",
   },
   {
-    id: uuid(),
+    id: "38dcf41a-d11b-76c7-1456-af14c19922f8",
     type: "a",
     left: "47%",
     top: 30,
@@ -179,7 +179,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "Services",
   },
   {
-    id: uuid(),
+    id: "1eef0659-4f02-ee57-dc2d-359025aab642",
     type: "a",
     left: "55%",
     top: 30,
@@ -209,7 +209,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "Skills",
   },
   {
-    id: uuid(),
+    id: "a18b9c31-eecb-9090-31c3-2c43593c4ad1",
     type: "a",
     left: "63%",
     top: 30,
@@ -239,7 +239,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "Contact me",
   },
   {
-    id: uuid(),
+    id: "0ec73837-b26e-9faf-1ca3-496bbd67bdea",
     type: "button",
     left: "87.1012482662968%",
     top: 34,
@@ -268,7 +268,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "Contact",
   },
   {
-    id: uuid(),
+    id: "8d5567da-1697-3f22-2514-cc44dcff187a",
     type: "input",
     left: "29.819694868238557%",
     top: 174,
@@ -297,7 +297,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "<name>",
   },
   {
-    id: uuid(),
+    id: "222fb1d1-be0c-494d-b9a5-f7c3a9fb2bba",
     type: "input",
     left: "18.030513176144243%",
     top: 176,
@@ -326,7 +326,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "My full name is",
   },
   {
-    id: uuid(),
+    id: "f9fc84a1-287d-3219-0f59-4099cef5f622",
     type: "input",
     left: "23.57836338418863%",
     top: 234,
@@ -355,11 +355,11 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "I'm a website developer",
   },
   {
-    id: uuid(),
+    id: "162b75e7-58f3-0254-40bf-5cdcacd3474a",
     type: "input",
     left: "16.08876560332871%",
     top: 319,
-    width: "300",
+    width: 300,
     height: 52,
     inGrid: true,
     isMulti: false,
@@ -381,10 +381,9 @@ export const DefaultItemInGridTemplate2 = [
       borderSize: "1px",
     },
     valueItem: "Enter your email  ",
-    textValue: "Enter your email  ",
   },
   {
-    id: uuid(),
+    id: "2f4631ab-60e4-c217-2530-aebc992715a9",
     type: "button",
     left: "39.042995839112336%",
     top: 327,
@@ -406,14 +405,14 @@ export const DefaultItemInGridTemplate2 = [
       fontFamily: "",
       borderRadius: "23px",
       fontWeight: "",
-      lineHeight: "",
+      lineHeight: "10px",
       borderSize: "1px",
     },
     src: "",
     valueItem: "send",
   },
   {
-    id: uuid(),
+    id: "6890fed3-80b4-f16a-4f67-08e22e3cd6ec",
     type: "div",
     left: "51.10957004160886%",
     top: 350,
@@ -441,7 +440,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "5c73a5e2-274a-39a3-1c46-0be5fa887954",
     type: "img",
     left: "55.47850208044382%",
     top: 154,
@@ -470,7 +469,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "80b7efab-bd01-49a6-b6e7-2b1ee4f94a93",
     type: "background",
     left: "0%",
     top: 646,
@@ -499,7 +498,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "82231107-fe06-1ead-e8e9-9597dfd59d5f",
     type: "img",
     left: "21.63661581137309%",
     top: 798,
@@ -528,7 +527,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "4775ad2e-2e63-1923-9b9d-7b4d007e5dfd",
     type: "input",
     left: "62.13592233009708%",
     top: 804,
@@ -557,7 +556,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "About me ",
   },
   {
-    id: uuid(),
+    id: "bdd7eca8-c679-7f9f-c289-df29da4d09e6",
     type: "input",
     left: "59.986130374479885%",
     top: 894,
@@ -586,7 +585,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "enter text",
   },
   {
-    id: uuid(),
+    id: "66e1e608-cb07-e68d-40e4-8418f8a8a863",
     type: "background",
     left: "0%",
     top: 1292,
@@ -615,7 +614,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "26efaae5-924f-46fd-19c3-f6efb0e11081",
     type: "input",
     left: "44%",
     top: 1381,
@@ -644,7 +643,7 @@ export const DefaultItemInGridTemplate2 = [
     textValue: "Our Services",
   },
   {
-    id: uuid(),
+    id: "58227855-a0df-f357-19a0-20db0170f31d",
     type: "div",
     left: "20.87378640776699%",
     top: 1530,
@@ -672,7 +671,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "1e5fc885-eb5d-64f4-f8a5-9f36036e55ab",
     type: "div",
     left: "44.105409153952834%",
     top: 1530,
@@ -700,7 +699,7 @@ export const DefaultItemInGridTemplate2 = [
     valueItem: "",
   },
   {
-    id: uuid(),
+    id: "9eee8c7f-9ae4-d6f7-5157-56e985d6fe15",
     type: "div",
     left: "66.01941747572815%",
     top: 1530,
