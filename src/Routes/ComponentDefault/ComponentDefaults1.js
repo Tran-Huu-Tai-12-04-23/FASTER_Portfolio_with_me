@@ -6,7 +6,7 @@ export const DefaultItemInGridTemplate1 = [
     type: "background",
     left: "0%",
     top: 0,
-    width: 1442,
+    width: "100%",
     height: 600,
     inGrid: true,
     isMulti: false,

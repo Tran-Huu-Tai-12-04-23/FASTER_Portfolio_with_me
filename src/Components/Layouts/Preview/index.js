@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState, useLayoutEffect, useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import clsx from "clsx";
 import styles from "./Preview.module.scss";
@@ -18,6 +18,7 @@ function Preview({
   showPreview,
   children,
 }) {
+  const Preview = useRef();
   const icons = {
     Facebook: <GrFacebookOption />,
     Instagram: <GrInstagram />,
@@ -25,6 +26,7 @@ function Preview({
     Linkedin: <GrLinkedin />,
     Youtube: <GrYoutube />,
   };
+
   const renderItem = () => {
     if (items) {
       return items.map((item, index) => {
@@ -58,6 +60,10 @@ function Preview({
                 ...item.styleDefault,
                 zIndex: 2,
                 transform: item.center ? "translateX(-50%)" : "",
+                display: item.type === "button" ? "flex" : "block",
+                justifyContent: item.type === "button" ? "center" : "",
+                alignItems: item.type === "button" ? "center" : "",
+                overflow: "hidden",
               }}
             >
               {item.valueItem}
@@ -160,6 +166,7 @@ function Preview({
       style={{
         height: heightTemplate + 400,
       }}
+      ref={Preview}
     >
       <AiOutlineClose
         className={clsx(styles.icon_close)}
@@ -173,7 +180,7 @@ function Preview({
           width: width,
           height: heightTemplate,
         }}
-        id='preview'
+        id='Preview'
       >
         {items && renderItem()}
       </div>

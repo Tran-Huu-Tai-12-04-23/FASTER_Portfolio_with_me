@@ -79,6 +79,9 @@ function UserWeb({
                 ...item.styleDefault,
                 zIndex: 2,
                 transform: item.center ? "translateX(-50%)" : "",
+                display: item.type === "button" ? "flex" : "block",
+                justifyContent: item.type === "button" ? "center" : "",
+                alignItems: item.type === "button" ? "center" : "",
               }}
             >
               {item.valueItem}

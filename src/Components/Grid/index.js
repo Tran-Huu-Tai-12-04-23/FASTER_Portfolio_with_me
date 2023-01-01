@@ -17,6 +17,7 @@ import {
   ShowOverlay,
   ContextReducer,
   ContextShowEditorComponent,
+  GridWidth,
 } from "~/Store/Context";
 import {
   setUndo,
@@ -194,6 +195,7 @@ function Grid(props) {
         padding: "12px",
         textAlign: "center",
         textTransform: "uppercase",
+        borderRadius: "4px",
       };
       textValues = "Enter name button";
       height = 50;
@@ -212,6 +214,7 @@ function Grid(props) {
         borderColor: "#757575",
         padding: "12px",
         color: "#757575",
+        borderRadius: "4px",
       };
     }
     if (type === "icon") {
@@ -298,6 +301,7 @@ function Grid(props) {
       }
     });
   };
+
   //show, hidden trash
   let isDragging = useDragDropManager().monitor.isDragging();
   useEffect(() => {
@@ -330,6 +334,7 @@ function Grid(props) {
     // if( isDragging ) {
     // }
   }, [{ isOver, isDragging }]);
+
   // useEffect(() => {
   //   console.log("check");
   //   items.map((item) => {
@@ -373,25 +378,27 @@ function Grid(props) {
 
   return (
     <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-        ref={grid}
-      >
+      <GridWidth.Provider value={grid}>
         <div
-          ref={drop}
           style={{
-            backgroundColor,
+            width: "100%",
+            height: "100%",
           }}
-          className={clsx(styles.wrapper)}
-          id={props.id}
+          ref={grid}
         >
-          {items && renderItem()}
-          {props.children}
+          <div
+            ref={drop}
+            style={{
+              backgroundColor,
+            }}
+            className={clsx(styles.wrapper)}
+            id={props.id}
+          >
+            {items && renderItem()}
+            {props.children}
+          </div>
         </div>
-      </div>
+      </GridWidth.Provider>
     </ShowOverlay.Provider>
   );
 }

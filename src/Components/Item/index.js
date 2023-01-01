@@ -27,6 +27,7 @@ import {
   HeightHeading,
   ContextShowEditorComponent,
   ElementContentPortfolio,
+  GridWidth,
 } from "~/Store/Context";
 import {
   setBackgroundColor,
@@ -100,6 +101,8 @@ function Item({
   const [scrollHeight, setScrollHeight] = useState(0);
   const inputEditLinkIcon = useRef();
   const [linkIcon, setLinkIcon] = useState(href ? href : "");
+  const Grid = useContext(GridWidth);
+
   const icons = {
     Facebook: <GrFacebookOption />,
     Instagram: <GrInstagram />,
@@ -373,8 +376,19 @@ function Item({
     if (elementContentPortfolio && width === "100%") {
       [contentPortfolio, setShowTrash, widthContent] = elementContentPortfolio;
       setWidthContents(widthContent ? widthContent : width);
+    } else if (elementContentPortfolio) {
+      [contentPortfolio, setShowTrash, widthContent] = elementContentPortfolio;
+      if (width.toString().includes("%")) {
+        const widthNumber = parseInt(
+          width.toString().substring(0, width.toString().length - 1)
+        );
+        if (widthNumber) {
+          setWidthContents((widthNumber / 100) * parseInt(widthContent));
+        }
+      }
     }
   });
+
   useEffect(() => {
     // work next
     if (items) {

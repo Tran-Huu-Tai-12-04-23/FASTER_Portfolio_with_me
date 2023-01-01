@@ -112,6 +112,7 @@ export const DefaultItemInGridTemplate4 = [
       lineHeight: "",
     },
     valueItem: "",
+    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq9zZ0dsOIYyjwZdkWKTE_kuxtRplsy9dexPnXEzCsMRNXXATXEmrELQz9i7z1aeStYJI&usqp=CAU",
   },
   {
     id: uuid(),
@@ -387,6 +388,7 @@ export const DefaultItemInGridTemplate4 = [
       lineHeight: "",
     },
     valueItem: "",
+    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq9zZ0dsOIYyjwZdkWKTE_kuxtRplsy9dexPnXEzCsMRNXXATXEmrELQz9i7z1aeStYJI&usqp=CAU",
   },
   {
     id: uuid(),
@@ -441,7 +443,7 @@ export const DefaultItemInGridTemplate4 = [
       borderSize: "initial",
     },
     valueItem: "",
-    src: "",
+    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq9zZ0dsOIYyjwZdkWKTE_kuxtRplsy9dexPnXEzCsMRNXXATXEmrELQz9i7z1aeStYJI&usqp=CAU",
   },
   {
     id: uuid(),
@@ -469,7 +471,7 @@ export const DefaultItemInGridTemplate4 = [
       borderSize: "initial",
     },
     valueItem: "",
-    src: "",
+    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq9zZ0dsOIYyjwZdkWKTE_kuxtRplsy9dexPnXEzCsMRNXXATXEmrELQz9i7z1aeStYJI&usqp=CAU",
   },
   {
     id: uuid(),
@@ -497,7 +499,7 @@ export const DefaultItemInGridTemplate4 = [
       borderSize: "initial",
     },
     valueItem: "",
-    src: "",
+    src: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq9zZ0dsOIYyjwZdkWKTE_kuxtRplsy9dexPnXEzCsMRNXXATXEmrELQz9i7z1aeStYJI&usqp=CAU",
   },
   {
     id: uuid(),

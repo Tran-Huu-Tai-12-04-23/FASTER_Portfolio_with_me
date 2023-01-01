@@ -79,6 +79,19 @@ function CreatePortfolio({
 
   const loadInStyleDefault = () => {
     // console.log("render");
+    // var count = 0;
+    // items.map((item) => {
+    //   if (!item.toString().includes("%") && widthContent && item.width) {
+    //     const newWidth = `${
+    //       (parseInt(item.width) / parseInt(widthContent)) * 100
+    //     }%`;
+    //     if (newWidth) {
+    //       item.width = newWidth;
+    //       count++;
+    //     }
+    //   }
+    // });
+
     const setStyle = (item) => {
       const itemDomReal = document.getElementById(item.id);
       if (itemDomReal) {
@@ -106,12 +119,14 @@ function CreatePortfolio({
         setStyle(item);
       }
     });
+
     // console.log(findItem(state.id_item_selected));
     if (!isObjectEquals(dataItems, items)) {
+      // if (count === items.length) {
       localStorage.setItem(`items-${id}`, JSON.stringify(items));
+      localStorage.setItem(`colors-${id}`, JSON.stringify(colorRange));
+      // }
     }
-
-    localStorage.setItem(`colors-${id}`, JSON.stringify(colorRange));
   };
   // save data in localStorage
   useEffect(() => {
@@ -197,7 +212,6 @@ function CreatePortfolio({
   useEffect(() => {
     setTransactionContent(widthMenu === "0" ? "-11%" : "0");
   }, [widthMenu]);
-
   //go to top page
   const handleShowScroll = (e) => {
     setShowTag(true);
