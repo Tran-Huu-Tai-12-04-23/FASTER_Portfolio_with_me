@@ -17,6 +17,7 @@ import {
   GrLinkedin,
   GrYoutube,
 } from "react-icons/gr";
+import { IoResizeOutline } from "react-icons/io5";
 
 import "./resizeable.css";
 import styles from "./Item.module.scss";
@@ -310,11 +311,13 @@ function Item({
 
   // handle when mouse up
   const handleMouseDown = (e) => {
+    e.target.parentElement.style.border = "1px solid blue";
     const itemResize = e.target.parentElement.children[0];
     setWidthContents(itemResize.offsetWidth);
     setHeightWrapperReSizeable(itemResize.offsetHeight);
   };
   const handleMouseUp = (e) => {
+    e.target.parentElement.style.border = "none";
     const itemResize = e.target.parentElement.children[0];
     const item = findItem(itemResize.id);
     if (item) {
@@ -458,6 +461,9 @@ function Item({
                 }
                 handleSelectItemToEdit(e);
               }}
+              onMouseDown={handleMouseDown}
+              onMouseUp={handleMouseUp}
+              onMouseOver={handleMouseUp}
               className={classNamesItem}
               src={
                 (type === "img" || type === "backgroundImage") && linkImg
@@ -555,6 +561,7 @@ function Item({
               }}
               onMouseDown={handleMouseDown}
               onMouseUp={handleMouseUp}
+              onMouseOver={handleMouseUp}
             >
               {InfoIcon ? icons[InfoIcon] : null}
             </a>
