@@ -261,7 +261,7 @@ export const DefaultItemInGridTemplate2 = [
       fontFamily: "",
       borderRadius: "12px",
       fontWeight: "",
-      lineHeight: "18px",
+      lineHeight: "",
       borderSize: "1px",
     },
     src: "",
