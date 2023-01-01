@@ -223,7 +223,6 @@ function Grid(props) {
         borderWidth: "1px",
         borderStyle: "solid",
         borderColor: "#FFCCFF",
-        padding: "12px",
       };
       if (InfoIcon.trim() === "Facebook") {
         styles = {
