@@ -377,7 +377,7 @@ export const DefaultItemInGridTemplate2 = [
       fontWeight: "",
       textAlign: "",
       textTransform: "",
-      lineHeight: "23px",
+      lineHeight: "",
       borderSize: "1px",
     },
     valueItem: "Enter your email  ",
