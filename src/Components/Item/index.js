@@ -317,6 +317,7 @@ function Item({
     // handle when mouse up
 
     const handleMouseDown = (e) => {
+        e.stopPropagation();
         const resize = e.target.parentElement.querySelector("span");
         setModeEdit(!modeEdit);
         if (modeEdit) {
@@ -333,6 +334,7 @@ function Item({
         setHeightWrapperReSizeable(itemResize.offsetHeight);
     };
     const handleMouseUp = (e) => {
+        e.stopPropagation();
         const itemResize = e.target.parentElement.children[0];
         const item = findItem(itemResize.id);
         if (item) {
