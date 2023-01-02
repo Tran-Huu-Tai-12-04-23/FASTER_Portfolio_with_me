@@ -485,12 +485,12 @@ function Item({
                     onMouseDown={
                         type !== "background" && type !== "backgroundImage"
                             ? handleMouseDown
-                            : ""
+                            : null
                     }
                     onMouseUp={
                         type !== "background" && type !== "backgroundImage"
                             ? handleMouseUp
-                            : ""
+                            : null
                     }
                 >
                     <>
@@ -511,13 +511,13 @@ function Item({
                                 type !== "background" &&
                                 type !== "backgroundImage"
                                     ? handleMouseDown
-                                    : ""
+                                    : null
                             }
                             onMouseUp={
                                 type !== "background" &&
                                 type !== "backgroundImage"
                                     ? handleMouseUp
-                                    : ""
+                                    : null
                             }
                             onMouseOver={handleMouseUp}
                             className={classNamesItem}
