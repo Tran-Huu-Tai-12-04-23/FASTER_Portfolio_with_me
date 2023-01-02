@@ -286,10 +286,10 @@ function Item({
 
     const handleSelectItemToEdit = (e) => {
         e.stopPropagation();
-        if (findItem(getId(e))) {
-            loadStyleComponentInInitState(findItem(getId(e)));
+        if (findItem(e.target.id)) {
+            loadStyleComponentInInitState(findItem(e.target.id));
         }
-        dispatch(setIdItemSelected(getId(e)));
+        dispatch(setIdItemSelected(e.target.id));
         setEditorComponent(true);
     };
 
@@ -317,24 +317,11 @@ function Item({
     // handle when mouse up
 
     const handleMouseDown = (e) => {
-        e.stopPropagation();
-        const resize = e.target.parentElement.querySelector("span");
-        setModeEdit(!modeEdit);
-        if (modeEdit) {
-            if (resize) {
-                resize.style.display = "block";
-            }
-        } else {
-            if (resize) {
-                resize.style.display = "none";
-            }
-        }
         const itemResize = e.target.parentElement.children[0];
         setWidthContents(itemResize.offsetWidth);
         setHeightWrapperReSizeable(itemResize.offsetHeight);
     };
     const handleMouseUp = (e) => {
-        e.stopPropagation();
         const itemResize = e.target.parentElement.children[0];
         const item = findItem(itemResize.id);
         if (item) {
@@ -544,7 +531,6 @@ function Item({
                         >
                             {nameItemLink ? nameItemLink : null}
                         </Type>
-                        <span className='resize'></span>
 
                         {/* {type === "a" ? (
               <div
@@ -620,7 +606,6 @@ function Item({
                         >
                             {InfoIcon ? icons[InfoIcon] : null}
                         </a>
-                        <span className='resize'></span>
                         {/* <div
               className={clsx(styles.item_edit)}
               onClick={(e) => {

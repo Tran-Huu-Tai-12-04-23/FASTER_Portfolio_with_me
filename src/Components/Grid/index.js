@@ -464,7 +464,7 @@ function Grid(props) {
                             backgroundColor,
                         }}
                         className={clsx(styles.wrapper)}
-                        id={props.id}
+                        // id={props.id}
                     >
                         {items && renderItem()}
                         {props.children}
