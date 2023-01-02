@@ -105,6 +105,7 @@ function Item({
     const inputEditLinkIcon = useRef();
     const [linkIcon, setLinkIcon] = useState(href ? href : "");
     const Grid = useContext(GridWidth);
+    const [modeEdit, setModeEdit] = useState(true);
 
     const icons = {
         Facebook: <GrFacebookOption />,
@@ -182,24 +183,6 @@ function Item({
         }
     };
 
-    const handleShowInputImg = (e) => {
-        // state.stackUndo.push(structuredClone(items));d
-        var item = findItem(e.target.id);
-        const reader = new FileReader();
-        var url;
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                url = reader.result;
-                setLinkImg(url);
-                if (item) {
-                    item.src = url;
-                }
-            }
-        };
-
-        reader.readAsDataURL(e.target.files[0]);
-    };
-
     const loadStyleComponentInInitState = (item) => {
         const itemDomReal = document.getElementById(item.id);
         if (itemDomReal) {
@@ -229,7 +212,7 @@ function Item({
                 setBorderRadius(
                     itemDomReal.style.borderRadius
                         ? itemDomReal.style.borderRadius
-                        : ""
+                        : 0
                 )
             );
             dispatch(
@@ -332,14 +315,24 @@ function Item({
     };
 
     // handle when mouse up
+
     const handleMouseDown = (e) => {
-        e.target.parentElement.style.border = "1px solid blue";
+        const resize = e.target.parentElement.querySelector("span");
+        setModeEdit(!modeEdit);
+        if (modeEdit) {
+            if (resize) {
+                resize.style.display = "block";
+            }
+        } else {
+            if (resize) {
+                resize.style.display = "none";
+            }
+        }
         const itemResize = e.target.parentElement.children[0];
         setWidthContents(itemResize.offsetWidth);
         setHeightWrapperReSizeable(itemResize.offsetHeight);
     };
     const handleMouseUp = (e) => {
-        e.target.parentElement.style.border = "none";
         const itemResize = e.target.parentElement.children[0];
         const item = findItem(itemResize.id);
         if (item) {
@@ -382,12 +375,6 @@ function Item({
         }
     }, [linkImg]);
     //change type when have src
-    useLayoutEffect(() => {
-        // setLinkImg(src);
-        // setType("img");
-        // setNameItemLink(null);
-        // console.log(nameItemLink);
-    }, [src]);
 
     let contentPortfolio, setShowTrash, widthContent;
     //get width wrapper content
@@ -471,8 +458,7 @@ function Item({
                             ? parseInt(heightWrapperReSizeable)
                             : parseInt(height)
                     }
-                    // onClick={handleSelectItemToEdit}
-
+                    onClick={handleSelectItemToEdit}
                     style={{
                         ...stylesItem,
                         transform: center ? "translateX(-50%)" : "none",
@@ -556,6 +542,7 @@ function Item({
                         >
                             {nameItemLink ? nameItemLink : null}
                         </Type>
+                        <span className='resize'></span>
 
                         {/* {type === "a" ? (
               <div
@@ -631,7 +618,7 @@ function Item({
                         >
                             {InfoIcon ? icons[InfoIcon] : null}
                         </a>
-
+                        <span className='resize'></span>
                         {/* <div
               className={clsx(styles.item_edit)}
               onClick={(e) => {
