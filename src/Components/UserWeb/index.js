@@ -33,21 +33,26 @@ function UserWeb({
     };
     useEffect(() => {
         data.map((item) => {
-            if (!item.height.toString().includes("%") && item.height) {
-                item.height = `${(item.height / heightTemplate) * 100}%`;
-            }
-            if (!item.width.toString().includes("%") && item.width) {
-                item.width = `${(item.width / widthContent) * 100}%`;
-                console.log(widthContent);
-            }
-            if (!item.top.toString().includes("%")) {
-                item.top = `${(item.top / heightTemplate) * 100}%`;
-            }
-            if (!item.left.toString().includes("%")) {
-                item.left = `${(item.left / widthContent) * 100}%`;
-            }
-            if (item.type === "background" || item.type === "backgroundImage") {
-                item.width = "100%";
+            if (widthContent && heightTemplate) {
+                if (!item.height.toString().includes("%") && item.height) {
+                    item.height = `${(item.height / heightTemplate) * 100}%`;
+                }
+                if (!item.width.toString().includes("%") && item.width) {
+                    item.width = `${(item.width / widthContent) * 100}%`;
+                    console.log(widthContent);
+                }
+                if (!item.top.toString().includes("%")) {
+                    item.top = `${(item.top / heightTemplate) * 100}%`;
+                }
+                if (!item.left.toString().includes("%")) {
+                    item.left = `${(item.left / widthContent) * 100}%`;
+                }
+                if (
+                    item.type === "background" ||
+                    item.type === "backgroundImage"
+                ) {
+                    item.width = "100%";
+                }
             }
         });
     }, []);
