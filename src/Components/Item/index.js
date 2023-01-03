@@ -243,7 +243,7 @@ function Item({
                 setBorderSize(
                     itemDomReal.style.borderWidth
                         ? itemDomReal.style.borderWidth
-                        : ""
+                        : 0
                 )
             );
             dispatch(

@@ -39,7 +39,6 @@ function UserWeb({
                 }
                 if (!item.width.toString().includes("%")) {
                     item.width = `${(item.width / widthContent) * 100}%`;
-                    console.log(widthContent);
                 }
                 if (!item.top.toString().includes("%")) {
                     item.top = `${(item.top / heightTemplate) * 100}%`;
@@ -204,7 +203,6 @@ function UserWeb({
             style={{
                 height: heightTemplate ? heightTemplate + 500 : 1000,
             }}
-            id={id}
         >
             {data && renderItem()}
         </div>

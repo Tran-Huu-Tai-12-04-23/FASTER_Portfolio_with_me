@@ -10,7 +10,7 @@ import { useDrop, useDragDropManager } from "react-dnd";
 import uuid from "react-uuid";
 
 import styles from "./Grid.module.scss";
-import { Item, Overlay, TipSuggest } from "~/Components";
+import { Item, Overlay, TipSuggest, UserWeb } from "~/Components";
 import {
     ContextItemsIngrid,
     ElementContentPortfolio,
@@ -202,6 +202,7 @@ function Grid(props) {
 
         if (type === "input") {
             styles = {
+                border: "none",
                 backgroundColor: "transparent",
                 color: "#ccc",
                 borderWidth: "1px",
@@ -215,6 +216,7 @@ function Grid(props) {
         }
         if (type === "button") {
             styles = {
+                border: "none",
                 backgroundColor: "transparent",
                 color: "#ccc",
                 borderWidth: "1px",
@@ -231,12 +233,16 @@ function Grid(props) {
         }
         if (type === "div") {
             styles = {
-                border: " 1px solid #ccc",
+                border: "none",
+                borderStyle: "solid",
+                borderWidth: "1px",
+                borderColor: "#ccc",
                 backgroundColor: "rgb(175, 67, 67)",
             };
         }
         if (type === "a") {
             styles = {
+                border: "none",
                 borderWidth: "1px",
                 borderStyle: "solid",
                 borderColor: "#757575",
@@ -276,7 +282,6 @@ function Grid(props) {
                 styles = { ...styles, color: "red" };
             }
 
-            console.log(styles);
             height = 60;
             width = 60;
         }
@@ -449,29 +454,45 @@ function Grid(props) {
     };
 
     return (
-        <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
-            <GridWidth.Provider value={grid}>
-                <div
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                    }}
-                    ref={grid}
-                >
+        <>
+            <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
+                <GridWidth.Provider value={grid}>
                     <div
-                        ref={drop}
                         style={{
-                            backgroundColor,
+                            width: "100%",
+                            height: "100%",
                         }}
-                        className={clsx(styles.wrapper)}
-                        // id={props.id}
+                        ref={grid}
                     >
-                        {items && renderItem()}
-                        {props.children}
+                        <div
+                            ref={drop}
+                            style={{
+                                backgroundColor,
+                            }}
+                            className={clsx(styles.wrapper)}
+                            // id={props.id}
+                        >
+                            {items && renderItem()}
+                            {props.children}
+                        </div>
                     </div>
-                </div>
-            </GridWidth.Provider>
-        </ShowOverlay.Provider>
+                </GridWidth.Provider>
+            </ShowOverlay.Provider>
+            <div
+                id='download'
+                style={{
+                    display: "none",
+                }}
+            >
+                <UserWeb
+                    items={structuredClone(items)}
+                    heightTemplate={
+                        grid && grid.current ? grid.current.offsetHeight : 100
+                    }
+                    widthContent={widthContent}
+                ></UserWeb>
+            </div>
+        </>
     );
 }
 

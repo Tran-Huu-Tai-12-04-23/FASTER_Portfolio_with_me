@@ -29,7 +29,12 @@ import {
 import ModalPublic from "./ModalPublic";
 import { UserWeb } from "~/Components";
 
-function Header({ setShowPreview, heightDefault, widthContent }) {
+function Header({
+    setShowPreview,
+    heightDefault,
+    widthContent,
+    handleDownload,
+}) {
     const [title, setTitle] = useState("Enter title");
     const [state, dispatch] = useContext(ContextReducer);
     const [items, setItems] = useContext(ContextItemsIngrid);
@@ -80,18 +85,6 @@ function Header({ setShowPreview, heightDefault, widthContent }) {
         Github: <GrGithub />,
         Linkedin: <GrLinkedin />,
         Youtube: <GrYoutube />,
-    };
-    const handleDownload = async () => {
-        var pageHTML = document.querySelector("head").innerHTML;
-        var page2 = window.document.getElementById("download").innerHTML;
-        pageHTML = `<!DOCTYPE html>
-        <html> ${pageHTML} <body>${page2}</body><html>`;
-        let data = new Blob([pageHTML], { type: "text/html" });
-        let csvURL = window.URL.createObjectURL(data);
-        let tempLink = document.createElement("a");
-        tempLink.href = csvURL;
-        tempLink.setAttribute("download", `${title}.html`);
-        tempLink.click();
     };
 
     const renderYourLink = (e) => {
@@ -215,7 +208,7 @@ function Header({ setShowPreview, heightDefault, widthContent }) {
                                 fontSize: "32px",
                                 display: "none",
                             }}
-                            // onClick={handleDownload}
+                            onClick={handleDownload}
                         ></FiDownloadCloud>
                     </TipSuggest>
                     <TipSuggest content='Public'>

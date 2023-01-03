@@ -1,69 +1,68 @@
 .wrapper {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  background-color: rgb(211, 199, 199);
-  z-index: 10000;
-  padding: 50px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(211, 199, 199);
+    z-index: 10000;
+    padding: 50px;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  .icon_close {
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    width: 50px;
-    height: 50px;
-    background-color: rgba(0, 0, 0, 0.6);
-    border-radius: 24px;
-    color: #fff;
-
-    &:hover {
-      color: var(--primary);
-      cursor: pointer;
+    &::-webkit-scrollbar {
+        display: none;
     }
-  }
+
+    .icon_close {
+        position: absolute;
+        top: 2%;
+        right: 2%;
+        width: 50px;
+        height: 50px;
+        background-color: rgba(0, 0, 0, 0.6);
+        border-radius: 24px;
+        color: #fff;
+
+        &:hover {
+            color: var(--primary);
+            cursor: pointer;
+        }
+    }
 }
 
 .wrapper_template {
-  width: 75%;
-  background-color: #fff;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  overflow: scroll;
-  -webkit-box-shadow: 5px 5px 15px 5px #000000;
-  box-shadow: 5px 5px 15px 5px #000000;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  img {
+    background-color: #fff;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    overflow: scroll;
+    -webkit-box-shadow: 5px 5px 15px 5px #000000;
+    box-shadow: 5px 5px 15px 5px #000000;
     &::-webkit-scrollbar {
-      display: none;
+        display: none;
     }
-    // object-fit: contain;
-    // image-rendering: pixelated;
-    width: 100%;
-    width: 400px;
-    z-index: 1000;
-  }
+
+    img {
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        // object-fit: contain;
+        // image-rendering: pixelated;
+        width: 100%;
+        width: 400px;
+        z-index: 1000;
+    }
 }
 
 .icon {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  border: none;
-
-  svg {
     width: 100%;
     height: 100%;
-    color: inherit;
-  }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border: none;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        color: inherit;
+    }
 }

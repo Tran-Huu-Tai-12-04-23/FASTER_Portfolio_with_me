@@ -14,13 +14,8 @@ export const DefaultItemInGridTemplate5 = [
         styleDefault: {
             backgroundColor: "",
             padding: 0,
-            borderWidth: "0px",
-            borderStyle: "none",
-            borderColor: "transparent",
-            color: "",
             fontSize: "",
             fontFamily: "",
-            borderRadius: "",
             fontWeight: "",
             textAlign: "",
             textTransform: "",
