@@ -98,6 +98,7 @@ function UserWeb({
                 'https://final-orpin-gamma.vercel.app/static/css/main.bc70f4dd.css"' +
                 resthtml;
         }
+        console.log(newPageHtml);
         pageHTML = newPageHtml ? newPageHtml : pageHTML;
         let data = new Blob([pageHTML], { type: "data:attachment/text," });
         let csvURL = URL.createObjectURL(data);
