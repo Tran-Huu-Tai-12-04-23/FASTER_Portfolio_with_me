@@ -87,12 +87,12 @@ function UserWeb({
             "/static/css/main.bc70f4dd.css",
             `${document.location.host}/static/css/main.bc70f4dd.css`
         );
-        console.log(`${document.location.host}/static/css/main.bc70f4dd.css`);
-        console.log(typeof pageHTML);
         pageHTML.replace(
             "/manifest.json",
             `${document.location.host}/manifest.json`
         );
+
+        console.log(pageHTML);
         let data = new Blob([pageHTML], { type: "data:attachment/text," });
         let csvURL = URL.createObjectURL(data);
         let tempLink = document.createElement("a");
