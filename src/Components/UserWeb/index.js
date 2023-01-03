@@ -87,6 +87,8 @@ function UserWeb({
             "/static/css/main.bc70f4dd.css",
             `${document.location.host}/static/css/main.bc70f4dd.css`
         );
+        console.log(`${document.location.host}/static/css/main.bc70f4dd.css`);
+        console.log(typeof pageHTML);
         pageHTML.replace(
             "/manifest.json",
             `${document.location.host}/manifest.json`
