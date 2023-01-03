@@ -478,20 +478,6 @@ function Grid(props) {
                     </div>
                 </GridWidth.Provider>
             </ShowOverlay.Provider>
-            <div
-                id='download'
-                style={{
-                    display: "none",
-                }}
-            >
-                <UserWeb
-                    items={structuredClone(items)}
-                    heightTemplate={
-                        grid && grid.current ? grid.current.offsetHeight : 100
-                    }
-                    widthContent={widthContent}
-                ></UserWeb>
-            </div>
         </>
     );
 }

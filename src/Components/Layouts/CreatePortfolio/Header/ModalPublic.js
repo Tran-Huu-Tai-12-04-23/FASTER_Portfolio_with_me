@@ -15,6 +15,7 @@ function ModalPublic({
     const [items, setItems] = useContext(ContextItemsIngrid);
     const [value, setValue] = useState("");
     const [showLink, setShowLink] = useState(false);
+    const [enterAgain, setEnterAgain] = useState(false);
 
     const [data, setData] = useState({
         path: "default",
@@ -61,16 +62,29 @@ function ModalPublic({
                 >
                     <span
                         style={{
+                            color: "var(--primary)",
+                            fontSize: "14px",
+                            fontWeight: "600",
+                            lineHeight: "20px",
+                        }}
+                    >
+                        After visiting the website you can right click to
+                        download it right click
+                    </span>
+                    <span
+                        style={{
                             fontSize: "16px",
                             marginBottom: "12px",
                         }}
                     >
-                        Get to your website:
+                        Click to get your website:
                     </span>
                     <a
                         onClick={(e) => {
                             setShowModalPublic(false);
                             setShowLink(false);
+                            setValue("");
+                            setEnterAgain(true);
                         }}
                         href={`/${data.path}`}
                         target='_blank'
@@ -88,7 +102,14 @@ function ModalPublic({
                 <div
                     onKeyUp={(e) => {
                         if (e.keyCode === 13) {
-                            handleSubmit();
+                            if (
+                                !data.path.toString().includes("/") &&
+                                data.path !== "default"
+                            ) {
+                                handleSubmit();
+                            } else {
+                                setEnterAgain(!enterAgain);
+                            }
                         }
                     }}
                     style={{
@@ -96,22 +117,43 @@ function ModalPublic({
                     }}
                 >
                     <span>Path</span>
+                    <span
+                        style={{
+                            fontSize: "10px",
+                            color: " var(--primary)",
+                            fontWeight: "600",
+                            lineHeight: "20px",
+                            display: enterAgain ? "block" : "none",
+                        }}
+                    >
+                        Try again...
+                    </span>
                     <input
                         type='text'
                         onChange={(e) => {
-                            setData({
-                                path: e.target.value,
-                                items: items,
-                                heightDefault,
-                                widthContent,
-                            });
+                            setEnterAgain(false);
+                            if (e.target.value != "" && e.target.value) {
+                                setData({
+                                    path: e.target.value,
+                                    items: items,
+                                    heightDefault,
+                                    widthContent,
+                                });
+                            }
                             setValue(e.target.value);
                         }}
                         value={value}
                     ></input>
                     <button
                         onClick={(e) => {
-                            handleSubmit();
+                            if (
+                                !data.path.toString().includes("/") &&
+                                data.path !== "default"
+                            ) {
+                                handleSubmit();
+                            } else {
+                                setEnterAgain(!enterAgain);
+                            }
                         }}
                     >
                         Public

@@ -223,19 +223,6 @@ function CreatePortfolio({
         setTransactionContent(widthMenu === "0" ? "-11%" : "0");
     }, [widthMenu]);
 
-    const handleDownload = async () => {
-        var pageHTML = document.querySelector("head").innerHTML;
-        var page2 = document.getElementById("download").innerHTML;
-        pageHTML = `<!DOCTYPE html>
-        <html> ${pageHTML} <body>${page2}</body><html>`;
-        let data = new Blob([pageHTML], { type: "text/html" });
-        let csvURL = URL.createObjectURL(data);
-        let tempLink = document.createElement("a");
-        tempLink.href = csvURL;
-        tempLink.setAttribute("download", `new.html`);
-        tempLink.click();
-    };
-
     //go to top page
     const handleShowScroll = (e) => {
         setShowTag(true);
@@ -334,7 +321,6 @@ function CreatePortfolio({
                                             widthContent={widthContent}
                                             setShowPreview={setShowPreview}
                                             heightDefault={heightContent}
-                                            handleDownload={handleDownload}
                                         />
                                     ) : (
                                         ""

@@ -8,8 +8,8 @@ import {
     GrLinkedin,
     GrYoutube,
 } from "react-icons/gr";
+import { BsSave } from "react-icons/bs";
 import { TipSuggest } from "~/Components";
-import { FiDownloadCloud } from "react-icons/fi";
 
 function UserWeb({
     items = [],
@@ -24,6 +24,9 @@ function UserWeb({
     id,
 }) {
     const [data, setData] = useState(items);
+    const [showMenu, setShowMenu] = useState(false);
+    const [top, setTop] = useState(0);
+    const [left, setLeft] = useState(0);
     const icons = {
         Facebook: <GrFacebookOption />,
         Instagram: <GrInstagram />,
@@ -31,6 +34,25 @@ function UserWeb({
         Linkedin: <GrLinkedin />,
         Youtube: <GrYoutube />,
     };
+
+    useEffect(() => {
+        const handleContextMenu = (e) => {
+            e.preventDefault();
+            setShowMenu(true);
+            setLeft(e.pageX);
+            setTop(e.pageY);
+        };
+        const handleClick = (e) => {
+            e.preventDefault();
+            setShowMenu(false);
+        };
+        window.addEventListener("click", handleClick);
+        window.addEventListener("contextmenu", handleContextMenu);
+        return () => {
+            window.removeEventListener("contextmenu", handleContextMenu);
+        };
+    }, []);
+
     useEffect(() => {
         data.map((item) => {
             if (widthContent && heightTemplate) {
@@ -55,7 +77,18 @@ function UserWeb({
             }
         });
     }, []);
-
+    const handleDownload = (e) => {
+        document.getElementById("menu_web").style.display = "none";
+        e.preventDefault();
+        var pageHTML = window.document.documentElement.outerHTML;
+        console.log(pageHTML);
+        let data = new Blob([pageHTML], { type: "text/html" });
+        let csvURL = URL.createObjectURL(data);
+        let tempLink = document.createElement("a");
+        tempLink.href = csvURL;
+        tempLink.setAttribute("download", `new.html`);
+        tempLink.click();
+    };
     const renderItem = () => {
         if (data) {
             return data.map((item, index) => {
@@ -197,14 +230,35 @@ function UserWeb({
             });
         }
     };
+
     return (
         <div
             className={clsx(styles.wrapper)}
             style={{
+                position: "relative",
                 height: heightTemplate ? heightTemplate + 500 : 1000,
             }}
         >
             {data && renderItem()}
+            <div
+                className={styles.menu}
+                style={{
+                    position: "absolute",
+                    display: showMenu ? "flex" : "none",
+                    left: left,
+                    top: top,
+                }}
+                id={"menu_web"}
+                onClick={handleDownload}
+            >
+                <BsSave
+                    style={{
+                        fontSize: 40,
+                        color: "#fff",
+                    }}
+                ></BsSave>
+                <h3>Download</h3>
+            </div>
         </div>
     );
 }
