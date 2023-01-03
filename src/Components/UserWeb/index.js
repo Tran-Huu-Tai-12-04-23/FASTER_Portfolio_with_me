@@ -84,12 +84,11 @@ function UserWeb({
         var pageHTML =
             "<!DOCTYPE html>" + window.document.documentElement.outerHTML;
         // // console.log(pageHTML);
-        pageHTML.replace(
-            "/static/css/main.bc70f4dd.css",
-            `${document.location.host}/static/css/main.bc70f4dd.css`
-        );
-        const vitri = pageHTML.search("/static/css/main.bc70f4dd.css");
+
+        console.log(document.location.host);
+        const vitri = pageHTML.search("/static/js/main.9a203ddd.js");
         let newPageHtml;
+        console.log(vitri);
         if (vitri !== -1 && vitri) {
             const lenthLink1 = "/static/css/main.bc70f4dd.css".length;
             newPageHtml = pageHTML.substring(0, vitri);
