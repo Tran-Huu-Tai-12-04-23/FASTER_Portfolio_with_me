@@ -93,10 +93,12 @@ function BoxMenu() {
     };
     const handleShowInputImg = (e) => {
         setShowChooseLinkImage(true);
+        console.log(showChooseLinkImage);
         setTypeImage("image");
         setShowEditUrl(true);
         setShowOptions(false);
         const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
         var url;
 
         if (e.target.files[0].size < 100000) {
@@ -110,7 +112,6 @@ function BoxMenu() {
         } else {
             alert("Image size too large");
         }
-        reader.readAsDataURL(e.target.files[0]);
     };
     /// resize set width content
     useEffect(() => {
