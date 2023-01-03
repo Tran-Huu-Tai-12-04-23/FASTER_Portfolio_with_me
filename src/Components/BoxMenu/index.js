@@ -101,6 +101,7 @@ function BoxMenu() {
             }
         };
         const url2 = URL.createObjectURL(e.target.files[0]);
+        console.log(url2);
         if (url2) {
             setLinkImage(url2);
             setUrlItem(url2);
@@ -131,7 +132,6 @@ function BoxMenu() {
             window.removeEventListener("resize", handleResize);
         };
     });
-    console.log(items);
     // set type when selected
     useEffect(() => {
         const item = findItem(state.id_item_selected);
@@ -682,7 +682,10 @@ function BoxMenu() {
                         className={clsx(styles.input_file)}
                         type='file'
                         style={{ textAlign: "center", width: "40%" }}
-                        onChange={handleShowInputImg}
+                        onInput={handleShowInputImg}
+                        onClick={(e) => {
+                            e.target.value = null;
+                        }}
                         accept={"image/*"}
                     ></input>
                     <button
