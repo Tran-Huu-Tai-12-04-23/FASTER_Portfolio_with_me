@@ -80,6 +80,7 @@ function BoxMenu() {
     const [showEditNameLink, setShowNameLinkItem] = useState(true);
     const [showChooseLinkImage, setShowChooseLinkImage] = useState(true);
     const [color, setColor] = useState("#fff");
+    const [showOption, setShowOptions] = useState(true);
 
     const findItem = (id) => {
         var item;
@@ -91,18 +92,19 @@ function BoxMenu() {
         return item;
     };
     const handleShowInputImg = (e) => {
-        console.log(URL.createObjectURL(e.target.files[0]));
         setShowChooseLinkImage(true);
+        setTypeImage("image");
         setShowEditUrl(true);
+        setShowOptions(false);
         const reader = new FileReader();
         var url;
+
         if (e.target.files[0].size < 100000) {
             reader.onload = () => {
                 if (reader.readyState === 2) {
                     url = reader.result;
                     setLinkImage(url);
                     setUrlItem(url);
-                    setTypeImage("image");
                 }
             };
         } else {
@@ -156,7 +158,12 @@ function BoxMenu() {
                 setWidthItem(item.width);
             }
 
-            setUrlItem(item.src ? item.src : "");
+            setUrlItem(
+                item.src ===
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQq9zZ0dsOIYyjwZdkWKTE_kuxtRplsy9dexPnXEzCsMRNXXATXEmrELQz9i7z1aeStYJI&usqp=CAU"
+                    ? ""
+                    : item.src
+            );
             setTypeImage(item.src ? "image" : "choose");
             setHrefItem(item.href ? item.href : "");
             if (item.textValue || item.valueItem) {
@@ -235,6 +242,7 @@ function BoxMenu() {
             // itemReal.replaceTag("img");
         }
         setShowEditUrl(false);
+        setTypeImage("image");
     };
     const handleSaveLinkImage = (e) => {
         const item = findItem(state.id_item_selected);
@@ -248,6 +256,7 @@ function BoxMenu() {
         }
         setUrlItem(linkImage);
         setShowChooseLinkImage(false);
+        setTypeImage("image");
     };
     const handleChangeHrefItem = (e) => {
         const item = findItem(state.id_item_selected);
@@ -623,7 +632,7 @@ function BoxMenu() {
                         display:
                             (typeItemSelected === "backgroundImage" ||
                                 typeItemSelected === "img") &&
-                            typeImage !== "choose"
+                            typeImage === "image"
                                 ? "flex"
                                 : "none",
                         justifyContent: "center",
@@ -636,7 +645,6 @@ function BoxMenu() {
                         type='url'
                         style={{
                             textAlign: "center",
-                            width: "100%",
                         }}
                         placeholder='url..'
                         value={urlItem}
@@ -664,12 +672,13 @@ function BoxMenu() {
                                 ? "flex"
                                 : "none",
                         justifyContent: "center",
+                        flexDirection: "column",
                     }}
                 >
                     <input
                         className={clsx(styles.input_file)}
                         type='file'
-                        style={{ textAlign: "center", width: "80%" }}
+                        style={{ textAlign: "center", width: "40%" }}
                         onChange={handleShowInputImg}
                         accept={"image/*"}
                     ></input>
