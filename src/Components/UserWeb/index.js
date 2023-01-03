@@ -88,14 +88,17 @@ function UserWeb({
             `${document.location.host}/static/css/main.bc70f4dd.css`
         );
         const vitri = pageHTML.search("/static/css/main.bc70f4dd.css");
-        const lenthLink1 = "/static/css/main.bc70f4dd.css".length;
-        const newPageHtml = pageHTML.substring(0, vitri);
-        const resthtml = pageHTML.substring(vitri + 1, pageHTML.length);
-        newPageHtml +=
-            'https://final-orpin-gamma.vercel.app/static/css/main.bc70f4dd.css"' +
-            resthtml;
-        console.log(newPageHtml);
-        let data = new Blob([newPageHtml], { type: "data:attachment/text," });
+        let newPageHtml;
+        if (vitri !== -1 && vitri) {
+            const lenthLink1 = "/static/css/main.bc70f4dd.css".length;
+            newPageHtml = pageHTML.substring(0, vitri);
+            const resthtml = pageHTML.substring(vitri + 1, pageHTML.length);
+            newPageHtml +=
+                'https://final-orpin-gamma.vercel.app/static/css/main.bc70f4dd.css"' +
+                resthtml;
+        }
+        pageHTML = newPageHtml ? newPageHtml : pageHTML;
+        let data = new Blob([pageHTML], { type: "data:attachment/text," });
         let csvURL = URL.createObjectURL(data);
         let tempLink = document.createElement("a");
         tempLink.href = csvURL;
