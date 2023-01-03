@@ -98,7 +98,7 @@ function UserWeb({
             );
 
             newPageHtml +=
-                `https://${document.location.host.toString()}/static/css/main.fbba4472.css` +
+                `https://${document.location.host.toString()}/static/css/main.fbba4472.css"` +
                 resthtml;
             console.log(newPageHtml);
         }
