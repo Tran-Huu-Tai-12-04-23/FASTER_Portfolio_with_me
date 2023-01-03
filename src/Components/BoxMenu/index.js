@@ -630,9 +630,10 @@ function BoxMenu() {
                 <div
                     style={{
                         display:
-                            (typeItemSelected === "backgroundImage" ||
-                                typeItemSelected === "img") &&
-                            typeImage === "image"
+                            (typeItemSelected === "backgroundImage" &&
+                                typeImage === "image") ||
+                            (typeItemSelected === "img" &&
+                                typeImage === "image")
                                 ? "flex"
                                 : "none",
                         justifyContent: "center",
@@ -666,9 +667,10 @@ function BoxMenu() {
                 <div
                     style={{
                         display:
-                            (typeItemSelected === "backgroundImage" ||
-                                typeItemSelected === "img") &&
-                            typeImage === "choose"
+                            (typeItemSelected === "backgroundImage" &&
+                                typeImage === "choose") ||
+                            (typeItemSelected === "img" &&
+                                typeImage === "choose")
                                 ? "flex"
                                 : "none",
                         justifyContent: "center",
