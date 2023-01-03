@@ -80,7 +80,8 @@ function UserWeb({
     const handleDownload = (e) => {
         document.getElementById("menu_web").style.display = "none";
         e.preventDefault();
-        var pageHTML = window.document.documentElement.outerHTML;
+        var pageHTML =
+            "<!DOCTYPE html>" + window.document.documentElement.outerHTML;
         console.log(pageHTML);
         let data = new Blob([pageHTML], { type: "text/html" });
         let csvURL = URL.createObjectURL(data);
