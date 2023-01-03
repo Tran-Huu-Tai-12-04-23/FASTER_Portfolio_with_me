@@ -90,9 +90,12 @@ function UserWeb({
         let newPageHtml;
         console.log(vitri);
         if (vitri !== -1 && vitri) {
-            const lenthLink1 = document.location.host.toString().length;
+            const length = document.location.host.toString().length;
             newPageHtml = pageHTML.substring(0, vitri);
-            const resthtml = pageHTML.substring(vitri + 1, pageHTML.length);
+            const resthtml = pageHTML.substring(
+                vitri + length + 1,
+                pageHTML.length
+            );
             newPageHtml +=
                 `${document.location.host.toString()}/static/css/main.fbba4472.css` +
                 resthtml;
