@@ -31,7 +31,7 @@ function UserWeb({
         Linkedin: <GrLinkedin />,
         Youtube: <GrYoutube />,
     };
-    useLayoutEffect(() => {
+    useEffect(() => {
         data.map((item) => {
             if (!item.height.toString().includes("%") && item.height) {
                 item.height = `${(item.height / heightTemplate) * 100}%`;
