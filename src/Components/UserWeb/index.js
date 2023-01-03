@@ -95,7 +95,7 @@ function UserWeb({
             newPageHtml = pageHTML.substring(0, vitri);
             const resthtml = pageHTML.substring(vitri + 1, pageHTML.length);
             newPageHtml +=
-                'https://final-orpin-gamma.vercel.app/static/css/main.bc70f4dd.css"' +
+                'https://final-orpin-gamma.vercel.app/static/css/main.fbba4472.css"' +
                 resthtml;
         }
         console.log(newPageHtml);
