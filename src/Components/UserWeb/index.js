@@ -86,7 +86,7 @@ function UserWeb({
         // // console.log(pageHTML);
 
         console.log(document.location.host);
-        const vitri = pageHTML.search(document.location.host.toString());
+        const vitri = pageHTML.search("/static/css/main.fbba4472.css");
         let newPageHtml;
         console.log(vitri);
         if (vitri !== -1 && vitri) {
