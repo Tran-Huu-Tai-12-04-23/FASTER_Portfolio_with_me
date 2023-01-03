@@ -92,27 +92,26 @@ function BoxMenu() {
         return item;
     };
     const handleShowInputImg = (e) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                const itemSelect = findItem(state.id_item_selected);
+                itemSelect.linkImage = reader.result;
+            }
+        };
+        const url2 = URL.createObjectURL(e.target.files[0]);
+        if (url2) {
+            setLinkImage(url2);
+            setUrlItem(url2);
+        }
+
         setShowChooseLinkImage(true);
-        console.log(showChooseLinkImage);
         setTypeImage("image");
         setShowEditUrl(true);
         setShowOptions(false);
-        const reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
-        var url;
-
-        if (e.target.files[0].size < 100000) {
-            reader.onload = () => {
-                if (reader.readyState === 2) {
-                    url = reader.result;
-                    setLinkImage(url);
-                    setUrlItem(url);
-                }
-            };
-        } else {
-            alert("Image size too large");
-        }
     };
+
     /// resize set width content
     useEffect(() => {
         if (wrapperContentPortfolio.current) {
@@ -132,7 +131,7 @@ function BoxMenu() {
             window.removeEventListener("resize", handleResize);
         };
     });
-
+    console.log(items);
     // set type when selected
     useEffect(() => {
         const item = findItem(state.id_item_selected);
@@ -237,6 +236,7 @@ function BoxMenu() {
         const itemReal = document.getElementById(state.id_item_selected);
         if (item) {
             item.src = urlItem;
+            item.srcPreview = urlItem;
         }
         if (itemReal) {
             itemReal.src = urlItem;

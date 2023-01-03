@@ -118,7 +118,7 @@ function UserWeb({
                     return (
                         <img
                             key={index}
-                            src={item.src}
+                            src={item.linkImage ? item.linkImage : item.src}
                             style={{
                                 width: item.width,
                                 height: item.height,
