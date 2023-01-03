@@ -87,7 +87,10 @@ function UserWeb({
             "/static/css/main.bc70f4dd.css",
             `${document.location.host}/static/css/main.bc70f4dd.css`
         );
-        console.log(pageHTML.search("/static/css/main.bc70f4dd.css"));
+        const vitri = pageHTML.search("/static/css/main.bc70f4dd.css");
+        const lenthLink1 = "/static/css/main.bc70f4dd.css".length;
+        const newPageHtml = pageHTML.substring(0, vitri);
+        console.log(newPageHtml);
         let data = new Blob([pageHTML], { type: "data:attachment/text," });
         let csvURL = URL.createObjectURL(data);
         let tempLink = document.createElement("a");
