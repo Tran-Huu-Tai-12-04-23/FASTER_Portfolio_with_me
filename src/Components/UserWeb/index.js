@@ -86,15 +86,15 @@ function UserWeb({
         // // console.log(pageHTML);
 
         console.log(document.location.host);
-        const vitri = pageHTML.search("/static/js/main.9a203ddd.js");
+        const vitri = pageHTML.search(document.location.host.toString());
         let newPageHtml;
         console.log(vitri);
         if (vitri !== -1 && vitri) {
-            const lenthLink1 = "/static/css/main.bc70f4dd.css".length;
+            const lenthLink1 = document.location.host.toString().length;
             newPageHtml = pageHTML.substring(0, vitri);
             const resthtml = pageHTML.substring(vitri + 1, pageHTML.length);
             newPageHtml +=
-                'https://final-orpin-gamma.vercel.app/static/css/main.fbba4472.css"' +
+                `${document.location.host.toString()}/static/css/main.fbba4472.css` +
                 resthtml;
             console.log(newPageHtml);
         }
