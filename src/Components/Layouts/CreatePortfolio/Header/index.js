@@ -27,6 +27,7 @@ import {
     ItemsLocalStore,
 } from "~/Store/Context";
 import ModalPublic from "./ModalPublic";
+import { UserWeb } from "~/Components";
 
 function Header({ setShowPreview, heightDefault, widthContent }) {
     const [title, setTitle] = useState("Enter title");
@@ -89,7 +90,6 @@ function Header({ setShowPreview, heightDefault, widthContent }) {
         let csvURL = window.URL.createObjectURL(data);
         let tempLink = document.createElement("a");
         tempLink.href = csvURL;
-
         tempLink.setAttribute("download", `${title}.html`);
         tempLink.click();
     };
@@ -213,8 +213,9 @@ function Header({ setShowPreview, heightDefault, widthContent }) {
                         <FiDownloadCloud
                             style={{
                                 fontSize: "32px",
+                                display: "none",
                             }}
-                            onClick={handleDownload}
+                            // onClick={handleDownload}
                         ></FiDownloadCloud>
                     </TipSuggest>
                     <TipSuggest content='Public'>

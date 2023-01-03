@@ -34,10 +34,10 @@ function UserWeb({
     useEffect(() => {
         data.map((item) => {
             if (widthContent && heightTemplate) {
-                if (!item.height.toString().includes("%") && item.height) {
+                if (!item.height.toString().includes("%")) {
                     item.height = `${(item.height / heightTemplate) * 100}%`;
                 }
-                if (!item.width.toString().includes("%") && item.width) {
+                if (!item.width.toString().includes("%")) {
                     item.width = `${(item.width / widthContent) * 100}%`;
                     console.log(widthContent);
                 }

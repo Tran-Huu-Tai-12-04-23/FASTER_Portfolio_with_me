@@ -215,6 +215,7 @@ function CreatePortfolio({
     useEffect(() => {
         setTransactionContent(widthMenu === "0" ? "-11%" : "0");
     }, [widthMenu]);
+
     //go to top page
     const handleShowScroll = (e) => {
         setShowTag(true);
@@ -478,20 +479,6 @@ function CreatePortfolio({
                     </ContextShowEditorComponent.Provider>
                 </ContextItemsIngrid.Provider>
             </wrapperContent.Provider>
-            {widthContent && (
-                <div
-                    style={{
-                        display: "none",
-                    }}
-                    id='download'
-                >
-                    <UserWeb
-                        items={items}
-                        heightTemplate={heightContent}
-                        widthContent={widthContent}
-                    ></UserWeb>
-                </div>
-            )}
         </>
     );
 }
