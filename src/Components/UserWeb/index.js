@@ -82,7 +82,7 @@ function UserWeb({
         e.preventDefault();
         var pageHTML =
             "<!DOCTYPE html>" + window.document.documentElement.outerHTML;
-        console.log(pageHTML);
+        // console.log(pageHTML);
         let data = new Blob([pageHTML], { type: "text/html" });
         let csvURL = URL.createObjectURL(data);
         let tempLink = document.createElement("a");
