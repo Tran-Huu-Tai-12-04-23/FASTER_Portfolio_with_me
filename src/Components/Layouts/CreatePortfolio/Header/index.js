@@ -91,7 +91,7 @@ function Header({ setShowPreview, heightDefault, widthContent }) {
         let tempLink = document.createElement("a");
         tempLink.href = csvURL;
 
-        tempLink.setAttribute("download", "portfolio.html");
+        tempLink.setAttribute("download", `${title}.html`);
         tempLink.click();
     };
 
