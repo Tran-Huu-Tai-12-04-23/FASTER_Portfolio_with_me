@@ -85,7 +85,6 @@ function Header({ setShowPreview, heightDefault, widthContent }) {
         var page2 = window.document.getElementById("download").innerHTML;
         pageHTML = `<!DOCTYPE html>
         <html> ${pageHTML} <body>${page2}</body><html>`;
-        console.log(pageHTML);
         let data = new Blob([pageHTML], { type: "text/html" });
         let csvURL = window.URL.createObjectURL(data);
         let tempLink = document.createElement("a");

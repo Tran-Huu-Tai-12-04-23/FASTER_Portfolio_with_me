@@ -478,18 +478,20 @@ function CreatePortfolio({
                     </ContextShowEditorComponent.Provider>
                 </ContextItemsIngrid.Provider>
             </wrapperContent.Provider>
-            <div
-                style={{
-                    display: "none",
-                }}
-                id='download'
-            >
-                <UserWeb
-                    items={items}
-                    heightTemplate={heightDefault}
-                    widthContent={widthContent}
-                ></UserWeb>
-            </div>
+            {widthContent && (
+                <div
+                    style={{
+                        display: "none",
+                    }}
+                    id='download'
+                >
+                    <UserWeb
+                        items={items}
+                        heightTemplate={heightContent}
+                        widthContent={widthContent}
+                    ></UserWeb>
+                </div>
+            )}
         </>
     );
 }
