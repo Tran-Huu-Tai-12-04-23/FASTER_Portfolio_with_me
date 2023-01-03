@@ -6,10 +6,10 @@ const leftDefaultTitle = 100;
 export const DefaultItemInGridTemplate4 = [
     {
         id: uuid(),
-        type: "div",
+        type: "background",
         left: "0%",
         top: 0,
-        width: 1442,
+        width: "100%",
         height: 500,
         inGrid: true,
         isMulti: false,
@@ -392,10 +392,10 @@ export const DefaultItemInGridTemplate4 = [
     },
     {
         id: uuid(),
-        type: "div",
+        type: "background",
         left: "0%",
         top: 2000,
-        width: 1442,
+        width: "100%",
         height: 510,
         inGrid: true,
         isMulti: false,
