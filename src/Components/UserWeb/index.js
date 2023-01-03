@@ -79,6 +79,7 @@ function UserWeb({
     }, []);
     const handleDownload = (e) => {
         document.getElementById("menu_web").style.display = "none";
+        document.getElementById("loading").style.display = "none";
         e.preventDefault();
         var pageHTML =
             "<!DOCTYPE html>" + window.document.documentElement.outerHTML;
