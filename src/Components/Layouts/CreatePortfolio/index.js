@@ -473,23 +473,23 @@ function CreatePortfolio({
                                     backgroundColor='#fff'
                                     showPreview={showPreview}
                                 ></Footer>
-                                <div
-                                    style={{
-                                        display: "none",
-                                    }}
-                                    id='download'
-                                >
-                                    <UserWeb
-                                        items={items}
-                                        heightTemplate={heightDefault}
-                                        widthContent={widthContent}
-                                    ></UserWeb>
-                                </div>
                             </ColorRange.Provider>
                         </ElementContentPortfolio.Provider>
                     </ContextShowEditorComponent.Provider>
                 </ContextItemsIngrid.Provider>
             </wrapperContent.Provider>
+            <div
+                style={{
+                    display: "none",
+                }}
+                id='download'
+            >
+                <UserWeb
+                    items={items}
+                    heightTemplate={heightDefault}
+                    widthContent={widthContent}
+                ></UserWeb>
+            </div>
         </>
     );
 }
