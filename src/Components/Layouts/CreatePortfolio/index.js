@@ -68,6 +68,7 @@ function CreatePortfolio({
     const [heightOnScroll, setHeightOnScroll] = useState();
     const [showRecovery, setShowRecovery] = useState(false);
     const [dataRecovery, setDataRecovery] = useState([]);
+    const [heightRecovery, setHeightRecovery] = useState();
     const [colorRange, setColorRange] = useState([
         "rgba(0,0,0,0)",
         "#000",
@@ -88,20 +89,6 @@ function CreatePortfolio({
     };
 
     const loadInStyleDefault = () => {
-        // console.log("render");
-        // var count = 0;
-        // items.map((item) => {
-        //   if (!item.toString().includes("%") && widthContent && item.width) {
-        //     const newWidth = `${
-        //       (parseInt(item.width) / parseInt(widthContent)) * 100
-        //     }%`;
-        //     if (newWidth) {
-        //       item.width = newWidth;
-        //       count++;
-        //     }
-        //   }
-        // });
-
         const setStyle = (item) => {
             const itemDomReal = document.getElementById(item.id);
             if (itemDomReal) {
@@ -134,8 +121,12 @@ function CreatePortfolio({
 
         // console.log(findItem(state.id_item_selected));
         if (!isObjectEquals(dataItems, items)) {
+            const data = {
+                items: items,
+                height: heightContent,
+            };
             // if (count === items.length) {
-            localStorage.setItem(`items-${id}`, JSON.stringify(items));
+            localStorage.setItem(`items-${id}`, JSON.stringify(data));
             localStorage.setItem(`colors-${id}`, JSON.stringify(colorRange));
             // }
         }
@@ -153,13 +144,16 @@ function CreatePortfolio({
         //   window.removeEventListener("beforeunload", handleSaveDataInStorage);
         // };
     });
-
+    useEffect(() => {
+        setHeightContent(heightRecovery);
+    }, [heightRecovery]);
     useEffect(() => {
         const data = getData(id);
         const colors = getColors(id);
         data.then((data) => {
-            if (data && data.length > 0) {
-                setDataRecovery(data);
+            if (data) {
+                setDataRecovery(data.items);
+                setHeightRecovery(data.height);
                 setShowRecovery(true);
             }
         }).catch((err) => err);
