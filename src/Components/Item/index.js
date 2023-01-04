@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { useDrag } from "react-dnd";
+import { useDrag, useDragDropManager } from "react-dnd";
 import {
     useState,
     useEffect,
@@ -315,6 +315,8 @@ function Item({
     };
 
     // handle when mouse up
+    let offsetDiff =
+        useDragDropManager().monitor.getDifferenceFromInitialOffset();
 
     const handleMouseDown = (e) => {
         const itemResize = e.target.parentElement.children[0];

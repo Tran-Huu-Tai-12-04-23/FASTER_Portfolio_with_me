@@ -242,7 +242,6 @@ function BoxMenu() {
             if (!urlItem.toString().includes("blob")) {
                 item.linkImage = urlItem;
             }
-            console.log(item);
         }
         if (itemReal) {
             itemReal.src = urlItem;
