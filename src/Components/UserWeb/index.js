@@ -88,27 +88,15 @@ function UserWeb({
         console.log(document.location.host);
         const vitri = pageHTML.search("/static/css/main.");
         let newPageHtml;
-        console.log(vitri);
         if (vitri !== -1 && vitri) {
-            const length = "/static/css/main.".length;
             newPageHtml = pageHTML.substring(0, vitri);
-            const resthtml = pageHTML.substring(
-                vitri + length + 1,
-                pageHTML.length
-            );
-            const vitriCuoi = resthtml.search('"');
-            const startRest = resthtml.substring(0, vitriCuoi);
-            console.log(startRest);
-            console.log(resthtml);
-            const newString = resthtml.substring(
-                vitriCuoi,
-                resthtml.length - 1
-            );
-            console.log(newString);
+            const resthtml = pageHTML.substring(vitri + 1, pageHTML.length);
 
+            console.log(resthtml);
+            console.log(newPageHtml);
             newPageHtml +=
-                `https://${document.location.host.toString()}/static/css/main.${startRest}` +
-                newString;
+                `https://${document.location.host.toString()}/static/css/main.` +
+                resthtml;
             console.log(newPageHtml);
         }
         pageHTML = newPageHtml ? newPageHtml : pageHTML;
