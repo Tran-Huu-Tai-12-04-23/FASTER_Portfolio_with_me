@@ -35,7 +35,7 @@ function Preview({
                     return (
                         <img
                             key={index}
-                            src={item.linkImage ? item.linkImage : item.src}
+                            src={item.src}
                             style={{
                                 width: item.width,
                                 height: item.height,
