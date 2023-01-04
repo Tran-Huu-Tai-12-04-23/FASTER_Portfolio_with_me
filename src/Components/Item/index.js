@@ -314,10 +314,6 @@ function Item({
         type: "text",
     };
 
-    // handle when mouse up
-    let offsetDiff =
-        useDragDropManager().monitor.getDifferenceFromInitialOffset();
-
     const handleMouseDown = (e) => {
         const itemResize = e.target.parentElement.children[0];
         setWidthContents(itemResize.offsetWidth);
