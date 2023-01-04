@@ -187,7 +187,7 @@ function CreatePortfolio({
         };
         if (dataRecovery) {
             dataRecovery.map((item) => {
-                if (item.linkImage) {
+                if (item.linkImage && item.src.toString().includes("blob")) {
                     item.src = URL.createObjectURL(
                         dataURItoBlob(item.linkImage)
                     );
