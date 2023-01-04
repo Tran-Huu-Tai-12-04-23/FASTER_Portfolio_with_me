@@ -145,7 +145,9 @@ function CreatePortfolio({
         // };
     });
     useEffect(() => {
-        setHeightContent(heightRecovery);
+        if (heightRecovery) {
+            setHeightContent(heightRecovery);
+        }
     }, [heightRecovery]);
     useEffect(() => {
         const data = getData(id);
@@ -168,7 +170,6 @@ function CreatePortfolio({
                 return err;
             });
     }, []);
-
     useEffect(() => {
         const dataURItoBlob = (dataURI) => {
             var mime = dataURI.split(",")[0].split(":")[1].split(";")[0];
