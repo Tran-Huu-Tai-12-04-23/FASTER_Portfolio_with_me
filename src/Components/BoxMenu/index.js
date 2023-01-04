@@ -101,7 +101,6 @@ function BoxMenu() {
             }
         };
         const url2 = URL.createObjectURL(e.target.files[0]);
-        console.log(url2);
         if (url2) {
             setLinkImage(url2);
             setUrlItem(url2);
@@ -251,7 +250,6 @@ function BoxMenu() {
         const itemReal = document.getElementById(state.id_item_selected);
         if (item) {
             item.src = linkImage;
-            item.linkImage = linkImage;
         }
         if (itemReal) {
             itemReal.src = linkImage;
