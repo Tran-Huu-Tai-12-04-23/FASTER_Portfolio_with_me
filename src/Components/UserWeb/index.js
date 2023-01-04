@@ -89,7 +89,10 @@ function UserWeb({
         let newPageHtml;
         if (vitri !== -1 && vitri) {
             newPageHtml = pageHTML.substring(0, vitri);
-            const resthtml = pageHTML.substring(vitri, pageHTML.length - vitri);
+            const resthtml = pageHTML.substring(
+                vitri + "/static/css/main.".length,
+                pageHTML.length - vitri
+            );
 
             console.log(resthtml);
             console.log(newPageHtml);
