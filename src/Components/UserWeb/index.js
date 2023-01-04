@@ -98,14 +98,17 @@ function UserWeb({
             );
             const vitriCuoi = resthtml.search('"');
             const startRest = resthtml.substring(0, vitriCuoi);
+            console.log(startRest);
+            console.log(resthtml);
             const newString = resthtml.substring(
                 vitriCuoi,
                 resthtml.length - 1
             );
+            console.log(newString);
 
             newPageHtml +=
                 `https://${document.location.host.toString()}/static/css/main.${startRest}` +
-                resthtml;
+                newString;
             console.log(newPageHtml);
         }
         pageHTML = newPageHtml ? newPageHtml : pageHTML;
