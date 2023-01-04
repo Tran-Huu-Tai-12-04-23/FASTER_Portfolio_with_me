@@ -86,19 +86,25 @@ function UserWeb({
         // // console.log(pageHTML);
 
         console.log(document.location.host);
-        const vitri = pageHTML.search("/static/css/main.fbba4472.css");
+        const vitri = pageHTML.search("/static/css/main.");
         let newPageHtml;
         console.log(vitri);
         if (vitri !== -1 && vitri) {
-            const length = "/static/css/main.fbba4472.css".length;
+            const length = "/static/css/main.".length;
             newPageHtml = pageHTML.substring(0, vitri);
             const resthtml = pageHTML.substring(
                 vitri + length + 1,
                 pageHTML.length
             );
+            const vitriCuoi = resthtml.search('"');
+            const startRest = resthtml.substring(0, vitriCuoi);
+            const newString = resthtml.substring(
+                vitriCuoi,
+                resthtml.length - 1
+            );
 
             newPageHtml +=
-                `https://${document.location.host.toString()}/static/css/main.fbba4472.css"` +
+                `https://${document.location.host.toString()}/static/css/main.${startRest}` +
                 resthtml;
             console.log(newPageHtml);
         }
