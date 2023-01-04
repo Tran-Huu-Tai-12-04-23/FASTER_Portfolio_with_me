@@ -112,7 +112,7 @@ function CreatePortfolio({
             item.styleDefault.lineHeight = state.line_height;
         };
         // console.log(state);
-
+        localStorage.clear();
         items.map((item) => {
             if (item.id === state.id_item_selected) {
                 setStyle(item);
