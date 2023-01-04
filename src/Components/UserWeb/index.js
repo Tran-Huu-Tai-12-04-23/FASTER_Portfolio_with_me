@@ -85,12 +85,11 @@ function UserWeb({
             "<!DOCTYPE html>" + window.document.documentElement.outerHTML;
         // // console.log(pageHTML);
 
-        console.log(document.location.host);
         const vitri = pageHTML.search("/static/css/main.");
         let newPageHtml;
         if (vitri !== -1 && vitri) {
             newPageHtml = pageHTML.substring(0, vitri);
-            const resthtml = pageHTML.substring(vitri, pageHTML.length);
+            const resthtml = pageHTML.substring(vitri, pageHTML.length - vitri);
 
             console.log(resthtml);
             console.log(newPageHtml);
