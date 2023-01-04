@@ -98,9 +98,14 @@ function BoxMenu() {
         reader.onload = () => {
             if (reader.readyState === 2 && itemSelect) {
                 itemSelect.linkImage = reader.result;
+                // const data = window.URL.createObjectURL(
+                //     dataURItoBlob(reader.result)
+                // );
+                // console.log(data);
             }
         };
         const url2 = URL.createObjectURL(e.target.files[0]);
+
         if (url2) {
             setLinkImage(url2);
             setUrlItem(url2);

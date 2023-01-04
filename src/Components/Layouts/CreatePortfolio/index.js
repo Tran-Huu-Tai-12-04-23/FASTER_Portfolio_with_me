@@ -67,7 +67,7 @@ function CreatePortfolio({
     const wrapperContentPortfolio = useRef();
     const [heightOnScroll, setHeightOnScroll] = useState();
     const [showRecovery, setShowRecovery] = useState(false);
-    const [dataRecovery, setDataRecovery] = useState({});
+    const [dataRecovery, setDataRecovery] = useState([]);
     const [colorRange, setColorRange] = useState([
         "rgba(0,0,0,0)",
         "#000",
@@ -174,6 +174,27 @@ function CreatePortfolio({
                 return err;
             });
     }, []);
+
+    useEffect(() => {
+        const dataURItoBlob = (dataURI) => {
+            var mime = dataURI.split(",")[0].split(":")[1].split(";")[0];
+            var binary = atob(dataURI.split(",")[1]);
+            var array = [];
+            for (var i = 0; i < binary.length; i++) {
+                array.push(binary.charCodeAt(i));
+            }
+            return new Blob([new Uint8Array(array)], { type: mime });
+        };
+        if (dataRecovery) {
+            dataRecovery.map((item) => {
+                if (item.linkImage) {
+                    item.src = URL.createObjectURL(
+                        dataURItoBlob(item.linkImage)
+                    );
+                }
+            });
+        }
+    }, [dataRecovery]);
 
     //auto focus for users
     useEffect(() => {
