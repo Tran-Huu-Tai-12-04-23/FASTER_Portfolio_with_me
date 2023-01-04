@@ -236,7 +236,7 @@ function BoxMenu() {
         const itemReal = document.getElementById(state.id_item_selected);
         if (item) {
             item.src = urlItem;
-            item.srcPreview = urlItem;
+            item.linkImage = urlItem;
         }
         if (itemReal) {
             itemReal.src = urlItem;
@@ -246,16 +246,17 @@ function BoxMenu() {
         setTypeImage("image");
     };
     const handleSaveLinkImage = (e) => {
+        setUrlItem(linkImage);
         const item = findItem(state.id_item_selected);
         const itemReal = document.getElementById(state.id_item_selected);
         if (item) {
             item.src = linkImage;
+            item.linkImage = linkImage;
         }
         if (itemReal) {
             itemReal.src = linkImage;
             // itemReal.replaceTag("img");
         }
-        setUrlItem(linkImage);
         setShowChooseLinkImage(false);
         setTypeImage("image");
     };
