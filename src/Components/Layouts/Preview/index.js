@@ -170,6 +170,7 @@ function Preview({
             });
         }
     };
+
     return (
         <div
             className={clsx(styles.wrapper)}
