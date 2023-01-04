@@ -90,7 +90,7 @@ function UserWeb({
         let newPageHtml;
         if (vitri !== -1 && vitri) {
             newPageHtml = pageHTML.substring(0, vitri);
-            const resthtml = pageHTML.substring(vitri + 1, pageHTML.length);
+            const resthtml = pageHTML.substring(vitri, pageHTML.length);
 
             console.log(resthtml);
             console.log(newPageHtml);
