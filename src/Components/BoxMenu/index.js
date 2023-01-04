@@ -94,9 +94,9 @@ function BoxMenu() {
     const handleShowInputImg = (e) => {
         const reader = new FileReader();
         reader.readAsDataURL(e.target.files[0]);
+        const itemSelect = findItem(state.id_item_selected);
         reader.onload = () => {
-            if (reader.readyState === 2) {
-                const itemSelect = findItem(state.id_item_selected);
+            if (reader.readyState === 2 && itemSelect) {
                 itemSelect.linkImage = reader.result;
             }
         };
@@ -111,7 +111,6 @@ function BoxMenu() {
         setShowEditUrl(true);
         setShowOptions(false);
     };
-
     /// resize set width content
     useEffect(() => {
         if (wrapperContentPortfolio.current) {
@@ -235,7 +234,10 @@ function BoxMenu() {
         const itemReal = document.getElementById(state.id_item_selected);
         if (item) {
             item.src = urlItem;
-            item.linkImage = urlItem;
+            if (!urlItem.toString().includes("blob")) {
+                item.linkImage = urlItem;
+            }
+            console.log(item);
         }
         if (itemReal) {
             itemReal.src = urlItem;
@@ -245,7 +247,6 @@ function BoxMenu() {
         setTypeImage("image");
     };
     const handleSaveLinkImage = (e) => {
-        setUrlItem(linkImage);
         const item = findItem(state.id_item_selected);
         const itemReal = document.getElementById(state.id_item_selected);
         if (item) {
@@ -253,7 +254,6 @@ function BoxMenu() {
         }
         if (itemReal) {
             itemReal.src = linkImage;
-            // itemReal.replaceTag("img");
         }
         setShowChooseLinkImage(false);
         setTypeImage("image");
