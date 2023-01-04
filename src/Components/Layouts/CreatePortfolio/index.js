@@ -144,11 +144,7 @@ function CreatePortfolio({
         //   window.removeEventListener("beforeunload", handleSaveDataInStorage);
         // };
     });
-    useEffect(() => {
-        if (heightRecovery) {
-            setHeightContent(heightRecovery);
-        }
-    }, [heightRecovery]);
+
     useEffect(() => {
         const data = getData(id);
         const colors = getColors(id);
@@ -325,6 +321,9 @@ function CreatePortfolio({
                                             onClick={(e) => {
                                                 e.stopPropagation();
                                                 setItems(dataRecovery);
+                                                setHeightContent(
+                                                    heightRecovery
+                                                );
                                                 setShowRecovery(false);
                                             }}
                                         >
