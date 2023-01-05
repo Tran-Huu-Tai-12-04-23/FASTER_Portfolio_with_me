@@ -589,7 +589,6 @@ function Item({
                             id={id}
                             ref={draggable ? drag : null}
                             onClick={(e) => {
-                                e.preventDefault();
                                 handleSelectItemToEdit(e);
                             }}
                             className={classNamesItem}
