@@ -13,7 +13,7 @@ import {
 function Preview({
     items,
     heightTemplate = 1000,
-    width = "75%",
+    width = "76%",
     setShowPreview,
     showPreview,
     children,
@@ -47,6 +47,7 @@ function Preview({
                                 transform: item.center
                                     ? "translateX(-50%)"
                                     : "",
+                                overflow: "hidden",
                             }}
                         ></img>
                     );
@@ -92,6 +93,7 @@ function Preview({
                                     : "",
                                 ...item.styleDefault,
                                 zIndex: 2,
+                                overflow: "hidden",
                             }}
                         ></div>
                     );
@@ -113,6 +115,7 @@ function Preview({
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
+                                overflow: "hidden",
                             }}
                         >
                             {item.textValue}
@@ -134,6 +137,7 @@ function Preview({
                                 padding: "0",
                                 border: "none",
                                 zIndex: 2,
+                                overflow: "hidden",
                             }}
                         >
                             <a
@@ -163,6 +167,7 @@ function Preview({
                                 padding: "0",
                                 border: "none",
                                 zIndex: 1,
+                                overflow: "hidden",
                             }}
                         ></div>
                     );

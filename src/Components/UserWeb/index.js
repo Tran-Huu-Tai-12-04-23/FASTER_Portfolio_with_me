@@ -129,6 +129,7 @@ function UserWeb({
                                 transform: item.center
                                     ? "translateX(-50%)"
                                     : "",
+                                overflow: "hidden",
                             }}
                         ></img>
                     );
@@ -153,6 +154,7 @@ function UserWeb({
                                     item.type === "button" ? "center" : "",
                                 alignItems:
                                     item.type === "button" ? "center" : "",
+                                overflow: "hidden",
                             }}
                         >
                             {item.valueItem}
@@ -173,6 +175,7 @@ function UserWeb({
                                     : "",
                                 ...item.styleDefault,
                                 zIndex: 1,
+                                overflow: "hidden",
                             }}
                         ></div>
                     );
@@ -194,6 +197,7 @@ function UserWeb({
                                 display: "flex",
                                 justifyContent: "center",
                                 alignItems: "center",
+                                overflow: "hidden",
                             }}
                         >
                             {item.textValue}
@@ -214,6 +218,7 @@ function UserWeb({
                                 padding: "0",
                                 border: "none",
                                 zIndex: 2,
+                                overflow: "hidden",
                             }}
                         >
                             <a
@@ -244,6 +249,7 @@ function UserWeb({
                                 padding: "0",
                                 border: "none",
                                 zIndex: 1,
+                                overflow: "hidden",
                             }}
                         ></div>
                     );
