@@ -11,6 +11,7 @@ function ModalPublic({
     setShowModalPublic,
     heightDefault,
     widthContent,
+    title,
 }) {
     const [items, setItems] = useContext(ContextItemsIngrid);
     const [value, setValue] = useState("");
@@ -22,6 +23,7 @@ function ModalPublic({
         items: "",
         heightDefault: heightDefault,
         widthContent: widthContent,
+        title: title,
     });
 
     const handleSubmit = (e) => {
@@ -138,6 +140,7 @@ function ModalPublic({
                                     items: items,
                                     heightDefault,
                                     widthContent,
+                                    title,
                                 });
                             }
                             setValue(e.target.value);

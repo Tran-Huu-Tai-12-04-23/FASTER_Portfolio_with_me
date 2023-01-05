@@ -13,7 +13,7 @@ import {
 function Preview({
     items,
     heightTemplate = 1000,
-    width = "76%",
+    width = "75.5%",
     setShowPreview,
     showPreview,
     children,
@@ -27,7 +27,6 @@ function Preview({
         Linkedin: <GrLinkedin />,
         Youtube: <GrYoutube />,
     };
-
     const renderItem = () => {
         if (items) {
             return items.map((item, index) => {

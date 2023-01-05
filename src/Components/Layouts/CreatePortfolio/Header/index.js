@@ -225,6 +225,7 @@ function Header({
                 </div>
             </div>
             <ModalPublic
+                title={title}
                 widthContent={widthContent}
                 show={showModalPublic}
                 setShowModalPublic={setShowModalPublic}

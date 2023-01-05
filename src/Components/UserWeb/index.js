@@ -22,6 +22,7 @@ function UserWeb({
     children,
     type,
     id,
+    title,
 }) {
     const [data, setData] = useState(items);
     const [showMenu, setShowMenu] = useState(false);
@@ -94,8 +95,6 @@ function UserWeb({
                 pageHTML.length - vitri
             );
 
-            console.log(resthtml);
-            console.log(newPageHtml);
             newPageHtml +=
                 `https://${document.location.host.toString()}/static/css/main.` +
                 resthtml;
@@ -107,7 +106,7 @@ function UserWeb({
         let tempLink = document.createElement("a");
         tempLink.href = csvURL;
         // tempLink.href = data;
-        tempLink.setAttribute("download", `new.html`);
+        tempLink.setAttribute("download", `${"New"}.html`);
         tempLink.click();
     };
     const renderItem = () => {

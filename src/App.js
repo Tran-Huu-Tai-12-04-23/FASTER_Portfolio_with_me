@@ -40,6 +40,7 @@ function App() {
                                     heightTemplate={item.heightDefault}
                                     items={structuredClone(item.items)}
                                     type={item.path}
+                                    title={item.title}
                                 ></UserWeb>
                             }
                         ></Route>
@@ -55,6 +56,7 @@ function App() {
                                 heightTemplate={dataUserWeb.heightDefault}
                                 widthContent={dataUserWeb.widthContent}
                                 type={dataUserWeb.path}
+                                title={dataUserWeb.title}
                             ></UserWeb>
                         }
                     ></Route>
