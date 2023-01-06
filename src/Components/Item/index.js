@@ -285,11 +285,25 @@ function Item({
     };
 
     const handleSelectItemToEdit = (e) => {
+        e.preventDefault();
         e.stopPropagation();
-        if (findItem(e.target.id)) {
-            loadStyleComponentInInitState(findItem(e.target.id));
+        var id;
+        if (type === "icon") {
+            if (e.target.id) {
+                id = e.target.id;
+            } else if (e.target.parentElement.id) {
+                id = e.target.parentElement.id;
+            } else if (e.target.parentElement.parentElement.id) {
+                id = e.target.parentElement.parentElement.id;
+            }
+        } else if (e.target.id) {
+            id = e.target.id;
         }
-        dispatch(setIdItemSelected(e.target.id));
+        console.log(id);
+        if (findItem(id)) {
+            loadStyleComponentInInitState(findItem(id));
+        }
+        dispatch(setIdItemSelected(id));
         setEditorComponent(true);
     };
 
@@ -392,7 +406,6 @@ function Item({
             }
         }
     });
-
     useEffect(() => {
         // work next
         if (items) {
@@ -592,7 +605,7 @@ function Item({
                                 handleSelectItemToEdit(e);
                             }}
                             className={classNamesItem}
-                            target='_blank'
+                            // target='_blank'
                             href={linkIcon}
                             style={{
                                 ...styleDefault,
