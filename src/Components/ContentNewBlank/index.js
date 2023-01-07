@@ -8,52 +8,51 @@ import styles from "./ContentNewBlank.module.scss";
 import { Template } from "~/Components";
 import { templates } from "~/assets/img";
 const contentTip = [
-  "Create with  blue templates",
-  "Create with professinal templates ",
-  "Create with normal templates",
-  "Create with pink templates",
+    "Create with  blue templates",
+    "Create with professinal templates ",
+    "Create with normal templates",
+    "Create with pink templates",
 ];
 function ContentNewBlank({ setShowModalChooseTemplate }) {
-  function renderTemplate() {
-    return templates.map((temp, index) => {
-      const nameTemplate = "/template" + (index + 2);
-      return (
-        <a
-          key={index + 1}
-          href={nameTemplate}
-          target='_blank'
-          onClick={(e) => {
-            setShowModalChooseTemplate(false);
-          }}
-        >
-          <Template background={temp} content={contentTip[index]} />
-        </a>
-      );
-    });
-  }
+    function renderTemplate() {
+        return templates.map((temp, index) => {
+            const nameTemplate = "/template" + (index + 2);
+            return (
+                <Link
+                    key={index + 1}
+                    to={nameTemplate}
+                    element={
+                        <Template
+                            background={temp}
+                            content={contentTip[index]}
+                        />
+                    }
+                ></Link>
+            );
+        });
+    }
 
-  return (
-    <Fragment>
-      <h1 className={clsx(styles.heading)}>Choose Template</h1>
+    return (
+        <>
+            <h1 className={clsx(styles.heading)}>Choose Template</h1>
 
-      <div className={clsx(styles.wrapper)}>
-        <a
-          href='/template1'
-          target={"_blank"}
-          onClick={(e) => {
-            setShowModalChooseTemplate(false);
-          }}
-        >
-          <Template
-            key='0'
-            content={contentTip[0]}
-            icon={<FontAwesomeIcon icon={faAdd}></FontAwesomeIcon>}
-          />
-        </a>
-        {renderTemplate()}
-      </div>
-    </Fragment>
-  );
+            <div className={clsx(styles.wrapper)}>
+                <Link
+                    to='/template1'
+                    element={
+                        <Template
+                            key='0'
+                            content={contentTip[0]}
+                            icon={
+                                <FontAwesomeIcon icon={faAdd}></FontAwesomeIcon>
+                            }
+                        />
+                    }
+                ></Link>
+                {renderTemplate()}
+            </div>
+        </>
+    );
 }
 
 export default ContentNewBlank;

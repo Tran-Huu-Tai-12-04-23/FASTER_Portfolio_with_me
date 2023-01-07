@@ -7,6 +7,7 @@ import styles from "./App.module.scss";
 import { Loading, UserWeb, Preview } from "~/Components";
 import { getDataUserWeb } from "~/Store/util";
 import { ItemsLocalStore } from "./Store/Context";
+import ChooseTemplate from "~/Components/Layouts/Home/Chootemplate";
 
 function App() {
     const [displayLoading, setDisplayLoading] = useState(true);
@@ -80,6 +81,10 @@ function App() {
                             );
                         })}
                         {renderUserWeb()}
+                        <Route
+                            path='/chooseTemplate'
+                            element={<ChooseTemplate />}
+                        ></Route>
                     </Routes>
                 </Router>
             </div>

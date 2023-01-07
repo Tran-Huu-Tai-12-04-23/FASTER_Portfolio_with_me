@@ -491,10 +491,6 @@ function CreatePortfolio({
                                         heightTemplate={heightContent}
                                     ></Preview>
                                 </div>
-                                <Footer
-                                    backgroundColor='#fff'
-                                    showPreview={showPreview}
-                                ></Footer>
                             </ColorRange.Provider>
                         </ElementContentPortfolio.Provider>
                     </ContextShowEditorComponent.Provider>
