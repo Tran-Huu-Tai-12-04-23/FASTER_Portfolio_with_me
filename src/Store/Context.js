@@ -11,3 +11,4 @@ export const wrapperContent = createContext();
 export const ColorRange = createContext();
 export const ItemsLocalStore = createContext();
 export const GridWidth = createContext();
+export const Theme = createContext();

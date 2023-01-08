@@ -6,13 +6,12 @@ import { publicRoutes } from "./Routes";
 import styles from "./App.module.scss";
 import { Loading, UserWeb, Preview } from "~/Components";
 import { getDataUserWeb } from "~/Store/util";
-import { ItemsLocalStore } from "./Store/Context";
-import ChooseTemplate from "~/Components/Layouts/Home/Chootemplate";
+import { ItemsLocalStore, Theme } from "./Store/Context";
 
 function App() {
     const [displayLoading, setDisplayLoading] = useState(true);
     const [dataUserWeb, setDataUserWeb] = useState([]);
-    const [widthContent, setWidthContent] = useState();
+    const [theme, setTheme] = useState(false);
 
     useEffect(() => {
         window.onload = () => {
@@ -67,27 +66,25 @@ function App() {
     };
     return (
         <ItemsLocalStore.Provider value={dataUserWeb}>
-            <Loading display={displayLoading}></Loading>
-            <div className={clsx(styles.wrapper)}>
-                <Router>
-                    <Routes>
-                        {publicRoutes.map((page, index) => {
-                            return (
-                                <Route
-                                    key={index}
-                                    path={page.path}
-                                    element={page.element}
-                                ></Route>
-                            );
-                        })}
-                        {renderUserWeb()}
-                        <Route
-                            path='/chooseTemplate'
-                            element={<ChooseTemplate />}
-                        ></Route>
-                    </Routes>
-                </Router>
-            </div>
+            <Theme.Provider value={[theme, setTheme]}>
+                <Loading display={displayLoading}></Loading>
+                <div className={clsx(styles.wrapper)}>
+                    <Router>
+                        <Routes>
+                            {publicRoutes.map((page, index) => {
+                                return (
+                                    <Route
+                                        key={index}
+                                        path={page.path}
+                                        element={page.element}
+                                    ></Route>
+                                );
+                            })}
+                            {renderUserWeb()}
+                        </Routes>
+                    </Router>
+                </div>
+            </Theme.Provider>
         </ItemsLocalStore.Provider>
     );
 }

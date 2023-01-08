@@ -7,40 +7,49 @@ import logoHuutai from "~/assets/img/logoHuutai.png";
 import { MdOutlineDarkMode } from "react-icons/md";
 import { BsFillSunFill } from "react-icons/bs";
 
-function Header({ modeTheme, setModeTheme }) {
+function Header({
+    theme,
+    setTheme,
+    showModalChooseTemplate,
+    setShowModalChooseTemplate,
+}) {
     return (
         <div
             className={clsx(styles.wrapper)}
             style={{
-                color: modeTheme ? "#000" : "#fff",
+                color: theme ? "#000" : "#fff",
             }}
         >
             {/* menu in here  */}
 
             <div className={clsx(styles.nav_home)}>
                 <div className={clsx(styles.mode_themes)}>
-                    {modeTheme && (
+                    {theme && (
                         <MdOutlineDarkMode
                             style={{
                                 color: "#000",
                             }}
                             onClick={(e) => {
-                                setModeTheme(!modeTheme);
+                                setTheme(!theme);
                             }}
                         ></MdOutlineDarkMode>
                     )}
-                    {!modeTheme && (
+                    {!theme && (
                         <BsFillSunFill
                             style={{
                                 color: "yellow",
                             }}
                             onClick={(e) => {
-                                setModeTheme(!modeTheme);
+                                setTheme(!theme);
                             }}
                         ></BsFillSunFill>
                     )}
                 </div>
-                <a href='#home'>
+                <a
+                    onClick={(e) => {
+                        setShowModalChooseTemplate(!showModalChooseTemplate);
+                    }}
+                >
                     <h4>Home</h4>
                 </a>
                 <a href='#guide'>
@@ -61,6 +70,10 @@ function Header({ modeTheme, setModeTheme }) {
                         color: "inherit",
                         fontWeight: 600,
                         cursor: "pointer",
+                        display: !showModalChooseTemplate ? "block" : "none",
+                    }}
+                    onClick={(e) => {
+                        setShowModalChooseTemplate(!showModalChooseTemplate);
                     }}
                 >
                     Get start

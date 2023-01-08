@@ -6,21 +6,26 @@ import styles from "./HomeContent.module.scss";
 import img_content_1 from "../../../../assets/img/img_content_1.png";
 import ChooseTemplate from "../Chootemplate";
 
-function HomeContent({ stateModalChooseTemplate, modeTheme, setModeTheme }) {
+function HomeContent({ stateModalChooseTemplate, theme, setTheme }) {
     return (
         <div
             className={clsx(styles.wrapper)}
             id='home'
             style={{
-                backgroundColor: !modeTheme ? "#212121" : "#fff",
+                backgroundColor: !theme ? "#212121" : "#fff",
             }}
         >
             <div className={clsx(styles.wrapper_info)}>
                 <h1>Ready to started with your portfolio?</h1>
 
-                <Link to='/chooseTemplate' className={clsx(styles.button)}>
+                <button
+                    className={clsx(styles.button)}
+                    onClick={(e) => {
+                        stateModalChooseTemplate(true);
+                    }}
+                >
                     Try with us
-                </Link>
+                </button>
             </div>
             <img src={img_content_1} className={clsx(styles.img)}></img>
         </div>
