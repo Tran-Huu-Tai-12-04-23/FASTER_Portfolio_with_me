@@ -10,6 +10,7 @@ import clsx from "clsx";
 import styles from "./CreatePortfolio.module.scss";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { VscAdd } from "react-icons/vsc";
+import { IoAddSharp } from "react-icons/io5";
 
 import Header from "./Header";
 import MenuUntil from "~/Components/MenuUntil";
@@ -18,21 +19,13 @@ import {
     ContextShowEditorComponent,
     ContextItemsIngrid,
     ElementContentPortfolio,
-    wrapperContent,
+    ContextWrapperContent,
     ContextReducer,
     ColorRange,
 } from "~/Store/Context";
-import {
-    GrFacebookOption,
-    GrInstagram,
-    GrGithub,
-    GrLinkedin,
-    GrYoutube,
-} from "react-icons/gr";
-import Footer from "../Footer";
 import Preview from "../Preview";
-import Tag from "./Tag";
 import { getData, getColors } from "~/Store/util";
+import EditorGrid from "./EditorGrid";
 
 function CreatePortfolio({
     DefaultComponent = [],
@@ -48,24 +41,17 @@ function CreatePortfolio({
 
     const [transactionContent, setTransactionContent] = useState("0");
     const [widthMenu, setWidthMenu] = useState("22%");
-    const [goToTop, setGoToTop] = useState(false);
-    const [showEditorComponent, setEditorComponent] = useState(false);
-    const [showAddHeight, setShowAddHeight] = useState(false);
-    const [heightContent, setHeightContent] = useState(
-        heightDefault ? heightDefault : 1000
-    );
-    const [heightContentChange, setHeightContentChange] = useState("");
+    const [showEditorComponent, setEditorComponent] = useState(true);
     const [showTrash, setShowTrash] = useState(false);
     const [widthContent, setWidthContent] = useState();
-    const [widthContentBefore, setWidthContentBefore] = useState();
+
     const [showPreview, setShowPreview] = useState(false);
     const contentPortfolio = useRef();
     const wrapperTemplateContent = useRef();
     const inputAddHeight = useRef();
-    const [contentTag, setContentTag] = useState("Header");
-    const [showTag, setShowTag] = useState(false);
+
     const wrapperContentPortfolio = useRef();
-    const [heightOnScroll, setHeightOnScroll] = useState();
+
     const [showRecovery, setShowRecovery] = useState(false);
     const [dataRecovery, setDataRecovery] = useState([]);
     const [heightRecovery, setHeightRecovery] = useState();
@@ -123,7 +109,7 @@ function CreatePortfolio({
         if (!isObjectEquals(dataItems, items)) {
             const data = {
                 items: items,
-                height: heightContent,
+                // height: heightContent,
             };
             // if (count === items.length) {
             localStorage.setItem(`items-${id}`, JSON.stringify(data));
@@ -198,7 +184,6 @@ function CreatePortfolio({
     useEffect(() => {
         if (wrapperTemplateContent.current) {
             setWidthContent(wrapperTemplateContent.current.offsetWidth);
-            setWidthContentBefore(wrapperTemplateContent.current.offsetWidth);
             // console.log(wrapperTemplateContent.current.offsetWidth);
         }
     }, []);
@@ -223,59 +208,9 @@ function CreatePortfolio({
         }
     }, [items]);
 
-    //set height for page
-    useEffect(() => {
-        if (wrapperTemplateContent.current) {
-            wrapperTemplateContent.current.style.height = `${heightContent}px`;
-        }
-    }, [heightContent]);
-
-    // transaction page when hidden menu
-    useEffect(() => {
-        setTransactionContent(widthMenu === "0" ? "-11%" : "0");
-    }, [widthMenu]);
-
-    //go to top page
-    const handleShowScroll = (e) => {
-        setShowTag(true);
-        if (e.currentTarget.scrollTop <= 0) {
-            setShowTag(false);
-        }
-        if (e.currentTarget.scrollTop < 200) {
-            setContentTag("Header");
-        }
-        if (e.currentTarget.scrollTop > 200) {
-            setContentTag("Content");
-        }
-        if (e.currentTarget.scrollTop > 2000) {
-            setContentTag("Footer");
-        }
-        setGoToTop(e.currentTarget.scrollTop > 200 ? true : false);
-    };
-
-    const handleGoToTop = (e) => {
-        if (contentPortfolio.current) {
-            contentPortfolio.current.scrollTop = 0;
-        }
-    };
-
-    //handle set height
-    const handleSetHeightPage = (e) => {
-        setHeightContent((prev) => {
-            const newHeight = prev + parseInt(heightContentChange);
-            if (newHeight > 1000) {
-                return newHeight;
-            } else {
-                return 1000;
-            }
-        });
-        setHeightContentChange("");
-        setShowAddHeight(!showAddHeight);
-    };
-
     return (
         <>
-            <wrapperContent.Provider value={wrapperContentPortfolio}>
+            <ContextWrapperContent.Provider value={wrapperContentPortfolio}>
                 <ContextItemsIngrid.Provider value={[items, setItems]}>
                     <ContextShowEditorComponent.Provider
                         value={[showEditorComponent, setEditorComponent]}
@@ -297,186 +232,117 @@ function CreatePortfolio({
                                     }}
                                 >
                                     <div
-                                        className={clsx(
-                                            styles.wrapper_nofication
-                                        )}
-                                        style={{
-                                            display:
-                                                showEditorComponent ||
-                                                !showRecovery
-                                                    ? "none"
-                                                    : "flex",
-                                        }}
-                                    >
-                                        <h1>Web data recovery</h1>
-                                        <button
-                                            onClick={(e) => {
-                                                setShowRecovery(false);
-                                                localStorage.clear();
-                                            }}
-                                        >
-                                            No
-                                        </button>
-                                        <button
-                                            onClick={(e) => {
-                                                e.stopPropagation();
-                                                setItems(dataRecovery);
-                                                setHeightContent(
-                                                    heightRecovery
-                                                );
-                                                setShowRecovery(false);
-                                            }}
-                                        >
-                                            Yes
-                                        </button>
-                                    </div>
-                                    {showEditorComponent === false &&
-                                    !showRecovery ? (
-                                        <Header
-                                            widthContent={widthContent}
-                                            setShowPreview={setShowPreview}
-                                            heightDefault={heightContent}
-                                        />
-                                    ) : (
-                                        ""
-                                    )}
-
-                                    <div
                                         className={clsx(styles.content)}
                                         ref={wrapperContentPortfolio}
                                     >
-                                        <MenuUntil
-                                            state={setWidthMenu}
-                                            valueState={widthMenu}
-                                        >
-                                            <div
-                                                className={clsx(
-                                                    styles.wrapper_icon_add_height_content
-                                                )}
-                                            >
-                                                <TipSuggest
-                                                    content='Add height page, click'
-                                                    position={"top"}
-                                                    styles={{
-                                                        width: "100%",
-                                                        height: "100%",
-                                                    }}
-                                                >
-                                                    <VscAdd
-                                                        className={clsx(
-                                                            styles.icon_add_height_content
-                                                        )}
-                                                        onClick={(e) => {
-                                                            setShowAddHeight(
-                                                                !showAddHeight
-                                                            );
-                                                        }}
-                                                    ></VscAdd>
-                                                </TipSuggest>
-                                                <div
-                                                    className={clsx(
-                                                        styles.form_enter_height
-                                                    )}
-                                                    style={{
-                                                        display: showAddHeight
-                                                            ? "block"
-                                                            : "none",
-                                                    }}
-                                                >
-                                                    <input
-                                                        ref={inputAddHeight}
-                                                        type='number'
-                                                        onChange={(e) => {
-                                                            setHeightContentChange(
-                                                                e.target.value
-                                                            );
-                                                        }}
-                                                        onKeyPress={(e) => {
-                                                            if (
-                                                                e.which === 13
-                                                            ) {
-                                                                handleSetHeightPage();
-                                                            }
-                                                        }}
-                                                        value={
-                                                            heightContentChange
-                                                        }
-                                                        placeholder='Please enter number !!'
-                                                    />
-                                                    <button
-                                                        onClick={
-                                                            handleSetHeightPage
-                                                        }
-                                                    >
-                                                        Enter
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                            <Trash
-                                                display={
-                                                    showTrash ? "flex" : "none"
-                                                }
-                                                id={"trash"}
-                                            ></Trash>
-                                        </MenuUntil>
-                                        {showTag && widthMenu !== "0" ? (
-                                            <Tag content={contentTag}></Tag>
-                                        ) : null}
-
-                                        <div
-                                            ref={contentPortfolio}
-                                            id={"content_portfolio"}
+                                        {/* <div
                                             className={clsx(
-                                                styles.wrapper_template
+                                                styles.wrapper_nofication
                                             )}
                                             style={{
-                                                minWidth: "76%",
-                                                transform: `translateX(${transactionContent})`,
+                                                display:
+                                                    showEditorComponent ||
+                                                    !showRecovery
+                                                        ? "none"
+                                                        : "flex",
                                             }}
-                                            onScroll={handleShowScroll}
                                         >
-                                            <div
-                                                ref={wrapperTemplateContent}
-                                                className={clsx(
-                                                    styles.wrapper_template_content
-                                                )}
-                                                id='wrapper_template_content'
+                                            <h1>Web data recovery</h1>
+                                            <button
+                                                onClick={(e) => {
+                                                    setShowRecovery(false);
+                                                    localStorage.clear();
+                                                }}
                                             >
-                                                {children}
+                                                No
+                                            </button>
+                                            <button
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setItems(dataRecovery);
+                                                    setHeightContent(
+                                                        heightRecovery
+                                                    );
+                                                    setShowRecovery(false);
+                                                }}
+                                            >
+                                                Yes
+                                            </button>
+                                        </div> */}
+                                        {/* {showEditorComponent === false &&
+                                        !showRecovery ? (
+                                           
+                                        ) : (
+                                            ""
+                                        )} */}
+                                        <Header
+                                            widthContent={widthContent}
+                                            setShowPreview={setShowPreview}
+                                            // heightDefault={heightContent}
+                                        />
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                justifyContent: "space-between",
+                                                width: "100%",
+                                            }}
+                                        >
+                                            <MenuUntil
+                                                state={setWidthMenu}
+                                                valueState={widthMenu}
+                                            ></MenuUntil>
 
-                                                {/* <Grid space={2} gap='12px' backgroundColor='#ccc'></Grid> */}
+                                            <div
+                                                ref={contentPortfolio}
+                                                id={"content_portfolio"}
+                                                className={clsx(
+                                                    styles.wrapper_template
+                                                )}
+                                                style={{
+                                                    minWidth: "78%",
+                                                    transform: `translateX(${transactionContent})`,
+                                                    display: "flex",
+                                                    // justifyContent: "center",
+                                                    backgroundColor: "#ccc",
+                                                    position: "relative",
+                                                }}
+                                            >
+                                                <div
+                                                    ref={wrapperTemplateContent}
+                                                    className={clsx(
+                                                        styles.wrapper_template_content
+                                                    )}
+                                                    id='wrapper_template_content'
+                                                >
+                                                    {children}
+                                                    {!showEditorComponent && (
+                                                        <EditorGrid />
+                                                    )}
+                                                </div>
+                                                <EditorComponent
+                                                    style={{
+                                                        display:
+                                                            showEditorComponent
+                                                                ? "flex"
+                                                                : "none",
+                                                        // transform: widthMenu === "0" ? "translateX(-11%)" : "",
+                                                    }}
+                                                ></EditorComponent>
+                                                <div
+                                                    className={clsx(
+                                                        styles.add_pages
+                                                    )}
+                                                >
+                                                    <IoAddSharp />
+                                                    <span>Add page</span>
+                                                </div>
                                             </div>
                                         </div>
-
-                                        <EditorComponent
-                                            style={{
-                                                display: showEditorComponent
-                                                    ? "flex"
-                                                    : "none",
-                                                // transform: widthMenu === "0" ? "translateX(-11%)" : "",
-                                            }}
-                                        ></EditorComponent>
-
-                                        <div
-                                            className={clsx(styles.go_to_top)}
-                                            style={{
-                                                display: goToTop
-                                                    ? "block"
-                                                    : "none",
-                                                transform:
-                                                    widthMenu === "0"
-                                                        ? "translateX(-100px)"
-                                                        : "",
-                                            }}
-                                        >
-                                            <TipSuggest content='Go to top'>
-                                                <MdKeyboardArrowUp
-                                                    onClick={handleGoToTop}
-                                                ></MdKeyboardArrowUp>
-                                            </TipSuggest>
-                                        </div>
                                     </div>
+                                    <Trash
+                                        display={showTrash ? "flex" : "none"}
+                                        id={"trash"}
+                                    ></Trash>
                                 </div>
                                 <div
                                     style={{
@@ -488,14 +354,14 @@ function CreatePortfolio({
                                         setShowPreview={setShowPreview}
                                         showPreview={showPreview}
                                         items={items}
-                                        heightTemplate={heightContent}
+                                        // heightTemplate={heightContent}
                                     ></Preview>
                                 </div>
                             </ColorRange.Provider>
                         </ElementContentPortfolio.Provider>
                     </ContextShowEditorComponent.Provider>
                 </ContextItemsIngrid.Provider>
-            </wrapperContent.Provider>
+            </ContextWrapperContent.Provider>
         </>
     );
 }

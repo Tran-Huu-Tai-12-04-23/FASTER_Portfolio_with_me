@@ -19,6 +19,7 @@ import {
     ContextShowEditorComponent,
     GridWidth,
 } from "~/Store/Context";
+
 import {
     setUndo,
     setRedo,
@@ -39,6 +40,8 @@ import {
     setBackgroundColor,
 } from "~/Store/reducer/actions";
 import { TfiHandOpen } from "react-icons/tfi";
+import { findAllByAltText } from "@testing-library/react";
+import { IoFingerPrint } from "react-icons/io5";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
 
 function Grid(props) {
@@ -80,52 +83,29 @@ function Grid(props) {
                     left = `${(delta.x / grid.current.offsetWidth) * 100}%`;
                     // left = Math.round(item.left + delta.x);
                 }
-                if (item.top) {
-                    top = item.top.toString().includes("%")
-                        ? `calc(${item.top} + ${delta.y}px)`
-                        : Math.round(item.top + delta.y);
-                } else {
-                    top = Math.round(item.top + delta.y);
-                }
-                // state.stackUndo.push(structuredClone(item.itemsDrag));
-                // console.log(left);
-                // console.log(top);
-                if (
-                    item.type === "background" ||
-                    item.type === "backgroundImage" ||
-                    !left
-                ) {
-                    left = "0%";
-                    if (top < 0 && top) {
-                        top = 0;
-                    }
-                }
-                moveItem(item.id, left, top, item.inGrid, item.itemsDrag);
+
+                moveItem(
+                    item.id,
+                    left,
+                    item.top + delta.y,
+                    item.inGrid,
+                    item.itemsDrag
+                );
             } else if (item.inGrid === false && item.isMulti === false) {
                 const valueScrollTop = contentPortfolio.current.scrollTop;
                 const delta = monitor.getClientOffset();
-                const data = monitor.getDifferenceFromInitialOffset();
-                let left = item.widthMenu
-                    ? delta.x - item.widthMenu
-                    : delta.x - 400;
-                let top = delta.y - 100;
+
+                let left =
+                    item.type === "icon"
+                        ? delta.x - item.widthMenu - 80
+                        : delta.x - item.widthMenu - 150;
+                let top = delta.y - 180;
                 if (left < 0) {
                     left = 0;
                 }
                 if (top < 0 && top) {
                     top = 0;
                 }
-
-                if (
-                    item.type === "background" ||
-                    item.type === "backgroundImage"
-                ) {
-                    top -= 50;
-                    if (top < 0) {
-                        top = 0;
-                    }
-                }
-                state.stackUndo.push(structuredClone(item.itemsDrag));
                 left = `${(left / grid.current.offsetWidth) * 100}%`;
                 addItem(
                     uuid(),
@@ -133,10 +113,8 @@ function Grid(props) {
                     left,
                     top + valueScrollTop,
                     item.InfoIcon ? item.InfoIcon.Name : "",
-                    item.styleDefault,
                     item.src,
-                    item.href,
-                    item.valueItem
+                    item.href
                 );
             }
         },
@@ -152,12 +130,8 @@ function Grid(props) {
         left = "200px",
         top = "100px",
         InfoIcon,
-        styleDefault,
         src,
-        href,
-        valueItem,
-        width = 200,
-        height = type === "a" ? 30 : 100
+        href
     ) => {
         setEditorComponent(!showEditorComponent);
         dispatch(setIdItemSelected(id));
@@ -196,9 +170,9 @@ function Grid(props) {
             dispatch(setLineHeight(styles.lineHeight ? styles.lineHeight : ""));
         };
         var styles = {};
-        var textValues = "";
-        var height;
-        var width;
+        var textValues = " ";
+        var height = 250;
+        var width = 250;
 
         if (type === "input") {
             styles = {
@@ -250,6 +224,9 @@ function Grid(props) {
                 color: "#757575",
                 borderRadius: "4px",
             };
+            height = 50;
+            width = 250;
+            textValues = "Enter name link";
         }
         if (type === "icon") {
             styles = {
@@ -304,6 +281,7 @@ function Grid(props) {
             width = "100%";
             left = "0%";
         }
+
         loadStyleComponentInInitState(styles);
         setItems((prev) => {
             return [
@@ -322,6 +300,7 @@ function Grid(props) {
                     src,
                     href,
                     valueItem: textValues,
+                    textValue: textValues,
                 },
             ];
         });
@@ -364,12 +343,11 @@ function Grid(props) {
         };
         itemsItem.map((item) => {
             if (item.id === id) {
-                // console.log(`left: ${left} top: ${top}  inGrid: ${inGrid} id: ${id} `);
                 item.left = left;
                 item.top = top;
                 if (item) {
-                    loadStyleComponentInInitState(item.styleDefault);
                     dispatch(setIdItemSelected(id));
+                    loadStyleComponentInInitState(item.styleDefault);
                 }
             }
         });
@@ -403,23 +381,36 @@ function Grid(props) {
             itemDomReal.style.backgroundColor = state.background_color;
         }
     }, [state]);
-
-    useLayoutEffect(() => {
-        // if (isDragging && !canDrop) {
-        //   setEditorComponent(isOver && canDrop);
-        // }
-        // if( isDragging ) {
-        // }
-    }, [{ isOver, isDragging }]);
-
-    // useEffect(() => {
-    //   console.log("check");
-    //   items.map((item) => {
-    //     console.log(item.left);
-    //     console.log((item.left / grid.current.offsetWidth) * 100);
-    //   });
-    //   console.log("check end");
-    // }, []);
+    useEffect(() => {
+        const item = findItem(state.id_item_selected);
+        if (item) {
+            item.styleDefault.fontSize = state.font_size;
+            item.styleDefault.fontFamily = state.font_family;
+            item.styleDefault.borderRadius = state.border_radius;
+            item.styleDefault.borderStyle = state.border_style;
+            item.styleDefault.borderColor = state.border_color;
+            item.styleDefault.fontWeight = state.font_weight
+                ? "bold"
+                : "normal";
+            item.styleDefault.textAlign = state.text_align ? "center" : "";
+            item.styleDefault.borderWidth = state.border_size;
+            item.styleDefault.textTransform = state.text_transform
+                ? "uppercase"
+                : "";
+            item.styleDefault.lineHeight = state.line_height;
+            item.styleDefault.color = state.color;
+            item.styleDefault.backgroundColor = state.background_color;
+        }
+    }, [state]);
+    const findItem = (id) => {
+        var item;
+        items.forEach((element) => {
+            if (element.id === id) {
+                item = element;
+            }
+        });
+        return item;
+    };
     const renderItem = () => {
         if (items) {
             return items.map((item, index) => {

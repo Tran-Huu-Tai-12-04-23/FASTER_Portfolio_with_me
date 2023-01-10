@@ -1,37 +1,36 @@
 .wrapper {
-  width: 100px;
-  height: 100px;
-  // background-color: transparent;
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 20px;
-  z-index: 1000000;
-  // display: none;
-  transition: all 0.5s ease-in-out;
-  animation: fadeInTrash 0.3s linear;
+    width: 100px;
+    height: 100px;
+    // background-color: transparent;
+    position: absolute;
+    bottom: 10px;
+    right: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    z-index: 1000000;
+    // display: none;
+    transition: all 0.5s ease-in-out;
+    animation: fadeInTrash 0.3s linear;
 
-  svg {
-    font-size: 36px;
-    color: transparent;
-  }
+    svg {
+        font-size: 36px;
+        color: transparent;
+    }
 
-  &:hover {
-    background-color: var(--primary);
-  }
+    &:hover {
+        background-color: var(--primary);
+    }
 }
 
 @keyframes fadeInTrash {
-  from {
-    opacity: 0;
-    bottom: -10px;
-  }
-  to {
-    opacity: 1;
-    bottom: 10px;
-  }
+    from {
+        opacity: 0;
+        bottom: -10px;
+    }
+    to {
+        opacity: 1;
+        bottom: 10px;
+    }
 }

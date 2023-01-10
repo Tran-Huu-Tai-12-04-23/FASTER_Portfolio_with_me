@@ -132,6 +132,10 @@ function Header({
 
                     <TipSuggest classNames={clsx(styles.input)} content='Edit'>
                         <input
+                            style={{
+                                color: "#fff",
+                                border: "1px solid #ccc",
+                            }}
                             value={title}
                             onChange={handleDataTitle}
                             onBlur={handleDataTitleEmpty}
@@ -152,6 +156,7 @@ function Header({
                                     display: showLinkYourWebsite
                                         ? "none"
                                         : "block",
+                                    color: "#fff",
                                 }}
                             ></CgWebsite>
                         </TipSuggest>
@@ -161,6 +166,7 @@ function Header({
                                 setShowLinkYourWebsite(false);
                             }}
                             style={{
+                                color: "#fff",
                                 display: showLinkYourWebsite ? "block" : "none",
                             }}
                         ></AiOutlineClose>
@@ -198,6 +204,9 @@ function Header({
                         <FontAwesomeIcon
                             onClick={(e) => {
                                 setShowPreview(true);
+                            }}
+                            style={{
+                                color: "#fff",
                             }}
                             icon={faComputer}
                         ></FontAwesomeIcon>

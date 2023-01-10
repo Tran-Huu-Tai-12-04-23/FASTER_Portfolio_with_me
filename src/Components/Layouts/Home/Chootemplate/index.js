@@ -34,7 +34,9 @@ function ChooseTemplate({ setModeTheme, modeTheme }) {
                     justifyContent: "center",
                     alignItems: "center",
                     flexWrap: "wrap",
-                    backgroundColor: !modeTheme ? "#212121" : "#fff",
+                    backgroundColor: !modeTheme
+                        ? "var(--second_background)"
+                        : "#fff",
                 }}
             >
                 <Link to='/template1'>

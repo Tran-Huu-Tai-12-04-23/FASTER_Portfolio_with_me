@@ -53,7 +53,6 @@ function Item({
     inGrid = false,
     isMulti = false,
     stylesItem,
-    fontSize = "14px",
     heading = false,
     icon = false,
     width = 250,
@@ -75,14 +74,15 @@ function Item({
     itemsDrag,
 }) {
     const [items, setItems] = useContext(ContextItemsIngrid);
-    itemsDrag = items;
     const [value, setValue] = useState(
         valueItem ? valueItem : "Enter text !!!"
     );
     const [linkItemTypeA, setLinkItemTypeA] = useState(href ? href : "");
+
     const [nameItemLink, setNameItemLink] = useState(
-        textValue ? textValue : href ? href.name : ""
+        textValue ? textValue : ""
     );
+
     const [Type, setType] = useState("div");
     const [linkImg, setLinkImg] = useState(
         src
@@ -91,22 +91,16 @@ function Item({
     );
     const [state, dispatch] = useContext(ContextReducer);
     const [showModal, setShowModal] = useState(href ? false : true);
-    const [showEditLinkIcon, setShowEditLinkIcon] = useState(false);
     //use context get state show and hidden editor component
     const [showEditorComponent, setEditorComponent] = useContext(
         ContextShowEditorComponent
     );
-    const data = useContext(HeightHeading);
     const elementContentPortfolio = useContext(ElementContentPortfolio);
     const [widthContents, setWidthContents] = useState(width);
     const [heightWrapperReSizeable, setHeightWrapperReSizeable] =
         useState(height);
     const [scrollHeight, setScrollHeight] = useState(0);
-    const inputEditLinkIcon = useRef();
     const [linkIcon, setLinkIcon] = useState(href ? href : "");
-    const Grid = useContext(GridWidth);
-    const [modeEdit, setModeEdit] = useState(true);
-
     const icons = {
         Facebook: <GrFacebookOption />,
         Instagram: <GrInstagram />,
@@ -171,17 +165,6 @@ function Item({
         }),
         [id, left, top, inGrid, isMulti]
     );
-    let heightHeadingText, setHeightHeadingText;
-    const handleChangeValue = (e) => {
-        state.stackUndo.push(structuredClone(items));
-        setValue(e.target.value);
-    };
-
-    const handleBlurInput = (e) => {
-        if (e.target.value === "") {
-            setValue("Enter text !!!");
-        }
-    };
 
     const loadStyleComponentInInitState = (item) => {
         const itemDomReal = document.getElementById(item.id);
@@ -263,16 +246,6 @@ function Item({
         }
     };
 
-    //get id if component multi layer
-    const getId = (e) => {
-        let item = e.target;
-        while (item.parentNode) {
-            if (item.id) {
-                return item.id;
-            }
-            item = item.parentElement;
-        }
-    };
     //find item from items
     const findItem = (id) => {
         var item;
@@ -299,26 +272,11 @@ function Item({
         } else if (e.target.id) {
             id = e.target.id;
         }
-        console.log(id);
         if (findItem(id)) {
             loadStyleComponentInInitState(findItem(id));
         }
         dispatch(setIdItemSelected(id));
         setEditorComponent(true);
-    };
-
-    // edit link
-    const handleEditLink = (e) => {
-        e.stopPropagation();
-        setEditorComponent(true);
-        setShowModal(!showModal);
-        dispatch(
-            setIdItemSelected(
-                e.target.id
-                    ? e.target.id
-                    : e.target.parentElement.parentElement.id
-            )
-        );
     };
 
     const propsTypeLink = {
@@ -341,13 +299,6 @@ function Item({
             item.width = itemResize.offsetWidth;
         }
     };
-
-    //show, hidden trash
-    // useEffect(() => {
-    //   if (isDragging) {
-    //     setEditorComponent(true);
-    //   }
-    // }, [isDragging]);
 
     useEffect(() => {
         setType(icon ? "div" : type);
@@ -445,7 +396,7 @@ function Item({
     }, [items]);
     // render item
     const renderItem = () => {
-        if (resizable && type !== "icon") {
+        if (resizable && type !== "icon" && type !== "a") {
             return (
                 <ReactResizableBox
                     width={
@@ -479,82 +430,118 @@ function Item({
                             : null
                     }
                 >
-                    <>
-                        <Type
-                            id={id}
-                            ref={draggable ? drag : null}
-                            onClick={(e) => {
-                                if (
-                                    type !== "input" &&
-                                    type !== "img" &&
-                                    type !== "backgroundImage"
-                                ) {
-                                    e.preventDefault();
-                                }
-                                handleSelectItemToEdit(e);
-                            }}
-                            onMouseDown={
-                                type !== "background" &&
-                                type !== "backgroundImage"
-                                    ? handleMouseDown
-                                    : null
+                    <Type
+                        id={id}
+                        ref={drag}
+                        onClick={(e) => {
+                            if (type !== "input" && type !== "img") {
+                                e.preventDefault();
                             }
-                            onMouseUp={
-                                type !== "background" &&
-                                type !== "backgroundImage"
-                                    ? handleMouseUp
-                                    : null
+                            handleSelectItemToEdit(e);
+                        }}
+                        onMouseDown={handleMouseDown}
+                        onMouseUp={handleMouseUp}
+                        onMouseOver={handleMouseUp}
+                        className={classNamesItem}
+                        src={linkImg}
+                        value={value}
+                        onChange={(e) => {
+                            setValue(e.target.value);
+                        }}
+                        onBlur={(e) => {
+                            if (e.target.value === "") {
+                                setValue("Enter text!!");
                             }
-                            onMouseOver={handleMouseUp}
-                            className={classNamesItem}
-                            src={
-                                (type === "img" ||
-                                    type === "backgroundImage") &&
-                                linkImg
-                                    ? linkImg
-                                    : null
+                        }}
+                        href={linkItemTypeA ? linkItemTypeA : href}
+                        target={linkItemTypeA ? "_blank" : null}
+                        style={{
+                            position: position,
+                            ...styleDefault,
+                        }}
+                        type={
+                            (type === "img" || type === "backgroundImage") &&
+                            !src
+                                ? "file"
+                                : "text"
+                        }
+                        accept={type !== "img" ? null : "image/*"}
+                    ></Type>
+                </ReactResizableBox>
+            );
+        } else if (resizable && type !== "icon") {
+            return (
+                <ReactResizableBox
+                    width={
+                        widthContents
+                            ? parseInt(widthContents)
+                            : parseInt(width)
+                    }
+                    height={
+                        heightWrapperReSizeable
+                            ? parseInt(heightWrapperReSizeable)
+                            : parseInt(height)
+                    }
+                    onClick={handleSelectItemToEdit}
+                    style={{
+                        ...stylesItem,
+                        transform: center ? "translateX(-50%)" : "none",
+                        maxWidth: "102%",
+                        zIndex:
+                            type === "background" || type === "backgroundImage"
+                                ? 0
+                                : 1,
+                    }}
+                    onMouseDown={
+                        type !== "background" && type !== "backgroundImage"
+                            ? handleMouseDown
+                            : null
+                    }
+                    onMouseUp={
+                        type !== "background" && type !== "backgroundImage"
+                            ? handleMouseUp
+                            : null
+                    }
+                >
+                    <Type
+                        id={id}
+                        ref={drag}
+                        onClick={(e) => {
+                            if (type !== "input" && type !== "img") {
+                                e.preventDefault();
                             }
-                            value={
-                                type !== "img" && type !== "backgroundImage"
-                                    ? value
-                                    : undefined
+                            handleSelectItemToEdit(e);
+                        }}
+                        onMouseDown={handleMouseDown}
+                        onMouseUp={handleMouseUp}
+                        onMouseOver={handleMouseUp}
+                        className={classNamesItem}
+                        src={linkImg}
+                        value={value}
+                        onChange={(e) => {
+                            setValue(e.target.value);
+                        }}
+                        onBlur={(e) => {
+                            if (e.target.value === "") {
+                                setValue("Enter text!!");
                             }
-                            onChange={
-                                type !== "img" && type !== "backgroundImage"
-                                    ? handleChangeValue
-                                    : null
-                            }
-                            href={linkItemTypeA ? linkItemTypeA : href}
-                            target={linkItemTypeA ? "_blank" : null}
-                            onBlur={handleBlurInput}
-                            style={{
-                                position: position,
-                                ...styleDefault,
-                            }}
-                            type={
-                                (type === "img" ||
-                                    type === "backgroundImage") &&
-                                !src
-                                    ? "file"
-                                    : "text"
-                            }
-                            accept={type !== "img" ? null : "image/*"}
-                        >
-                            {nameItemLink ? nameItemLink : null}
-                        </Type>
-
-                        {/* {type === "a" ? (
-              <div
-                id={id}
-                className={clsx(styles.item_edit)}
-                onClick={handleEditLink}
-              >
-                <TipSuggest content='Edit link '>
-                  <RiEdit2Fill onClick={handleEditLink}></RiEdit2Fill>
-                </TipSuggest>
-              </div>
-            ) : undefined} */}
-                    </>
+                        }}
+                        href={linkItemTypeA ? linkItemTypeA : href}
+                        target={linkItemTypeA ? "_blank" : null}
+                        style={{
+                            position: position,
+                            ...styleDefault,
+                        }}
+                        type={
+                            (type === "img" || type === "backgroundImage") &&
+                            !src
+                                ? "file"
+                                : "text"
+                        }
+                        accept={type !== "img" ? null : "image/*"}
+                    >
+                        {nameItemLink ? nameItemLink : null}
+                    </Type>
                 </ReactResizableBox>
             );
         } else if (
@@ -570,9 +557,6 @@ function Item({
                     style={{
                         ...styleDefault,
                     }}
-                    value={value}
-                    onChange={handleChangeValue}
-                    onBlur={handleBlurInput}
                 >
                     {children}
                 </Type>
@@ -592,102 +576,27 @@ function Item({
                     }
                     style={{
                         ...stylesItem,
-                        zIndex: 1,
                     }}
                     onMouseDown={handleMouseDown}
                     onMouseUp={handleMouseUp}
                 >
-                    <>
-                        <a
-                            id={id}
-                            ref={draggable ? drag : null}
-                            onClick={(e) => {
-                                handleSelectItemToEdit(e);
-                            }}
-                            className={classNamesItem}
-                            // target='_blank'
-                            href={linkIcon}
-                            style={{
-                                ...styleDefault,
-                            }}
-                            onMouseDown={handleMouseDown}
-                            onMouseUp={handleMouseUp}
-                            onMouseOver={handleMouseUp}
-                        >
-                            {InfoIcon ? icons[InfoIcon] : null}
-                        </a>
-                        {/* <div
-              className={clsx(styles.item_edit)}
-              onClick={(e) => {
-                e.stopPropagation();
-                inputEditLinkIcon.current.focus();
-                setShowEditLinkIcon(true);
-                if (inputEditLinkIcon) {
-                  setEditorComponent(
-                    inputEditLinkIcon.current.value ? false : true
-                  );
-                }
-              }}
-              onMouseDown={(e) => {
-                e.stopPropagation();
-              }}
-              onMouseUp={(e) => {
-                e.stopPropagation();
-              }}
-            >
-              <TipSuggest content='Add link '>
-                <RiEdit2Fill id={id}></RiEdit2Fill>
-              </TipSuggest>
-            </div>
-            <div
-              className={clsx(styles.enter_link_icon)}
-              style={{
-                display: showEditLinkIcon ? "flex" : "none",
-              }}
-            >
-              <input
-                placeholder='Link'
-                ref={inputEditLinkIcon}
-                onChange={(e) => {
-                  e.stopPropagation();
-                  setLinkIcon(e.target.value);
-                }}
-                value={linkIcon}
-                onKeyPress={(e) => {
-                  if (e.which === 13) {
-                    e.stopPropagation();
-                    setShowEditLinkIcon(false);
-                    setLinkIcon(e.target.value);
-                  }
-                }}
-                onBlur={(e) => {
-                  e.stopPropagation();
-                  setShowEditLinkIcon(false);
-                  setLinkIcon(e.target.value);
-                }}
-                onMouseDown={(e) => {
-                  e.stopPropagation();
-                }}
-                onMouseUp={(e) => {
-                  e.stopPropagation();
-                }}
-              ></input>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowEditLinkIcon(false);
-                }}
-                onMouseDown={(e) => {
-                  e.stopPropagation();
-                }}
-                onMouseUp={(e) => {
-                  e.stopPropagation();
-                }}
-              >
-                Enter
-              </button>
-            </div> */}
-                    </>
+                    <a
+                        id={id}
+                        ref={draggable ? drag : null}
+                        onClick={(e) => {
+                            handleSelectItemToEdit(e);
+                        }}
+                        className={classNamesItem}
+                        href={linkIcon}
+                        style={{
+                            ...styleDefault,
+                        }}
+                        onMouseDown={handleMouseDown}
+                        onMouseUp={handleMouseUp}
+                        onMouseOver={handleMouseUp}
+                    >
+                        {InfoIcon ? icons[InfoIcon] : null}
+                    </a>
                 </ReactResizableBox>
             );
         }
@@ -717,7 +626,7 @@ function Item({
                             onClick={(e) => {
                                 e.stopPropagation();
                             }}
-                            value={nameItemLink}
+                            value={nameItemLink ? nameItemLink : null}
                             onChange={(e) => {
                                 e.stopPropagation();
                                 setEditorComponent(true);

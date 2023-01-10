@@ -1,27 +1,23 @@
 .wrapper {
+    width: 100%;
+    height: 100%;
+    background-color: #ccc;
 }
 
 .content {
     display: flex;
-    margin: 80px 0 0 0;
     justify-content: space-between;
-    margin-bottom: 2vh;
+    flex-wrap: wrap;
     scroll-behavior: smooth;
     transition: all 0.5s ease-in-out;
-    padding-bottom: 50px;
+    height: 100vh;
 }
 
 .wrapper_template {
-    margin: 0 50px;
-    -webkit-box-shadow: 5px 5px 15px 5px #170c0b;
-    box-shadow: 5px 5px 15px 5px #170c0b;
-    height: 80vh;
-    overflow-x: hidden;
-    overflow-y: scroll;
     transition: all 0.4s ease-in-out;
+    justify-content: center;
 
     &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
         border-radius: 10px;
         background-color: #f5f5f5;
         // display: none;
@@ -37,14 +33,14 @@
         border-radius: 10px;
         width: 4px;
         height: 10%;
-        -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
         background-color: var(--primary);
         // display: none;
     }
 
     .wrapper_template_content {
-        max-width: 100%;
-        width: 100%;
+        margin-top: 80px;
+        width: 90%;
+        height: 70%;
         overflow: hidden;
     }
 }
@@ -61,79 +57,6 @@
     opacity: 0.5;
 }
 
-.go_to_top {
-    position: absolute;
-    bottom: 650px;
-    right: 6%;
-    font-size: 80;
-    background-color: #ccc;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    cursor: pointer;
-    display: flex;
-    justify-self: center;
-    align-items: center;
-    transition: all 0.4s ease-in-out;
-    svg {
-        width: 100%;
-        height: 100%;
-    }
-}
-
-.wrapper_icon_add_height_content {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 40px;
-    height: 30px;
-    text-align: center;
-    border-radius: 50%;
-    background-color: #ccc;
-    font-size: 24px;
-    cursor: pointer;
-    color: var(--primary);
-    font-weight: 800;
-    .form_enter_height {
-        position: absolute;
-        top: -150px;
-        width: 260px;
-        height: 120px;
-        right: -280%;
-        padding: 24px;
-        background-color: #ccc;
-        border-radius: 12px;
-        animation: fadeInMenuEnterHeight 0.4s ease-in-out;
-        display: none;
-
-        input {
-            width: 100%;
-            outline: none;
-            border: none;
-            border: 1px solid var(--primary);
-            padding: 6px;
-            font-size: 18px;
-        }
-
-        button {
-            border: none;
-            outline: none;
-            margin-top: 12px;
-            padding: 6px 12px;
-            border-radius: 12px;
-            background-color: var(--primary);
-            color: #fff;
-            font-size: 16px;
-            cursor: pointer;
-
-            &:hover {
-                background-color: var(--primary_color_component);
-            }
-        }
-    }
-}
-
 @keyframes fadeInMenuEnterHeight {
     from {
         opacity: 0;
@@ -147,33 +70,51 @@
     }
 }
 
-.wrapper_nofication {
+.add_pages {
+    position: absolute;
+    bottom: calc(var(--header_height) * (1.5));
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: calc(var(--header_height) / 2);
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 60px;
+    background-color: #242c38;
+    border-radius: 4px;
+    user-select: none;
+    &:hover {
+        filter: brightness(140%);
+        cursor: pointer;
+    }
+    span,
+    svg {
+        font-size: 24px;
+        margin: 0 12px;
+        color: #fff;
+    }
+}
+
+.editor {
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: #ccc;
-    box-shadow: 6px 5px 15px 5px #ccc;
-    color: var(--primary);
-    text-transform: uppercase;
-    button {
-        margin-left: 12px;
-        padding: 12px 24px;
-        border: none;
-        outline: none;
-        border-radius: 6px;
-        background-color: rgba(0, 0, 0, 0.5);
-        font-size: 22px;
-        color: #1e90ff;
+    width: 20%;
+    height: 40px;
+    top: 40px;
+    right: 5%;
+    background-color: #242c38;
+    z-index: 100;
+    user-select: none;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    svg {
+        color: #fff;
+        font-size: 32px;
+        cursor: pointer;
 
         &:hover {
             color: var(--primary);
-            cursor: pointer;
         }
     }
 }

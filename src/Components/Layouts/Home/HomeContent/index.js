@@ -12,7 +12,7 @@ function HomeContent({ stateModalChooseTemplate, theme, setTheme }) {
             className={clsx(styles.wrapper)}
             id='home'
             style={{
-                backgroundColor: !theme ? "#212121" : "#fff",
+                backgroundColor: !theme ? "var(--second_background)" : "#fff",
             }}
         >
             <div className={clsx(styles.wrapper_info)}>
