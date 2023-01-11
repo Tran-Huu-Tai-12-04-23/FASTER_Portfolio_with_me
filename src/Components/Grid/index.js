@@ -43,10 +43,11 @@ import { TfiHandOpen } from "react-icons/tfi";
 import { findAllByAltText } from "@testing-library/react";
 import { IoFingerPrint } from "react-icons/io5";
 // import { AiOutlineConsoleSql } from "react-icons/ai";
+import EditorGrid from "./EditorGrid";
 
-function Grid(props) {
-    const [state, dispatch] = useContext(ContextReducer);
+function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
     const [items, setItems] = useContext(ContextItemsIngrid);
+    const [state, dispatch] = useContext(ContextReducer);
     const [backgroundColor, setBackgroundColorGrid] = useState("#fff");
     const [contentPortfolio, setShowTrash, widthContent] = useContext(
         ElementContentPortfolio
@@ -85,6 +86,7 @@ function Grid(props) {
                 }
 
                 moveItem(
+                    id,
                     item.id,
                     left,
                     item.top + delta.y,
@@ -95,10 +97,16 @@ function Grid(props) {
                 const valueScrollTop = contentPortfolio.current.scrollTop;
                 const delta = monitor.getClientOffset();
 
-                let left =
-                    item.type === "icon"
+                let left;
+                if (item.type === "icon") {
+                    left = item.widthMenu
                         ? delta.x - item.widthMenu - 80
-                        : delta.x - item.widthMenu - 150;
+                        : delta.x - 300;
+                } else {
+                    left = item.widthMenu
+                        ? delta.x - item.widthMenu - 150
+                        : delta.x - 400;
+                }
                 let top = delta.y - 180;
                 if (left < 0) {
                     left = 0;
@@ -108,6 +116,7 @@ function Grid(props) {
                 }
                 left = `${(left / grid.current.offsetWidth) * 100}%`;
                 addItem(
+                    id,
                     uuid(),
                     item.type,
                     left,
@@ -125,6 +134,7 @@ function Grid(props) {
     }));
 
     const addItem = (
+        idGrid,
         id,
         type,
         left = "200px",
@@ -287,6 +297,7 @@ function Grid(props) {
             return [
                 ...prev,
                 {
+                    idGrid,
                     type,
                     left,
                     top,
@@ -305,7 +316,7 @@ function Grid(props) {
             ];
         });
     };
-    const moveItem = (id, left, top, inGrid, itemsItem) => {
+    const moveItem = (idGrid, id, left, top, inGrid, itemsItem) => {
         setEditorComponent(true);
         const loadStyleComponentInInitState = (styles) => {
             dispatch(
@@ -342,7 +353,7 @@ function Grid(props) {
             dispatch(setLineHeight(styles.lineHeight ? styles.lineHeight : ""));
         };
         itemsItem.map((item) => {
-            if (item.id === id) {
+            if (item.id === id && item.idGrid === idGrid) {
                 item.left = left;
                 item.top = top;
                 if (item) {
@@ -402,6 +413,7 @@ function Grid(props) {
             item.styleDefault.backgroundColor = state.background_color;
         }
     }, [state]);
+
     const findItem = (id) => {
         var item;
         items.forEach((element) => {
@@ -414,32 +426,34 @@ function Grid(props) {
     const renderItem = () => {
         if (items) {
             return items.map((item, index) => {
-                return (
-                    <Item
-                        key={item.id}
-                        id={item.id}
-                        inGrid={true}
-                        type={item.type}
-                        width={item.width}
-                        height={item.height}
-                        valueItem={item.valueItem}
-                        center={item.center}
-                        href={item.href}
-                        icon={false}
-                        styleDefault={item.styleDefault}
-                        InfoIcon={item.InfoIcon}
-                        textValue={item.textValue}
-                        widthContentItem={item.widthContentItem}
-                        itemsDrag={items}
-                        stylesItem={{
-                            top: item.top,
-                            left: item.left,
-                            width: item.width,
-                            height: item.height,
-                        }}
-                        src={item.src}
-                    ></Item>
-                );
+                if (item.idGrid === id) {
+                    return (
+                        <Item
+                            key={item.id}
+                            id={item.id}
+                            inGrid={true}
+                            type={item.type}
+                            width={item.width}
+                            height={item.height}
+                            valueItem={item.valueItem}
+                            center={item.center}
+                            href={item.href}
+                            icon={false}
+                            styleDefault={item.styleDefault}
+                            InfoIcon={item.InfoIcon}
+                            textValue={item.textValue}
+                            widthContentItem={item.widthContentItem}
+                            itemsDrag={items}
+                            stylesItem={{
+                                top: item.top,
+                                left: item.left,
+                                width: item.width,
+                                height: item.height,
+                            }}
+                            src={item.src}
+                        ></Item>
+                    );
+                }
             });
         }
     };
@@ -449,9 +463,12 @@ function Grid(props) {
             <ShowOverlay.Provider value={[showOverlay, setShowOverlay]}>
                 <GridWidth.Provider value={grid}>
                     <div
+                        className={clsx(styles.wrapper_grid)}
                         style={{
                             width: "100%",
-                            height: "100%",
+                            height: "70vh",
+                            marginBottom: "100px",
+                            position: "relative",
                         }}
                         ref={grid}
                     >
@@ -459,13 +476,23 @@ function Grid(props) {
                             ref={drop}
                             style={{
                                 backgroundColor,
+                                ...style,
                             }}
                             className={clsx(styles.wrapper)}
+                            id={id}
                             // id={props.id}
                         >
                             {items && renderItem()}
-                            {props.children}
+                            {children}
                         </div>
+                        <h5 className={clsx(styles.number_page)}>
+                            Page {numberPage}
+                        </h5>
+                        <EditorGrid
+                            idPage={id}
+                            pages={pages}
+                            setPages={setPages}
+                        />
                     </div>
                 </GridWidth.Provider>
             </ShowOverlay.Provider>

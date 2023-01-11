@@ -1,10 +1,4 @@
-import {
-    useEffect,
-    useState,
-    useRef,
-    useLayoutEffect,
-    useContext,
-} from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import clsx from "clsx";
 import styles from "./CreatePortfolio.module.scss";
@@ -22,13 +16,15 @@ import {
     ContextWrapperContent,
     ContextReducer,
     ColorRange,
+    ContextPages,
 } from "~/Store/Context";
 import Preview from "../Preview";
 import { getData, getColors } from "~/Store/util";
-import EditorGrid from "./EditorGrid";
+import EditorGrid from "../../Grid/EditorGrid";
 
 function CreatePortfolio({
     DefaultComponent = [],
+
     heightDefault,
     id,
     children,
@@ -315,9 +311,9 @@ function CreatePortfolio({
                                                     id='wrapper_template_content'
                                                 >
                                                     {children}
-                                                    {!showEditorComponent && (
-                                                        <EditorGrid />
-                                                    )}
+                                                    {/* {!showEditorComponent && (
+                                                            <EditorGrid />
+                                                        )} */}
                                                 </div>
                                                 <EditorComponent
                                                     style={{
@@ -328,14 +324,6 @@ function CreatePortfolio({
                                                         // transform: widthMenu === "0" ? "translateX(-11%)" : "",
                                                     }}
                                                 ></EditorComponent>
-                                                <div
-                                                    className={clsx(
-                                                        styles.add_pages
-                                                    )}
-                                                >
-                                                    <IoAddSharp />
-                                                    <span>Add page</span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>

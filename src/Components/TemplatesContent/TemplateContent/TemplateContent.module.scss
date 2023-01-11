@@ -1,0 +1,33 @@
+.wrapper {
+    width: 100%;
+    height: calc(100vh - var(--header_height) * 2);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.add_pages {
+    width: 40%;
+    height: var(--header_height);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #242c38;
+    border-radius: 4px;
+    user-select: none;
+    transform: translateY(-50%);
+    &:hover {
+        filter: brightness(140%);
+        cursor: pointer;
+    }
+    span,
+    svg {
+        font-size: 24px;
+        margin: 0 12px;
+        color: #fff;
+    }
+}
