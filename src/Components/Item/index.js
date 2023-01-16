@@ -72,6 +72,8 @@ function Item({
     widthMenu,
     widthContentItem,
     itemsDrag,
+    numberFooter,
+    typeMulti,
 }) {
     const [items, setItems] = useContext(ContextItemsIngrid);
     const [value, setValue] = useState(
@@ -158,6 +160,8 @@ function Item({
                 href,
                 valueItem,
                 stylesItem,
+                numberFooter,
+                typeMulti,
             },
             collect: (monitor) => ({
                 isDragging: monitor.isDragging(),
@@ -396,7 +400,7 @@ function Item({
     }, [items]);
     // render item
     const renderItem = () => {
-        if (resizable && type !== "icon" && type !== "a") {
+        if (resizable && type !== "icon" && type !== "a" && !isMulti) {
             return (
                 <ReactResizableBox
                     width={
@@ -469,7 +473,7 @@ function Item({
                     ></Type>
                 </ReactResizableBox>
             );
-        } else if (resizable && type !== "icon") {
+        } else if (resizable && type !== "icon" && !isMulti) {
             return (
                 <ReactResizableBox
                     width={
@@ -545,8 +549,8 @@ function Item({
                 </ReactResizableBox>
             );
         } else if (
-            (icon && isChild === false) ||
-            (inGrid === "false" && isChild === false)
+            (icon && isChild === false && !isMulti) ||
+            (inGrid === "false" && isChild === false && !isMulti)
         ) {
             return (
                 <Type
@@ -561,7 +565,7 @@ function Item({
                     {children}
                 </Type>
             );
-        } else if (type === "icon" && inGrid && isChild === false) {
+        } else if (type === "icon" && inGrid && isChild === false && !isMulti) {
             return (
                 <ReactResizableBox
                     width={
@@ -598,6 +602,18 @@ function Item({
                         {InfoIcon ? icons[InfoIcon] : null}
                     </a>
                 </ReactResizableBox>
+            );
+        } else if (isMulti) {
+            return (
+                <Type
+                    ref={drag}
+                    src={src}
+                    style={{
+                        width: "100%",
+                        padding: 12,
+                        height: 100,
+                    }}
+                ></Type>
             );
         }
     };

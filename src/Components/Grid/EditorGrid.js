@@ -10,19 +10,13 @@ import { FiCopy } from "react-icons/fi";
 import { BiAddToQueue } from "react-icons/bi";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { ContextItemsIngrid } from "~/Store/Context";
+import { setType } from "~/Store/reducer/actions";
 
 function EditorGrid({ idPage, pages, setPages, style }) {
     const [showSetting, setShowSetting] = useState(false);
     const [items, setItems] = useContext(ContextItemsIngrid);
-    const [showEditBackgroundColor, setShowEditBackgroundColor] =
-        useState(false);
-    const [showEditBackgroundImage, setShowEditBackgroundImage] =
-        useState(false);
     const [showChooseOptionsColor, setShowChooseOptionsColor] = useState(false);
     const [offsetModal, setOffsetModal] = useState({ x: 0, y: 0 });
-    const [showSelectColor, setShowSelectColor] = useState(false);
-    const [showSelectLinearGradient, setShowSelectLinearGradient] =
-        useState(false);
     const [valueColor, setValueColor] = useState(
         style && style.backgroundColor ? style.backgroundColor : "#ffffff"
     );
@@ -38,18 +32,24 @@ function EditorGrid({ idPage, pages, setPages, style }) {
         `linear-gradient(0deg, ${valueColorGradient.color1}  44%, ${valueColorGradient.color2} 84%)`,
         `radial-gradient(circle, ${valueColorGradient.color1} 0%, ${valueColorGradient.color1} 18%, ${valueColorGradient.color2} 69%)`,
     ];
+    const [linkBackgroundImage, setLinkBackgroundImage] = useState("");
+    const [typeEdit, setTypeEdit] = useState("");
 
     useEffect(() => {
         const handleHidden = () => {
-            setShowChooseOptionsColor(false);
-            setShowSelectColor(false);
-            setShowSelectLinearGradient(false);
+            setTypeEdit("");
         };
         window.addEventListener("click", handleHidden);
         return () => {
             window.removeEventListener("click", handleHidden);
         };
     });
+
+    useEffect(() => {
+        if (linkBackgroundImage) {
+            handleSaveLinkBackground();
+        }
+    }, [linkBackgroundImage]);
 
     const findPage = () => {
         var page;
@@ -105,19 +105,22 @@ function EditorGrid({ idPage, pages, setPages, style }) {
         });
         setPages(newPages);
     };
-    const handleSetBackgroundColor = () => {
-        setShowSelectColor(!showSelectColor);
+    const handleSetBackgroundColor = (color) => {
+        setValueColor(color);
         var page = findPage();
-        page.style.background = valueColor;
+        page.style.background = color;
         var itemPage = document.getElementById(idPage);
         if (itemPage) {
-            itemPage.style.background = valueColor;
+            itemPage.style.background = color;
         }
     };
-    const handleSaveBackgroundGradient = (e) => {
+    const handleSaveBackgroundGradient = (color1, color2, e) => {
         e.stopPropagation();
+        setValueColorGradient({
+            color1: color1,
+            color2: color2,
+        });
         setShowChooseOptionsColor(!showChooseOptionsColor);
-        setShowSelectLinearGradient(!showSelectLinearGradient);
         var page = findPage();
         page.style.background =
             backgroundLinearGradient[numberTypeLinearGradient];
@@ -126,6 +129,32 @@ function EditorGrid({ idPage, pages, setPages, style }) {
             itemPage.style.background =
                 backgroundLinearGradient[numberTypeLinearGradient];
         }
+    };
+    const handleSaveLinkBackground = () => {
+        var page = findPage();
+        page.style.backgroundImage = `url("${linkBackgroundImage}")`;
+        page.style.backgroundRepeat = "no-repeat";
+        page.style.backgroundSize = `cover`;
+        page.style.object = `fit`;
+        var itemPage = document.getElementById(idPage);
+        if (itemPage) {
+            itemPage.style.backgroundImage = `url("${linkBackgroundImage}")`;
+            itemPage.style.backgroundRepeat = "no-repeat";
+            itemPage.style.backgroundSize = `cover`;
+            itemPage.style.object = `fit`;
+        }
+    };
+    const handleShowInputImg = (e) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                if (reader.result) {
+                    setLinkBackgroundImage(reader.result);
+                }
+            }
+        };
+        setTypeEdit("");
     };
 
     const renderOptionBackgroundLinearGradient = () => {
@@ -142,44 +171,46 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                                 ? "2px solid #ccc"
                                 : "none",
                     }}
-                    onClick={(e) => setNumberTypeLinearGradient(index)}
+                    onClick={(e) => {
+                        setNumberTypeLinearGradient(index);
+                        var page = findPage();
+                        page.style.background = backgroundLinearGradient[index];
+                        var itemPage = document.getElementById(idPage);
+                        if (itemPage) {
+                            itemPage.style.background =
+                                backgroundLinearGradient[index];
+                        }
+                    }}
                 ></li>
             );
         });
     };
     const renderModal = () => {
-        if (
-            showChooseOptionsColor &&
-            !showSelectColor &&
-            !showSelectLinearGradient
-        ) {
+        if (typeEdit === "showChooseOptionsColor") {
             return (
                 <div className={clsx(styles.wrapper_options)}>
                     <h5>Choose type</h5>
-                    <ul>
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowChooseOptionsColor(false);
-                                setShowSelectColor(true);
-                            }}
-                        >
-                            Color
-                        </button>
-                        <button
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowSelectLinearGradient(
-                                    !showSelectLinearGradient
-                                );
-                            }}
-                        >
-                            Linear gradient
-                        </button>
-                    </ul>
+                    <button
+                        className={clsx(styles.button_options)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setTypeEdit("showSelectColor");
+                        }}
+                    >
+                        Color
+                    </button>
+                    <button
+                        className={clsx(styles.button_options)}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setTypeEdit("showSelectLinearGradient");
+                        }}
+                    >
+                        Linear gradient
+                    </button>
                 </div>
             );
-        } else if (showSelectColor && !showSelectLinearGradient) {
+        } else if (typeEdit === "showSelectColor") {
             return (
                 <div
                     className={clsx(styles.select_color)}
@@ -190,18 +221,31 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                     <h5>Select</h5>
                     <input
                         value={valueColor}
-                        onChange={(e) => setValueColor(e.target.value)}
+                        onChange={(e) => {
+                            handleSetBackgroundColor(e.target.value);
+                        }}
                         type='color'
                     ></input>
                     <button
                         className={clsx(styles.button)}
-                        onClick={handleSetBackgroundColor}
+                        onClick={(e) => {
+                            setTypeEdit("");
+                        }}
                     >
                         Save
                     </button>
+                    <button
+                        className={clsx(styles.button)}
+                        onClick={(e) => {
+                            handleSetBackgroundColor("#ffffff");
+                            setTypeEdit("");
+                        }}
+                    >
+                        Cancel
+                    </button>
                 </div>
             );
-        } else if (showSelectLinearGradient) {
+        } else if (typeEdit === "showSelectLinearGradient") {
             return (
                 <div
                     className={clsx(styles.wrapper_color_gradient)}
@@ -214,12 +258,13 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                         <input
                             type='color'
                             value={valueColorGradient.color1}
-                            onChange={(e) =>
-                                setValueColorGradient({
-                                    color1: e.target.value,
-                                    color2: valueColorGradient.color2,
-                                })
-                            }
+                            onChange={(e) => {
+                                handleSaveBackgroundGradient(
+                                    e.target.value,
+                                    valueColorGradient.color2,
+                                    e
+                                );
+                            }}
                         ></input>
                     </div>
                     <div>
@@ -227,19 +272,137 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                         <input
                             type='color'
                             value={valueColorGradient.color2}
-                            onChange={(e) =>
-                                setValueColorGradient({
-                                    color1: valueColorGradient.color1,
-                                    color2: e.target.value,
-                                })
-                            }
+                            onChange={(e) => {
+                                handleSaveBackgroundGradient(
+                                    valueColorGradient.color1,
+                                    e.target.value,
+                                    e
+                                );
+                            }}
                         ></input>
                     </div>
                     <button
                         className={clsx(styles.button)}
-                        onClick={handleSaveBackgroundGradient}
+                        onClick={(e) => {
+                            setTypeEdit("");
+                        }}
                     >
                         Save
+                    </button>
+                    <button
+                        className={clsx(styles.button)}
+                        onClick={(e) => {
+                            var page = findPage();
+                            page.style.background = "#ffffff";
+                            var itemPage = document.getElementById(idPage);
+                            if (itemPage) {
+                                itemPage.style.background = "#ffffff";
+                            }
+                            setTypeEdit("");
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            );
+        } else if (typeEdit === "showSelectBackgroundImage") {
+            return (
+                <div
+                    className={clsx(styles.wrapper_options)}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <h5>Choose Options</h5>
+                    <button
+                        className={clsx(styles.button_options)}
+                        onClick={(e) => setTypeEdit("showSelectFile")}
+                    >
+                        Select file
+                    </button>
+                    <button
+                        className={clsx(styles.button_options)}
+                        onClick={(e) => setTypeEdit("showSelectUrl")}
+                    >
+                        Url
+                    </button>
+                </div>
+            );
+        } else if (typeEdit === "showSelectFile") {
+            return (
+                <div
+                    className={clsx(styles.wrapper_select_file)}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <input
+                        className={clsx(styles.input_file)}
+                        type='file'
+                        onChange={(e) => {
+                            handleShowInputImg(e);
+                        }}
+                        onClick={(e) => {
+                            e.target.value = null;
+                        }}
+                        accept={"image/*"}
+                    ></input>
+                    <button
+                        className={clsx(styles.button)}
+                        onClick={(e) => {
+                            setTypeEdit("");
+                        }}
+                        style={{
+                            // display: showChooseLinkImage ? "block" : "none",
+                            maxWidth: "50%",
+                            height: "40px",
+                            borderRadius: "4px",
+                        }}
+                    >
+                        Cancel
+                    </button>
+                </div>
+            );
+        } else if (typeEdit === "showSelectUrl") {
+            return (
+                <div
+                    className={clsx(styles.wrapper_select_file)}
+                    onClick={(e) => e.stopPropagation()}
+                >
+                    <input
+                        value={linkBackgroundImage}
+                        type='url'
+                        placeholder='Url...'
+                        onChange={(e) => setLinkBackgroundImage(e.target.value)}
+                        style={{
+                            padding: "12px",
+                        }}
+                    ></input>
+
+                    <button
+                        className={clsx(styles.button)}
+                        onClick={(e) => {
+                            setTypeEdit("");
+                        }}
+                        style={{
+                            // display: showChooseLinkImage ? "block" : "none",
+                            maxWidth: "50%",
+                            height: "40px",
+                            borderRadius: "4px",
+                        }}
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        className={clsx(styles.button)}
+                        onClick={(e) => {
+                            handleSaveLinkBackground();
+                            setTypeEdit("");
+                        }}
+                        style={{
+                            // display: showChooseLinkImage ? "block" : "none",
+                            maxWidth: "50%",
+                            height: "40px",
+                            borderRadius: "4px",
+                        }}
+                    >
+                        save
                     </button>
                 </div>
             );
@@ -257,12 +420,7 @@ function EditorGrid({ idPage, pages, setPages, style }) {
             >
                 {renderModal()}
             </div>
-            {/* <div className={clsx(styles.modal_edit_background_color)}>
-                <input type='checkbox' />
-                <input type='checkbox' />
-                <input type='checkbox' />
-                <input type='checkbox' />
-            </div> */}
+
             <div className={clsx(styles.modal_edit_background_image)}></div>
             <div
                 className={clsx(styles.icon_setting)}
@@ -294,7 +452,7 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                 <div
                     onClick={(e) => {
                         e.stopPropagation();
-                        setShowChooseOptionsColor(!showChooseOptionsColor);
+                        setTypeEdit("showChooseOptionsColor");
                         setOffsetModal({
                             x: "20%",
                             y: "40px",
@@ -305,7 +463,17 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                         <AiOutlineBgColors />
                     </TipSuggest>
                 </div>
-                <div>
+                <div
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        e.stopPropagation();
+                        setOffsetModal({
+                            x: "10%",
+                            y: "40px",
+                        });
+                        setTypeEdit("showSelectBackgroundImage");
+                    }}
+                >
                     <TipSuggest content='Set Image'>
                         <BiImageAdd />
                     </TipSuggest>
@@ -322,7 +490,7 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                 </div>
                 {pages.length > 1 && (
                     <div onClick={handleRemove}>
-                        <TipSuggest content='Set background color'>
+                        <TipSuggest content='Delete page'>
                             <FiTrash2 />
                         </TipSuggest>
                     </div>

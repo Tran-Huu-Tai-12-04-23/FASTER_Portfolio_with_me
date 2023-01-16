@@ -20,11 +20,10 @@ import {
 } from "~/Store/Context";
 import Preview from "../Preview";
 import { getData, getColors } from "~/Store/util";
-import EditorGrid from "../../Grid/EditorGrid";
+import Guide from "~/Components/Guide";
 
 function CreatePortfolio({
     DefaultComponent = [],
-
     heightDefault,
     id,
     children,
@@ -345,6 +344,7 @@ function CreatePortfolio({
                                         // heightTemplate={heightContent}
                                     ></Preview>
                                 </div>
+                                <Guide></Guide>
                             </ColorRange.Provider>
                         </ElementContentPortfolio.Provider>
                     </ContextShowEditorComponent.Provider>

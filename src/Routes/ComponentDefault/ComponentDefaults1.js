@@ -1,9 +1,11 @@
 import uuid from "react-uuid";
-
+var id = uuid();
 export const DefaultItemInGridTemplate1 = [];
 export const DefaultComponentPages1 = [
     {
-        id: uuid(),
-        style: { background: "#ffffff" },
+        id: id,
+        style: {
+            background: "#ffffff",
+        },
     },
 ];

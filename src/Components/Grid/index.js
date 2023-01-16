@@ -19,6 +19,7 @@ import {
     ContextShowEditorComponent,
     GridWidth,
 } from "~/Store/Context";
+import { footer1 } from "./dataComponents";
 
 import {
     setUndo,
@@ -84,6 +85,25 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
                     left = `${(delta.x / grid.current.offsetWidth) * 100}%`;
                     // left = Math.round(item.left + delta.x);
                 }
+                if (item.top) {
+                    // top = item.left + delta.x;
+                    let topIt;
+                    if (item.top.toString().includes("%")) {
+                        topIt = item.top
+                            .toString()
+                            .substring(0, item.top.length - 1);
+                        // console.log(leftIt);
+                        top = `${
+                            (((topIt / 100) * grid.current.offsetHeight +
+                                delta.x) /
+                                grid.current.offsetHeight) *
+                            100
+                        }%`;
+                    }
+                } else {
+                    top = `${(delta.x / grid.current.offsetHeight) * 100}%`;
+                    // left = Math.round(item.left + delta.x);
+                }
 
                 moveItem(
                     id,
@@ -101,13 +121,13 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
                 if (item.type === "icon") {
                     left = item.widthMenu
                         ? delta.x - item.widthMenu - 80
-                        : delta.x - 300;
+                        : delta.x - 200;
                 } else {
                     left = item.widthMenu
                         ? delta.x - item.widthMenu - 150
-                        : delta.x - 400;
+                        : delta.x - 200;
                 }
-                let top = delta.y - 180;
+                let top = delta.y - 160;
                 if (left < 0) {
                     left = 0;
                 }
@@ -125,6 +145,15 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
                     item.src,
                     item.href
                 );
+            } else if (item.isMulti) {
+                const valueScrollTop = contentPortfolio.current.scrollTop;
+                const delta = monitor.getClientOffset();
+                let top = delta.y - 160 + valueScrollTop;
+
+                if (top < 0 && top) {
+                    top = 0;
+                }
+                addFooter(item.numberFooter, id, top);
             }
         },
         collect: (monitor) => ({
@@ -132,7 +161,32 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
             canDrop: monitor.canDrop(),
         }),
     }));
+    // function user
+    const addFooter = (numberFooter, idGrid, top) => {
+        footer1.map((footer) => {
+            footer.idGrid = id;
+            footer.id = uuid();
+        });
+        switch (numberFooter) {
+            case 0: {
+                footer1.map((footer) => {
+                    setItems((prev) => {
+                        return [
+                            ...prev,
+                            {
+                                ...footer,
+                            },
+                        ];
+                    });
+                });
 
+                break;
+            }
+            default: {
+                throw new Error("invalid type footer");
+            }
+        }
+    };
     const addItem = (
         idGrid,
         id,
@@ -141,44 +195,47 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
         top = "100px",
         InfoIcon,
         src,
-        href
+        href,
+        linkImage,
+        styleDefault,
+        valueItem
     ) => {
-        setEditorComponent(!showEditorComponent);
-        dispatch(setIdItemSelected(id));
-        const loadStyleComponentInInitState = (styles) => {
-            dispatch(
-                setBackgroundColor(
-                    styles.backgroundColor ? styles.backgroundColor : ""
-                )
-            );
-            dispatch(setColor(styles.color ? styles.color : ""));
-            dispatch(setFontSize(styles.fontSize ? styles.fontSize : ""));
-            dispatch(setFontFamily(styles.fontFamily ? styles.fontFamily : ""));
-            dispatch(
-                setBorderRadius(styles.borderRadius ? styles.borderRadius : "")
-            );
-            dispatch(
-                setBorderStyle(styles.borderStyle ? styles.borderStyle : "")
-            );
-            dispatch(
-                setBorderColor(styles.borderColor ? styles.borderColor : "")
-            );
-            dispatch(
-                setFontWeight(styles.fontWeight === "bold" ? true : false)
-            );
-            dispatch(
-                setTextAlign(styles.textAlign === "center" ? true : false)
-            );
-            dispatch(
-                setBorderSize(styles.borderWidth ? styles.borderWidth : "")
-            );
-            dispatch(
-                setTextTransform(
-                    styles.textTransform === "uppercase" ? true : false
-                )
-            );
-            dispatch(setLineHeight(styles.lineHeight ? styles.lineHeight : ""));
-        };
+        // setEditorComponent(!showEditorComponent);
+        // dispatch(setIdItemSelected(id));
+        // const loadStyleComponentInInitState = (styles) => {
+        //     dispatch(
+        //         setBackgroundColor(
+        //             styles.backgroundColor ? styles.backgroundColor : ""
+        //         )
+        //     );
+        //     dispatch(setColor(styles.color ? styles.color : ""));
+        //     dispatch(setFontSize(styles.fontSize ? styles.fontSize : ""));
+        //     dispatch(setFontFamily(styles.fontFamily ? styles.fontFamily : ""));
+        //     dispatch(
+        //         setBorderRadius(styles.borderRadius ? styles.borderRadius : "")
+        //     );
+        //     dispatch(
+        //         setBorderStyle(styles.borderStyle ? styles.borderStyle : "")
+        //     );
+        //     dispatch(
+        //         setBorderColor(styles.borderColor ? styles.borderColor : "")
+        //     );
+        //     dispatch(
+        //         setFontWeight(styles.fontWeight === "bold" ? true : false)
+        //     );
+        //     dispatch(
+        //         setTextAlign(styles.textAlign === "center" ? true : false)
+        //     );
+        //     dispatch(
+        //         setBorderSize(styles.borderWidth ? styles.borderWidth : "")
+        //     );
+        //     dispatch(
+        //         setTextTransform(
+        //             styles.textTransform === "uppercase" ? true : false
+        //         )
+        //     );
+        //     dispatch(setLineHeight(styles.lineHeight ? styles.lineHeight : ""));
+        // };
         var styles = {};
         var textValues = " ";
         var height = 250;
@@ -292,7 +349,7 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
             left = "0%";
         }
 
-        loadStyleComponentInInitState(styles);
+        // loadStyleComponentInInitState(styles);
         setItems((prev) => {
             return [
                 ...prev,

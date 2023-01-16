@@ -40,6 +40,7 @@ import {
 } from "~/Store/Context";
 import { setType } from "~/Store/reducer/actions";
 import Editor from "./Editor";
+import Component from "./Component";
 
 function BoxMenu() {
     const icons = [
@@ -64,8 +65,6 @@ function BoxMenu() {
             Component: <GrYoutube />,
         },
     ];
-    const [state, dispatch] = useContext(ContextReducer);
-    const [items, setItems] = useContext(ContextItemsIngrid);
     const wrapperContentPortfolio = useContext(ContextWrapperContent);
     const [widthMenu, setWidthMenu] = useState();
     const [contentPortfolio, setShowTrash, widthContent] = useContext(
@@ -403,6 +402,11 @@ function BoxMenu() {
                     )}
                     {numberEdit === 4 && <>{renderIcons()}</>}
                     {numberEdit === 6 && <Editor />}
+                    {numberEdit === 2 && (
+                        <>
+                            <Component></Component>
+                        </>
+                    )}
                 </div>
             </div>
         </>

@@ -16,7 +16,11 @@ export const publicRoutes = [
 
     {
         element: (
-            <CreatePortfolio heightDefault={2000} id='template-1'>
+            <CreatePortfolio
+                heightDefault={2000}
+                id='template-1'
+                DefaultComponent={DefaultItemInGridTemplate1}
+            >
                 <TemplateContent
                     DefaultComponentPages={DefaultComponentPages1}
                     DefaultComponent={DefaultItemInGridTemplate1}
