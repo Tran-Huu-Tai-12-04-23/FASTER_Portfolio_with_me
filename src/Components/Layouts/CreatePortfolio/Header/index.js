@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { useState, useContext, useEffect } from "react";
 import { faComputer, faHomeLg } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineBulb } from "react-icons/ai";
 import { BsArrowCounterclockwise, BsArrowClockwise } from "react-icons/bs";
 import { BiUndo, BiRedo } from "react-icons/bi";
 import { CgWebsite } from "react-icons/cg";
@@ -34,6 +34,7 @@ function Header({
     heightDefault,
     widthContent,
     handleDownload,
+    setShowGuide,
 }) {
     const [title, setTitle] = useState("Enter title");
     const [state, dispatch] = useContext(ContextReducer);
@@ -119,7 +120,7 @@ function Header({
 
     return (
         <>
-            <div className={clsx(styles.wrapper)}>
+            <div className={clsx(styles.wrapper)} id='header_create'>
                 <div className={clsx(styles.wrapper_input)}>
                     <TipSuggest content='Return Home'>
                         <Link to='/'>
@@ -144,6 +145,18 @@ function Header({
                 </div>
 
                 <div className={clsx(styles.until_options)}>
+                    <TipSuggest content='Guide'>
+                        <AiOutlineBulb
+                            onClick={(e) => {
+                                setShowGuide(true);
+                            }}
+                            style={{
+                                display: showLinkYourWebsite ? "none" : "block",
+                                color: "#fff",
+                                fontSize: 32,
+                            }}
+                        ></AiOutlineBulb>
+                    </TipSuggest>
                     <div
                         className={clsx(styles.your_website)}
                         onClick={(e) => {
@@ -160,6 +173,7 @@ function Header({
                                 }}
                             ></CgWebsite>
                         </TipSuggest>
+
                         <AiOutlineClose
                             onClick={(e) => {
                                 e.stopPropagation();
@@ -170,6 +184,7 @@ function Header({
                                 display: showLinkYourWebsite ? "block" : "none",
                             }}
                         ></AiOutlineClose>
+
                         <div
                             className={clsx(styles.wrapper_manager_link)}
                             style={{

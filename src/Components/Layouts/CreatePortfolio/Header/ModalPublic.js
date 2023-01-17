@@ -30,7 +30,6 @@ function ModalPublic({
         setValue("");
         setShowLink(true);
         const prevPublic = localStorage.getItem("public");
-        localStorage.clear();
         if (prevPublic) {
             localStorage.removeItem("public");
             localStorage.setItem("public", [JSON.stringify(data)]);

@@ -19,7 +19,7 @@ import {
     ContextPages,
 } from "~/Store/Context";
 import Preview from "../Preview";
-import { getData, getColors } from "~/Store/util";
+import { getData, getColors, getShowGuide } from "~/Store/util";
 import Guide from "~/Components/Guide";
 
 function CreatePortfolio({
@@ -33,6 +33,7 @@ function CreatePortfolio({
     const [dataItems, setDataItems] = useState(
         structuredClone(DefaultComponent)
     );
+    const [showGuide, setShowGuide] = useState(true);
 
     const [transactionContent, setTransactionContent] = useState("0");
     const [widthMenu, setWidthMenu] = useState("22%");
@@ -93,7 +94,6 @@ function CreatePortfolio({
             item.styleDefault.lineHeight = state.line_height;
         };
         // console.log(state);
-        localStorage.clear();
         items.map((item) => {
             if (item.id === state.id_item_selected) {
                 setStyle(item);
@@ -112,6 +112,15 @@ function CreatePortfolio({
             // }
         }
     };
+
+    useEffect(() => {
+        const showGuide = getShowGuide();
+        showGuide
+            .then((guide) => {
+                setShowGuide(!guide);
+            })
+            .catch((err) => console.error(err));
+    }, []);
     // save data in localStorage
     useEffect(() => {
         const handleSaveDataInStorage = (e) => {
@@ -246,7 +255,6 @@ function CreatePortfolio({
                                             <button
                                                 onClick={(e) => {
                                                     setShowRecovery(false);
-                                                    localStorage.clear();
                                                 }}
                                             >
                                                 No
@@ -271,6 +279,7 @@ function CreatePortfolio({
                                             ""
                                         )} */}
                                         <Header
+                                            setShowGuide={setShowGuide}
                                             widthContent={widthContent}
                                             setShowPreview={setShowPreview}
                                             // heightDefault={heightContent}
@@ -344,7 +353,10 @@ function CreatePortfolio({
                                         // heightTemplate={heightContent}
                                     ></Preview>
                                 </div>
-                                <Guide></Guide>
+                                <Guide
+                                    showGuide={showGuide}
+                                    setShowGuide={setShowGuide}
+                                ></Guide>
                             </ColorRange.Provider>
                         </ElementContentPortfolio.Provider>
                     </ContextShowEditorComponent.Provider>
