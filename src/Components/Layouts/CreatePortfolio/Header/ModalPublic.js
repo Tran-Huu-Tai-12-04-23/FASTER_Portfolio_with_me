@@ -12,6 +12,7 @@ function ModalPublic({
     heightDefault,
     widthContent,
     title,
+    pagesContent,
 }) {
     const [items, setItems] = useContext(ContextItemsIngrid);
     const [value, setValue] = useState("");
@@ -24,14 +25,15 @@ function ModalPublic({
         heightDefault: heightDefault,
         widthContent: widthContent,
         title: title,
+        pagesContent: "",
     });
 
     const handleSubmit = (e) => {
         setValue("");
         setShowLink(true);
         const prevPublic = localStorage.getItem("public");
+        localStorage.removeItem("public");
         if (prevPublic) {
-            localStorage.removeItem("public");
             localStorage.setItem("public", [JSON.stringify(data)]);
         } else {
             localStorage.setItem("public", [JSON.stringify(data)]);
@@ -141,6 +143,7 @@ function ModalPublic({
                                     heightDefault,
                                     widthContent,
                                     title,
+                                    pagesContent: pagesContent,
                                 });
                             }
                             setValue(e.target.value);

@@ -18,6 +18,7 @@ import {
     ContextReducer,
     ContextShowEditorComponent,
     GridWidth,
+    PageContent,
 } from "~/Store/Context";
 import { footer1 } from "./dataComponents";
 
@@ -48,6 +49,7 @@ import EditorGrid from "./EditorGrid";
 
 function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
     const [items, setItems] = useContext(ContextItemsIngrid);
+    const setPagesContent = useContext(PageContent);
     const [state, dispatch] = useContext(ContextReducer);
     const [backgroundColor, setBackgroundColorGrid] = useState("#fff");
     const [contentPortfolio, setShowTrash, widthContent] = useContext(
@@ -428,6 +430,10 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
     }, [isDragging]);
 
     //load styles
+
+    useEffect(() => {
+        setPagesContent(pages);
+    }, [pages]);
     useLayoutEffect(() => {
         const itemDomReal = document.getElementById(state.id_item_selected);
         if (itemDomReal) {

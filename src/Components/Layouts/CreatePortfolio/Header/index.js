@@ -35,6 +35,7 @@ function Header({
     widthContent,
     handleDownload,
     setShowGuide,
+    pagesContent,
 }) {
     const [title, setTitle] = useState("Enter title");
     const [state, dispatch] = useContext(ContextReducer);
@@ -249,6 +250,7 @@ function Header({
                 </div>
             </div>
             <ModalPublic
+                pagesContent={pagesContent}
                 title={title}
                 widthContent={widthContent}
                 show={showModalPublic}

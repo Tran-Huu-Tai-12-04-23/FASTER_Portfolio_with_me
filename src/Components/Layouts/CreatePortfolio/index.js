@@ -17,10 +17,12 @@ import {
     ContextReducer,
     ColorRange,
     ContextPages,
+    PageContent,
 } from "~/Store/Context";
 import Preview from "../Preview";
 import { getData, getColors, getShowGuide } from "~/Store/util";
 import Guide from "~/Components/Guide";
+import { TemplateContent } from "~/Components/";
 
 function CreatePortfolio({
     DefaultComponent = [],
@@ -29,6 +31,8 @@ function CreatePortfolio({
     children,
 }) {
     const [state, dispatch] = useContext(ContextReducer);
+    const [pagesContent, setPagesContent] = useState([]);
+
     const [items, setItems] = useState(DefaultComponent);
     const [dataItems, setDataItems] = useState(
         structuredClone(DefaultComponent)
@@ -100,10 +104,10 @@ function CreatePortfolio({
             }
         });
 
-        // console.log(findItem(state.id_item_selected));
         if (!isObjectEquals(dataItems, items)) {
             const data = {
                 items: items,
+                pagesContent: pagesContent,
                 // height: heightContent,
             };
             // if (count === items.length) {
@@ -130,9 +134,9 @@ function CreatePortfolio({
         };
 
         window.addEventListener("beforeunload", handleSaveDataInStorage);
-        // return () => {
-        //   window.removeEventListener("beforeunload", handleSaveDataInStorage);
-        // };
+        return () => {
+            window.removeEventListener("beforeunload", handleSaveDataInStorage);
+        };
     });
 
     useEffect(() => {
@@ -216,30 +220,33 @@ function CreatePortfolio({
         <>
             <ContextWrapperContent.Provider value={wrapperContentPortfolio}>
                 <ContextItemsIngrid.Provider value={[items, setItems]}>
-                    <ContextShowEditorComponent.Provider
-                        value={[showEditorComponent, setEditorComponent]}
-                    >
-                        <ElementContentPortfolio.Provider
-                            value={[
-                                contentPortfolio,
-                                setShowTrash,
-                                widthContent,
-                            ]}
+                    <PageContent.Provider value={setPagesContent}>
+                        <ContextShowEditorComponent.Provider
+                            value={[showEditorComponent, setEditorComponent]}
                         >
-                            <ColorRange.Provider
-                                value={[colorRange, setColorRange]}
+                            <ElementContentPortfolio.Provider
+                                value={[
+                                    contentPortfolio,
+                                    setShowTrash,
+                                    widthContent,
+                                ]}
                             >
-                                <div
-                                    className={clsx(styles.wrapper)}
-                                    style={{
-                                        display: showPreview ? "none" : "block",
-                                    }}
+                                <ColorRange.Provider
+                                    value={[colorRange, setColorRange]}
                                 >
                                     <div
-                                        className={clsx(styles.content)}
-                                        ref={wrapperContentPortfolio}
+                                        className={clsx(styles.wrapper)}
+                                        style={{
+                                            display: showPreview
+                                                ? "none"
+                                                : "block",
+                                        }}
                                     >
-                                        {/* <div
+                                        <div
+                                            className={clsx(styles.content)}
+                                            ref={wrapperContentPortfolio}
+                                        >
+                                            {/* <div
                                             className={clsx(
                                                 styles.wrapper_nofication
                                             )}
@@ -272,94 +279,104 @@ function CreatePortfolio({
                                                 Yes
                                             </button>
                                         </div> */}
-                                        {/* {showEditorComponent === false &&
+                                            {/* {showEditorComponent === false &&
                                         !showRecovery ? (
                                            
                                         ) : (
                                             ""
                                         )} */}
-                                        <Header
-                                            setShowGuide={setShowGuide}
-                                            widthContent={widthContent}
-                                            setShowPreview={setShowPreview}
-                                            // heightDefault={heightContent}
-                                        />
-                                        <div
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                                width: "100%",
-                                            }}
-                                        >
-                                            <MenuUntil
-                                                state={setWidthMenu}
-                                                valueState={widthMenu}
-                                            ></MenuUntil>
-
+                                            <Header
+                                                setShowGuide={setShowGuide}
+                                                widthContent={widthContent}
+                                                setShowPreview={setShowPreview}
+                                                pagesContent={pagesContent}
+                                                // heightDefault={heightContent}
+                                            />
                                             <div
-                                                ref={contentPortfolio}
-                                                id={"content_portfolio"}
-                                                className={clsx(
-                                                    styles.wrapper_template
-                                                )}
                                                 style={{
-                                                    minWidth: "78%",
-                                                    transform: `translateX(${transactionContent})`,
                                                     display: "flex",
-                                                    // justifyContent: "center",
-                                                    backgroundColor: "#ccc",
-                                                    position: "relative",
+                                                    justifyContent:
+                                                        "space-between",
+                                                    width: "100%",
                                                 }}
                                             >
+                                                <MenuUntil
+                                                    state={setWidthMenu}
+                                                    valueState={widthMenu}
+                                                ></MenuUntil>
+
                                                 <div
-                                                    ref={wrapperTemplateContent}
+                                                    ref={contentPortfolio}
+                                                    id={"content_portfolio"}
                                                     className={clsx(
-                                                        styles.wrapper_template_content
+                                                        styles.wrapper_template
                                                     )}
-                                                    id='wrapper_template_content'
+                                                    style={{
+                                                        minWidth: "78%",
+                                                        transform: `translateX(${transactionContent})`,
+                                                        display: "flex",
+                                                        // justifyContent: "center",
+                                                        backgroundColor: "#ccc",
+                                                        position: "relative",
+                                                    }}
                                                 >
-                                                    {children}
-                                                    {/* {!showEditorComponent && (
+                                                    <div
+                                                        ref={
+                                                            wrapperTemplateContent
+                                                        }
+                                                        className={clsx(
+                                                            styles.wrapper_template_content
+                                                        )}
+                                                        id='wrapper_template_content'
+                                                    >
+                                                        {children}
+                                                        {/* {!showEditorComponent && (
                                                             <EditorGrid />
                                                         )} */}
+                                                    </div>
+                                                    <EditorComponent
+                                                        style={{
+                                                            display:
+                                                                showEditorComponent
+                                                                    ? "flex"
+                                                                    : "none",
+                                                            // transform: widthMenu === "0" ? "translateX(-11%)" : "",
+                                                        }}
+                                                    ></EditorComponent>
                                                 </div>
-                                                <EditorComponent
-                                                    style={{
-                                                        display:
-                                                            showEditorComponent
-                                                                ? "flex"
-                                                                : "none",
-                                                        // transform: widthMenu === "0" ? "translateX(-11%)" : "",
-                                                    }}
-                                                ></EditorComponent>
                                             </div>
                                         </div>
+                                        <Trash
+                                            display={
+                                                showTrash ? "flex" : "none"
+                                            }
+                                            id={"trash"}
+                                        ></Trash>
                                     </div>
-                                    <Trash
-                                        display={showTrash ? "flex" : "none"}
-                                        id={"trash"}
-                                    ></Trash>
-                                </div>
-                                <div
-                                    style={{
-                                        display: "none",
-                                        display: showPreview ? "block" : "none",
-                                    }}
-                                >
-                                    <Preview
-                                        setShowPreview={setShowPreview}
-                                        showPreview={showPreview}
-                                        items={items}
-                                        // heightTemplate={heightContent}
-                                    ></Preview>
-                                </div>
-                                <Guide
-                                    showGuide={showGuide}
-                                    setShowGuide={setShowGuide}
-                                ></Guide>
-                            </ColorRange.Provider>
-                        </ElementContentPortfolio.Provider>
-                    </ContextShowEditorComponent.Provider>
+                                    <div
+                                        style={{
+                                            display: "none",
+                                            display: showPreview
+                                                ? "block"
+                                                : "none",
+                                        }}
+                                    >
+                                        <Preview
+                                            setShowPreview={setShowPreview}
+                                            showPreview={showPreview}
+                                            items={items}
+                                            pagesContent={pagesContent}
+                                            // heightTemplate={heightContent}
+                                        ></Preview>
+                                    </div>
+                                    <Guide
+                                        showGuide={showGuide}
+                                        setShowGuide={setShowGuide}
+                                    ></Guide>
+                                </ColorRange.Provider>
+                            </ElementContentPortfolio.Provider>
+                        </ContextShowEditorComponent.Provider>
+                    </PageContent.Provider>
                 </ContextItemsIngrid.Provider>
             </ContextWrapperContent.Provider>
         </>

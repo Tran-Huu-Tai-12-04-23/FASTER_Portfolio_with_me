@@ -94,13 +94,13 @@ function EditorGrid({ idPage, pages, setPages, style }) {
         var newPages = [];
         pages.map((page, index) => {
             if (page.id === idPage) {
-                newPages.push(page);
+                newPages.push(structuredClone(page));
                 newPages.push({
                     id: id,
                     style: page.style,
                 });
             } else {
-                newPages.push(page);
+                newPages.push(structuredClone(page));
             }
         });
         setPages(newPages);

@@ -17,7 +17,9 @@ function TemplateContent({ DefaultComponentPages }) {
     useEffect(() => {
         template.current.scrollTop = scroll;
     }, [scroll]);
-
+    // useEffect(() => {
+    //     handleCopyPages(pages);
+    // }, [pages]);
     const handleAddPages = () => {
         setScroll((prev) => prev + template.current.offsetHeight);
         setPages((prev) => {

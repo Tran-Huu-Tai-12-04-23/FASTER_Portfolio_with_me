@@ -25,7 +25,6 @@ function App() {
     data.then((data) => {
         setDataUserWeb(data);
     }).catch((error) => console.error(error));
-
     const renderUserWeb = () => {
         if (dataUserWeb) {
             if (Array.isArray(dataUserWeb)) {
@@ -41,6 +40,7 @@ function App() {
                                     items={structuredClone(item.items)}
                                     type={item.path}
                                     title={item.title}
+                                    pagesContent={item.pagesContent}
                                 ></UserWeb>
                             }
                         ></Route>
@@ -57,6 +57,7 @@ function App() {
                                 widthContent={dataUserWeb.widthContent}
                                 type={dataUserWeb.path}
                                 title={dataUserWeb.title}
+                                pagesContent={dataUserWeb.pagesContent}
                             ></UserWeb>
                         }
                     ></Route>

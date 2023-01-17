@@ -9,6 +9,7 @@ import {
     GrLinkedin,
     GrYoutube,
 } from "react-icons/gr";
+import { Grid } from "~/Components";
 
 function Preview({
     items,
@@ -18,6 +19,7 @@ function Preview({
     showPreview,
     children,
     id,
+    pagesContent,
 }) {
     const Preview = useRef();
     const icons = {
@@ -27,159 +29,187 @@ function Preview({
         Linkedin: <GrLinkedin />,
         Youtube: <GrYoutube />,
     };
-    const renderItem = () => {
+    const renderItem = (id) => {
         if (items) {
             return items.map((item, index) => {
-                if (item.type === "img" || item.type === "backgroundImage") {
-                    return (
-                        <img
-                            key={index}
-                            src={item.linkImage ? item.linkImage : item.src}
-                            style={{
-                                width: item.width,
-                                height: item.height,
-                                position: "absolute",
-                                top: item.top,
-                                left: item.left,
-                                ...item.styleDefault,
-                                zIndex: item.type === "img" ? 2 : 1,
-                                transform: item.center
-                                    ? "translateX(-50%)"
-                                    : "",
-                                overflow: "hidden",
-                            }}
-                        ></img>
-                    );
-                } else if (item.type === "input" || item.type === "button") {
-                    return (
-                        <div
-                            key={index}
-                            style={{
-                                position: "absolute",
-                                top: item.top,
-                                left: item.left,
-                                height: item.height,
-                                width: item.width,
-                                ...item.styleDefault,
-                                zIndex: 2,
-                                transform: item.center
-                                    ? "translateX(-50%)"
-                                    : "",
-                                display:
-                                    item.type === "button" ? "flex" : "block",
-                                justifyContent:
-                                    item.type === "button" ? "center" : "",
-                                alignItems:
-                                    item.type === "button" ? "center" : "",
-                                overflow: "hidden",
-                            }}
-                        >
-                            {item.valueItem}
-                        </div>
-                    );
-                } else if (item.type === "div") {
-                    return (
-                        <div
-                            key={index}
-                            style={{
-                                position: "absolute",
-                                top: item.top,
-                                left: item.left,
-                                height: item.height,
-                                width: item.width,
-                                transform: item.center
-                                    ? "translateX(-50%)"
-                                    : "",
-                                ...item.styleDefault,
-                                zIndex: 2,
-                                overflow: "hidden",
-                            }}
-                        ></div>
-                    );
-                } else if (item.type === "a") {
-                    return (
-                        <a
-                            key={index}
-                            href={item.href}
-                            target={"_blank"}
-                            style={{
-                                position: "absolute",
-                                top: item.top,
-                                left: item.left,
-                                height: item.height,
-                                width: item.width,
-                                ...item.styleDefault,
-                                zIndex: 2,
-                                textAlign: "center",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                overflow: "hidden",
-                            }}
-                        >
-                            {item.textValue}
-                        </a>
-                    );
-                } else if (item.type === "icon") {
-                    // console.log(item);
-                    return (
-                        <div
-                            className={clsx(styles.icon)}
-                            key={index}
-                            style={{
-                                position: "absolute",
-                                top: item.top,
-                                left: item.left,
-                                height: item.height,
-                                width: item.width,
-                                // ...item.styleDefault,
-                                padding: "0",
-                                border: "none",
-                                zIndex: 2,
-                                overflow: "hidden",
-                            }}
-                        >
+                if (item.idGrid === id) {
+                    if (
+                        item.type === "img" ||
+                        item.type === "backgroundImage"
+                    ) {
+                        return (
+                            <img
+                                key={index}
+                                src={item.linkImage ? item.linkImage : item.src}
+                                style={{
+                                    width: item.width,
+                                    height: item.height,
+                                    position: "absolute",
+                                    top: item.top,
+                                    left: item.left,
+                                    ...item.styleDefault,
+                                    zIndex: item.type === "img" ? 2 : 1,
+                                    transform: item.center
+                                        ? "translateX(-50%)"
+                                        : "",
+                                    overflow: "hidden",
+                                }}
+                            ></img>
+                        );
+                    } else if (
+                        item.type === "input" ||
+                        item.type === "button"
+                    ) {
+                        return (
+                            <div
+                                key={index}
+                                style={{
+                                    position: "absolute",
+                                    top: item.top,
+                                    left: item.left,
+                                    height: item.height,
+                                    width: item.width,
+                                    ...item.styleDefault,
+                                    zIndex: 2,
+                                    transform: item.center
+                                        ? "translateX(-50%)"
+                                        : "",
+                                    display:
+                                        item.type === "button"
+                                            ? "flex"
+                                            : "block",
+                                    justifyContent:
+                                        item.type === "button" ? "center" : "",
+                                    alignItems:
+                                        item.type === "button" ? "center" : "",
+                                    overflow: "hidden",
+                                }}
+                            >
+                                {item.valueItem}
+                            </div>
+                        );
+                    } else if (item.type === "div") {
+                        return (
+                            <div
+                                key={index}
+                                style={{
+                                    position: "absolute",
+                                    top: item.top,
+                                    left: item.left,
+                                    height: item.height,
+                                    width: item.width,
+                                    transform: item.center
+                                        ? "translateX(-50%)"
+                                        : "",
+                                    ...item.styleDefault,
+                                    zIndex: 2,
+                                    overflow: "hidden",
+                                }}
+                            ></div>
+                        );
+                    } else if (item.type === "a") {
+                        return (
                             <a
+                                key={index}
                                 href={item.href}
                                 target={"_blank"}
                                 style={{
-                                    width: "100%",
-                                    height: "100%",
+                                    position: "absolute",
+                                    top: item.top,
+                                    left: item.left,
+                                    height: item.height,
+                                    width: item.width,
                                     ...item.styleDefault,
+                                    zIndex: 2,
+                                    textAlign: "center",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    overflow: "hidden",
                                 }}
                             >
-                                {item.InfoIcon ? icons[item.InfoIcon] : null}
+                                {item.textValue}
                             </a>
-                        </div>
-                    );
-                } else if (item.type === "background") {
-                    return (
-                        <div
-                            key={index}
-                            style={{
-                                position: "absolute",
-                                top: item.top,
-                                left: item.left,
-                                height: item.height,
-                                width: item.width,
-                                ...item.styleDefault,
-                                padding: "0",
-                                border: "none",
-                                zIndex: 1,
-                                overflow: "hidden",
-                            }}
-                        ></div>
-                    );
+                        );
+                    } else if (item.type === "icon") {
+                        // console.log(item);
+                        return (
+                            <div
+                                className={clsx(styles.icon)}
+                                key={index}
+                                style={{
+                                    position: "absolute",
+                                    top: item.top,
+                                    left: item.left,
+                                    height: item.height,
+                                    width: item.width,
+                                    // ...item.styleDefault,
+                                    padding: "0",
+                                    border: "none",
+                                    zIndex: 2,
+                                    overflow: "hidden",
+                                }}
+                            >
+                                <a
+                                    href={item.href}
+                                    target={"_blank"}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        ...item.styleDefault,
+                                    }}
+                                >
+                                    {item.InfoIcon
+                                        ? icons[item.InfoIcon]
+                                        : null}
+                                </a>
+                            </div>
+                        );
+                    } else if (item.type === "background") {
+                        return (
+                            <div
+                                key={index}
+                                style={{
+                                    position: "absolute",
+                                    top: item.top,
+                                    left: item.left,
+                                    height: item.height,
+                                    width: item.width,
+                                    ...item.styleDefault,
+                                    padding: "0",
+                                    border: "none",
+                                    zIndex: 1,
+                                    overflow: "hidden",
+                                }}
+                            ></div>
+                        );
+                    }
                 }
             });
         }
     };
-
+    const renderPageContent = () => {
+        return pagesContent.map((grid, index) => {
+            return (
+                <div
+                    key={index}
+                    style={{
+                        width: "100%",
+                        ...grid.style,
+                        height: "70vh",
+                        position: "relative",
+                    }}
+                >
+                    {renderItem(grid.id)}
+                </div>
+            );
+        });
+    };
     return (
         <div
             className={clsx(styles.wrapper)}
             style={{
-                height: heightTemplate + 400,
+                height: `${70 * pagesContent.length + 20}vh`,
             }}
             ref={Preview}
         >
@@ -194,10 +224,10 @@ function Preview({
                 className={clsx(styles.wrapper_template)}
                 style={{
                     width: width,
-                    height: heightTemplate,
                 }}
             >
-                {items && renderItem()}
+                {/* {items && renderItem()} */}
+                {pagesContent && renderPageContent()}
             </div>
         </div>
     );
