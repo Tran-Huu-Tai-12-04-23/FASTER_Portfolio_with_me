@@ -5,7 +5,7 @@ import { useState, useContext, useEffect } from "react";
 import { faComputer, faHomeLg } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AiOutlineClose, AiOutlineBulb } from "react-icons/ai";
-import { BsArrowCounterclockwise, BsArrowClockwise } from "react-icons/bs";
+import { BsDownload } from "react-icons/bs";
 import { BiUndo, BiRedo } from "react-icons/bi";
 import { CgWebsite } from "react-icons/cg";
 import { getDataUserWeb } from "~/Store/util/index";
@@ -33,7 +33,6 @@ function Header({
     setShowPreview,
     heightDefault,
     widthContent,
-    handleDownload,
     setShowGuide,
     pagesContent,
 }) {
@@ -53,6 +52,39 @@ function Header({
         if (e.target.value === "") {
             setTitle("Title is empty");
         }
+    };
+
+    const handleDownload = (e) => {
+        // document.getElementById("menu_web").style.display = "none";
+        // document.getElementById("loading").style.display = "none";
+        e.preventDefault();
+        // var pageHTML =
+        // "<!DOCTYPE html>" + window.document.documentElement.outerHTML;
+        const download = document.getElementById("download").innerHTML;
+        const head = document.querySelector("head").innerHTML;
+        var pageHTML = `<!DOCTYPE html> <html><head>${head}</head><body>${download}</body></html>`;
+
+        const vitri = pageHTML.search("/static/css/main.");
+        let newPageHtml;
+        if (vitri !== -1 && vitri) {
+            newPageHtml = pageHTML.substring(0, vitri);
+            const resthtml = pageHTML.substring(
+                vitri + "/static/css/main.".length,
+                pageHTML.length - vitri
+            );
+
+            newPageHtml +=
+                `https://${document.location.host.toString()}/static/css/main.` +
+                resthtml;
+        }
+        pageHTML = newPageHtml ? newPageHtml : pageHTML;
+        let data = new Blob([pageHTML], { type: "data:attachment/text," });
+        let csvURL = URL.createObjectURL(data);
+        let tempLink = document.createElement("a");
+        tempLink.href = csvURL;
+        // tempLink.href = data;
+        tempLink.setAttribute("download", `${title}.html`);
+        tempLink.click();
     };
 
     // useEffect(() => {
@@ -231,11 +263,12 @@ function Header({
                         <FiDownloadCloud
                             style={{
                                 fontSize: "32px",
-                                display: "none",
+                                color: "#fff",
                             }}
                             onClick={handleDownload}
                         ></FiDownloadCloud>
                     </TipSuggest>
+
                     <TipSuggest content='Public'>
                         <Button
                             primary

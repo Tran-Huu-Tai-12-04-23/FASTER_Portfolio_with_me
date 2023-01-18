@@ -179,6 +179,11 @@ function Editor() {
                 item.linkImage = urlItem;
             }
         }
+        items.map((it) => {
+            if (it.id === item.id) {
+                it = item;
+            }
+        });
         if (itemReal) {
             itemReal.src = urlItem;
             // itemReal.replaceTag("img");
@@ -190,10 +195,10 @@ function Editor() {
         const item = findItem(state.id_item_selected);
         const itemReal = document.getElementById(state.id_item_selected);
         if (item) {
-            item.src = linkImage;
+            item.src = linkImage ? linkImage : item.src;
         }
         if (itemReal) {
-            itemReal.src = linkImage;
+            itemReal.src = linkImage ? linkImage : item.src;
         }
         setShowChooseLinkImage(false);
         setTypeImage("image");

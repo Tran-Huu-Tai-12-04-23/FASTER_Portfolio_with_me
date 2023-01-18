@@ -331,26 +331,6 @@ function Grid({ id, itemGrids, children, numberPage, pages, setPages, style }) {
             height = 60;
             width = 60;
         }
-        if (type === "background") {
-            styles = {
-                border: "none",
-                backgroundColor: "#ccc",
-                width: "100%",
-            };
-            height = 400;
-            width = "100%";
-            left = "0%";
-        }
-        if (type === "backgroundImage") {
-            styles = {
-                border: "none",
-                width: "100%",
-            };
-            height = 400;
-            width = "100%";
-            left = "0%";
-        }
-
         // loadStyleComponentInInitState(styles);
         setItems((prev) => {
             return [

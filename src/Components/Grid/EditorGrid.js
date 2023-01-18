@@ -132,16 +132,12 @@ function EditorGrid({ idPage, pages, setPages, style }) {
     };
     const handleSaveLinkBackground = () => {
         var page = findPage();
-        page.style.backgroundImage = `url("${linkBackgroundImage}")`;
-        page.style.backgroundRepeat = "no-repeat";
+        page.style.background = `url("${linkBackgroundImage}") no-repeat`;
         page.style.backgroundSize = `cover`;
-        page.style.object = `fit`;
         var itemPage = document.getElementById(idPage);
         if (itemPage) {
-            itemPage.style.backgroundImage = `url("${linkBackgroundImage}")`;
-            itemPage.style.backgroundRepeat = "no-repeat";
+            itemPage.style.background = `url("${linkBackgroundImage}") no-repeat`;
             itemPage.style.backgroundSize = `cover`;
-            itemPage.style.object = `fit`;
         }
     };
     const handleShowInputImg = (e) => {
@@ -179,6 +175,7 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                         if (itemPage) {
                             itemPage.style.background =
                                 backgroundLinearGradient[index];
+                            setLinkBackgroundImage("");
                         }
                     }}
                 ></li>
@@ -230,6 +227,7 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                         className={clsx(styles.button)}
                         onClick={(e) => {
                             setTypeEdit("");
+                            setLinkBackgroundImage("");
                         }}
                     >
                         Save
@@ -285,6 +283,7 @@ function EditorGrid({ idPage, pages, setPages, style }) {
                         className={clsx(styles.button)}
                         onClick={(e) => {
                             setTypeEdit("");
+                            setLinkBackgroundImage("");
                         }}
                     >
                         Save

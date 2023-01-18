@@ -158,7 +158,6 @@ function Item({
                 styleDefault,
                 src,
                 href,
-                valueItem,
                 stylesItem,
                 numberFooter,
                 typeMulti,
@@ -367,12 +366,12 @@ function Item({
             items.map((item) => {
                 const itemDomReal = document.getElementById(item.id);
                 if (itemDomReal) {
-                    item.textValue = itemDomReal.textContent
-                        ? itemDomReal.textContent
-                        : item.value;
-                    item.valueItem = itemDomReal.value
-                        ? itemDomReal.value
-                        : itemDomReal.textContent;
+                    // item.textValue = itemDomReal.textContent
+                    // ? itemDomReal.textContent
+                    // : item.value;
+                    // item.valueItem = itemDomReal.value
+                    //     ? itemDomReal.value
+                    //     : itemDomReal.textContent;
                     item.src = itemDomReal.src ? itemDomReal.src : item.src;
                     item.href = itemDomReal.href ? itemDomReal.href : item.href;
 
@@ -450,6 +449,8 @@ function Item({
                         src={linkImg}
                         value={value}
                         onChange={(e) => {
+                            const item = findItem(id);
+                            item.valueItem = e.target.value;
                             setValue(e.target.value);
                         }}
                         onBlur={(e) => {

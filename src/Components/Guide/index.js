@@ -85,7 +85,7 @@ function Guide({ showGuide, setShowGuide }) {
         },
         {
             top: "0%",
-            left: "73%",
+            left: "72%",
             backgroundColor: "transparent",
             border: "4px solid #fff",
             height: "60px",
@@ -93,7 +93,7 @@ function Guide({ showGuide, setShowGuide }) {
         },
         {
             top: "0%",
-            left: "82%",
+            left: "82.5%",
             backgroundColor: "transparent",
             border: "4px solid #fff",
             height: "60px",

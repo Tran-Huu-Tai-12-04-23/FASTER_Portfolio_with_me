@@ -22,7 +22,7 @@ import {
 import Preview from "../Preview";
 import { getData, getColors, getShowGuide } from "~/Store/util";
 import Guide from "~/Components/Guide";
-import { TemplateContent } from "~/Components/";
+import { UserWeb } from "~/Components";
 
 function CreatePortfolio({
     DefaultComponent = [],
@@ -206,7 +206,6 @@ function CreatePortfolio({
             window.removeEventListener("resize", handleResizeWindow);
         };
     });
-
     //hidden edit component when none item in grid
     useEffect(() => {
         if (items) {
@@ -373,6 +372,20 @@ function CreatePortfolio({
                                         showGuide={showGuide}
                                         setShowGuide={setShowGuide}
                                     ></Guide>
+                                    <div
+                                        id='download'
+                                        style={{
+                                            display: "none",
+                                        }}
+                                    >
+                                        <UserWeb
+                                            items={items}
+                                            heightTemplate={140}
+                                            widthContent={widthContent}
+                                            title={"new"}
+                                            pagesContent={pagesContent}
+                                        ></UserWeb>
+                                    </div>
                                 </ColorRange.Provider>
                             </ElementContentPortfolio.Provider>
                         </ContextShowEditorComponent.Provider>

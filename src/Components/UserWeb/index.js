@@ -1,4 +1,4 @@
-import { useEffect, useState, useLayoutEffect } from "react";
+import { useEffect, useState, useLayoutEffect, useRef } from "react";
 import clsx from "clsx";
 import styles from "./UserWeb.module.scss";
 import {
@@ -25,10 +25,6 @@ function UserWeb({
     id,
     title,
 }) {
-    const [data, setData] = useState(items);
-    const [showMenu, setShowMenu] = useState(false);
-    const [top, setTop] = useState(0);
-    const [left, setLeft] = useState(0);
     const icons = {
         Facebook: <GrFacebookOption />,
         Instagram: <GrInstagram />,
@@ -37,82 +33,9 @@ function UserWeb({
         Youtube: <GrYoutube />,
     };
 
-    useEffect(() => {
-        const handleContextMenu = (e) => {
-            e.preventDefault();
-            setShowMenu(true);
-            setLeft(e.pageX);
-            setTop(e.pageY);
-        };
-        const handleClick = (e) => {
-            e.preventDefault();
-            setShowMenu(false);
-        };
-        window.addEventListener("click", handleClick);
-        window.addEventListener("contextmenu", handleContextMenu);
-        return () => {
-            window.removeEventListener("contextmenu", handleContextMenu);
-        };
-    }, []);
-
-    useEffect(() => {
-        data.map((item) => {
-            if (widthContent && heightTemplate) {
-                if (!item.height.toString().includes("%")) {
-                    item.height = `${(item.height / heightTemplate) * 100}%`;
-                }
-                if (!item.width.toString().includes("%")) {
-                    item.width = `${(item.width / widthContent) * 100}%`;
-                }
-                if (!item.top.toString().includes("%")) {
-                    item.top = `${(item.top / heightTemplate) * 100}%`;
-                }
-                if (!item.left.toString().includes("%")) {
-                    item.left = `${(item.left / widthContent) * 100}%`;
-                }
-                if (
-                    item.type === "background" ||
-                    item.type === "backgroundImage"
-                ) {
-                    item.width = "100%";
-                }
-            }
-        });
-    }, []);
-    const handleDownload = (e) => {
-        document.getElementById("menu_web").style.display = "none";
-        document.getElementById("loading").style.display = "none";
-        e.preventDefault();
-        var pageHTML =
-            "<!DOCTYPE html>" + window.document.documentElement.outerHTML;
-        // // console.log(pageHTML);
-
-        const vitri = pageHTML.search("/static/css/main.");
-        let newPageHtml;
-        if (vitri !== -1 && vitri) {
-            newPageHtml = pageHTML.substring(0, vitri);
-            const resthtml = pageHTML.substring(
-                vitri + "/static/css/main.".length,
-                pageHTML.length - vitri
-            );
-
-            newPageHtml +=
-                `https://${document.location.host.toString()}/static/css/main.` +
-                resthtml;
-            console.log(newPageHtml);
-        }
-        pageHTML = newPageHtml ? newPageHtml : pageHTML;
-        let data = new Blob([pageHTML], { type: "data:attachment/text," });
-        let csvURL = URL.createObjectURL(data);
-        let tempLink = document.createElement("a");
-        tempLink.href = csvURL;
-        // tempLink.href = data;
-        tempLink.setAttribute("download", `${"New"}.html`);
-        tempLink.click();
-    };
     const renderItem = (id) => {
-        if (data) {
-            return data.map((item, index) => {
+        if (items) {
+            return items.map((item, index) => {
                 if (item.idGrid === id) {
                     if (
                         item.type === "img" ||
@@ -123,10 +46,14 @@ function UserWeb({
                                 key={index}
                                 src={item.linkImage ? item.linkImage : item.src}
                                 style={{
-                                    width: item.width,
-                                    height: item.height,
+                                    width: widthContent
+                                        ? `${
+                                              (item.width / widthContent) * 100
+                                          }%`
+                                        : item.width,
+                                    height: `${(item.height / 800) * 100}%`,
                                     position: "absolute",
-                                    top: item.top,
+                                    top: `${(item.top / 1000) * 100}%`,
                                     left: item.left,
                                     ...item.styleDefault,
                                     zIndex: item.type === "img" ? 2 : 1,
@@ -146,10 +73,14 @@ function UserWeb({
                                 key={index}
                                 style={{
                                     position: "absolute",
-                                    top: item.top,
+                                    top: `${(item.top / 1000) * 100}%`,
                                     left: item.left,
-                                    height: item.height,
-                                    width: item.width,
+                                    height: `${(item.height / 800) * 100}%`,
+                                    width: widthContent
+                                        ? `${
+                                              (item.width / widthContent) * 100
+                                          }%`
+                                        : item.width,
                                     ...item.styleDefault,
                                     zIndex: 2,
                                     transform: item.center
@@ -175,10 +106,14 @@ function UserWeb({
                                 key={index}
                                 style={{
                                     position: "absolute",
-                                    top: item.top,
+                                    top: `${(item.top / 1000) * 100}%`,
                                     left: item.left,
-                                    height: item.height,
-                                    width: item.width,
+                                    height: `${(item.height / 800) * 100}%`,
+                                    width: widthContent
+                                        ? `${
+                                              (item.width / widthContent) * 100
+                                          }%`
+                                        : item.width,
                                     transform: item.center
                                         ? "translateX(-50%)"
                                         : "",
@@ -196,10 +131,14 @@ function UserWeb({
                                 target={"_blank"}
                                 style={{
                                     position: "absolute",
-                                    top: item.top,
+                                    top: `${(item.top / 1000) * 100}%`,
                                     left: item.left,
-                                    height: item.height,
-                                    width: item.width,
+                                    height: `${(item.height / 800) * 100}%`,
+                                    width: widthContent
+                                        ? `${
+                                              (item.width / widthContent) * 100
+                                          }%`
+                                        : item.width,
                                     ...item.styleDefault,
                                     zIndex: 2,
                                     textAlign: "center",
@@ -220,10 +159,14 @@ function UserWeb({
                                 key={index}
                                 style={{
                                     position: "absolute",
-                                    top: item.top,
+                                    top: `${(item.top / 1000) * 100}%`,
                                     left: item.left,
-                                    height: item.height,
-                                    width: item.width,
+                                    height: `${(item.height / 800) * 100}%`,
+                                    width: widthContent
+                                        ? `${
+                                              (item.width / widthContent) * 100
+                                          }%`
+                                        : item.width,
                                     padding: "0",
                                     border: "none",
                                     zIndex: 2,
@@ -246,32 +189,12 @@ function UserWeb({
                                 </a>
                             </div>
                         );
-                    } else if (item.type === "background") {
-                        return (
-                            <div
-                                key={index}
-                                style={{
-                                    position: "absolute",
-                                    top: item.top,
-                                    left: item.left,
-                                    height: item.height,
-                                    width: item.width,
-                                    ...item.styleDefault,
-                                    padding: "0",
-                                    border: "none",
-                                    zIndex: 1,
-                                    overflow: "hidden",
-                                }}
-                            ></div>
-                        );
                     }
                 }
             });
         }
     };
-    useEffect(() => {
-        console.log(pagesContent);
-    }, []);
+    console.log(items);
     const renderPageContent = () => {
         return pagesContent.map((grid, index) => {
             return (
@@ -280,7 +203,7 @@ function UserWeb({
                     style={{
                         width: "100%",
                         ...grid.style,
-                        height: "100vh",
+                        height: "1000px",
                         position: "relative",
                     }}
                 >
@@ -293,25 +216,6 @@ function UserWeb({
     return (
         <div className={clsx(styles.wrapper)}>
             {pagesContent && renderPageContent()}
-            <div
-                className={styles.menu}
-                style={{
-                    position: "absolute",
-                    display: showMenu ? "flex" : "none",
-                    left: left,
-                    top: top,
-                }}
-                id={"menu_web"}
-                onClick={handleDownload}
-            >
-                <BsSave
-                    style={{
-                        fontSize: 40,
-                        color: "#fff",
-                    }}
-                ></BsSave>
-                <h3>Download</h3>
-            </div>
         </div>
     );
 }
