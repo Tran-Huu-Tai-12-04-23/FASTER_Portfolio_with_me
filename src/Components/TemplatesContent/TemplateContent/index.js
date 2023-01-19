@@ -2,11 +2,14 @@ import uuid from "react-uuid";
 import clsx from "clsx";
 import ReactDOMServer from "react-dom/server";
 import Html from "~/Html";
-import { useContext, useRef, useEffect, useState } from "react";
-
+import { useContext, useRef, useEffect, useState, memo } from "react";
 import styles from "./TemplateContent.module.scss";
 import { Grid, Item } from "~/Components";
-import { ContextPages, ElementContentPortfolio } from "~/Store/Context";
+import {
+    ContextPages,
+    ElementContentPortfolio,
+    PageContent,
+} from "~/Store/Context";
 import { IoAddSharp } from "react-icons/io5";
 
 function TemplateContent({ DefaultComponentPages }) {
@@ -60,4 +63,4 @@ function TemplateContent({ DefaultComponentPages }) {
     );
 }
 
-export default TemplateContent;
+export default memo(TemplateContent);

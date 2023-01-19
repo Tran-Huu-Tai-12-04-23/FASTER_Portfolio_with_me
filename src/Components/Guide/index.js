@@ -150,6 +150,7 @@ function Guide({ showGuide, setShowGuide }) {
             style={{
                 display: showGuide ? "block" : "none",
             }}
+            onClick={(e) => e.stopPropagation()}
         >
             <div
                 className={clsx(styles.guide)}

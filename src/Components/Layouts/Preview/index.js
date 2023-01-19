@@ -19,7 +19,7 @@ function Preview({
     showPreview,
     children,
     id,
-    pagesContent,
+    pagesContent = [],
 }) {
     const Preview = useRef();
     const icons = {

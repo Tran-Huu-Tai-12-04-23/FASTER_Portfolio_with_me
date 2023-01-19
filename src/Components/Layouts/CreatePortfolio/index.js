@@ -1,3 +1,4 @@
+import uuid from "react-uuid";
 import { useEffect, useState, useRef, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import clsx from "clsx";
@@ -32,7 +33,13 @@ function CreatePortfolio({
 }) {
     const [state, dispatch] = useContext(ContextReducer);
     const [pagesContent, setPagesContent] = useState([]);
-
+    const [pagesContentRecovery, setPagesContentRecovery] = useState([
+        {
+            id: uuid(),
+            style: {},
+        },
+    ]);
+    console.log(pagesContentRecovery);
     const [items, setItems] = useState(DefaultComponent);
     const [dataItems, setDataItems] = useState(
         structuredClone(DefaultComponent)
@@ -108,7 +115,6 @@ function CreatePortfolio({
             const data = {
                 items: items,
                 pagesContent: pagesContent,
-                // height: heightContent,
             };
             // if (count === items.length) {
             localStorage.setItem(`items-${id}`, JSON.stringify(data));
@@ -131,6 +137,7 @@ function CreatePortfolio({
             e.preventDefault();
             e.returnValue = "";
             loadInStyleDefault();
+            localStorage.setItem("showGuided", "true");
         };
 
         window.addEventListener("beforeunload", handleSaveDataInStorage);
@@ -144,8 +151,8 @@ function CreatePortfolio({
         const colors = getColors(id);
         data.then((data) => {
             if (data) {
-                setDataRecovery(data.items);
-                setHeightRecovery(data.height);
+                console.log(data);
+                setDataRecovery(data);
                 setShowRecovery(true);
             }
         }).catch((err) => err);
@@ -170,8 +177,8 @@ function CreatePortfolio({
             }
             return new Blob([new Uint8Array(array)], { type: mime });
         };
-        if (dataRecovery) {
-            dataRecovery.map((item) => {
+        if (dataRecovery && dataRecovery.items) {
+            dataRecovery.items.map((item) => {
                 if (item.linkImage && item.src.toString().includes("blob")) {
                     item.src = URL.createObjectURL(
                         dataURItoBlob(item.linkImage)
@@ -219,7 +226,9 @@ function CreatePortfolio({
         <>
             <ContextWrapperContent.Provider value={wrapperContentPortfolio}>
                 <ContextItemsIngrid.Provider value={[items, setItems]}>
-                    <PageContent.Provider value={setPagesContent}>
+                    <PageContent.Provider
+                        value={[pagesContentRecovery, setPagesContent]}
+                    >
                         <ContextShowEditorComponent.Provider
                             value={[showEditorComponent, setEditorComponent]}
                         >
@@ -245,50 +254,22 @@ function CreatePortfolio({
                                             className={clsx(styles.content)}
                                             ref={wrapperContentPortfolio}
                                         >
-                                            {/* <div
-                                            className={clsx(
-                                                styles.wrapper_nofication
-                                            )}
-                                            style={{
-                                                display:
-                                                    showEditorComponent ||
-                                                    !showRecovery
-                                                        ? "none"
-                                                        : "flex",
-                                            }}
-                                        >
-                                            <h1>Web data recovery</h1>
-                                            <button
-                                                onClick={(e) => {
-                                                    setShowRecovery(false);
-                                                }}
-                                            >
-                                                No
-                                            </button>
-                                            <button
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    setItems(dataRecovery);
-                                                    setHeightContent(
-                                                        heightRecovery
-                                                    );
-                                                    setShowRecovery(false);
-                                                }}
-                                            >
-                                                Yes
-                                            </button>
-                                        </div> */}
-                                            {/* {showEditorComponent === false &&
-                                        !showRecovery ? (
-                                           
-                                        ) : (
-                                            ""
-                                        )} */}
                                             <Header
+                                                showEditorComponent={
+                                                    showEditorComponent
+                                                }
+                                                showRecovery={showRecovery}
+                                                setShowRecovery={
+                                                    setShowRecovery
+                                                }
+                                                dataRecovery={dataRecovery}
                                                 setShowGuide={setShowGuide}
                                                 widthContent={widthContent}
                                                 setShowPreview={setShowPreview}
                                                 pagesContent={pagesContent}
+                                                setPagesContent={
+                                                    setPagesContentRecovery
+                                                }
                                                 // heightDefault={heightContent}
                                             />
                                             <div

@@ -229,3 +229,18 @@
         }
     }
 }
+
+.button_nofication {
+    padding: 10px 32px;
+    width: 100px;
+    border-radius: 4px;
+    background-color: rgba(187, 119, 119, 0.6);
+    color: #fff;
+    font-size: 18px;
+    margin-left: 24px;
+    cursor: pointer;
+    border: none;
+    &:hover {
+        background-color: var(--primary);
+    }
+}

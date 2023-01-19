@@ -35,6 +35,11 @@ function Header({
     widthContent,
     setShowGuide,
     pagesContent,
+    dataRecovery,
+    showEditorComponent,
+    showRecovery,
+    setShowRecovery,
+    setPagesContent,
 }) {
     const [title, setTitle] = useState("Enter title");
     const [state, dispatch] = useContext(ContextReducer);
@@ -87,20 +92,16 @@ function Header({
         tempLink.click();
     };
 
-    // useEffect(() => {
-    //   const handleKeyUp = (e) => {
-    //     if (e.ctrlKey && e.key === "z") {
-    //       handleUndo();
-    //     }
-    //     if (e.ctrlKey && e.key === "y") {
-    //       handleRedo();
-    //     }
-    //   };
-    //   window.addEventListener("keyup", handleKeyUp);
-    //   return () => {
-    //     window.removeEventListener("keyup", handleKeyUp);
-    //   };
-    // });
+    useEffect(() => {
+        const handleClick = (e) => {
+            setShowRecovery(false);
+            localStorage.clear();
+        };
+        window.addEventListener("click", handleClick);
+        return () => {
+            window.removeEventListener("click", handleClick);
+        };
+    });
     const handleUndo = () => {
         if (state.stackUndo.length > 0) {
             state.stackRedo.push(structuredClone(items));
@@ -154,80 +155,93 @@ function Header({
     return (
         <>
             <div className={clsx(styles.wrapper)} id='header_create'>
-                <div className={clsx(styles.wrapper_input)}>
-                    <TipSuggest content='Return Home'>
-                        <Link to='/'>
-                            <FontAwesomeIcon
-                                className={clsx(styles.icon_home)}
-                                icon={faHomeLg}
-                            ></FontAwesomeIcon>
-                        </Link>
-                    </TipSuggest>
+                {!showRecovery ? (
+                    <>
+                        <div className={clsx(styles.wrapper_input)}>
+                            <TipSuggest content='Return Home'>
+                                <Link to='/'>
+                                    <FontAwesomeIcon
+                                        className={clsx(styles.icon_home)}
+                                        icon={faHomeLg}
+                                    ></FontAwesomeIcon>
+                                </Link>
+                            </TipSuggest>
 
-                    <TipSuggest classNames={clsx(styles.input)} content='Edit'>
-                        <input
-                            style={{
-                                color: "#fff",
-                                border: "1px solid #ccc",
-                            }}
-                            value={title}
-                            onChange={handleDataTitle}
-                            onBlur={handleDataTitleEmpty}
-                        ></input>
-                    </TipSuggest>
-                </div>
-
-                <div className={clsx(styles.until_options)}>
-                    <TipSuggest content='Guide'>
-                        <AiOutlineBulb
-                            onClick={(e) => {
-                                setShowGuide(true);
-                            }}
-                            style={{
-                                display: showLinkYourWebsite ? "none" : "block",
-                                color: "#fff",
-                                fontSize: 32,
-                            }}
-                        ></AiOutlineBulb>
-                    </TipSuggest>
-                    <div
-                        className={clsx(styles.your_website)}
-                        onClick={(e) => {
-                            setShowLinkYourWebsite(true);
-                        }}
-                    >
-                        <TipSuggest content='Link your website'>
-                            <CgWebsite
-                                style={{
-                                    display: showLinkYourWebsite
-                                        ? "none"
-                                        : "block",
-                                    color: "#fff",
-                                }}
-                            ></CgWebsite>
-                        </TipSuggest>
-
-                        <AiOutlineClose
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setShowLinkYourWebsite(false);
-                            }}
-                            style={{
-                                color: "#fff",
-                                display: showLinkYourWebsite ? "block" : "none",
-                            }}
-                        ></AiOutlineClose>
-
-                        <div
-                            className={clsx(styles.wrapper_manager_link)}
-                            style={{
-                                display: showLinkYourWebsite ? "block" : "none",
-                            }}
-                        >
-                            {renderYourLink()}
+                            <TipSuggest
+                                classNames={clsx(styles.input)}
+                                content='Edit'
+                            >
+                                <input
+                                    style={{
+                                        color: "#fff",
+                                        border: "1px solid #ccc",
+                                    }}
+                                    value={title}
+                                    onChange={handleDataTitle}
+                                    onBlur={handleDataTitleEmpty}
+                                ></input>
+                            </TipSuggest>
                         </div>
-                    </div>
-                    {/* <div>
+
+                        <div className={clsx(styles.until_options)}>
+                            <TipSuggest content='Guide'>
+                                <AiOutlineBulb
+                                    onClick={(e) => {
+                                        setShowGuide(true);
+                                    }}
+                                    style={{
+                                        display: showLinkYourWebsite
+                                            ? "none"
+                                            : "block",
+                                        color: "#fff",
+                                        fontSize: 32,
+                                    }}
+                                ></AiOutlineBulb>
+                            </TipSuggest>
+                            <div
+                                className={clsx(styles.your_website)}
+                                onClick={(e) => {
+                                    setShowLinkYourWebsite(true);
+                                }}
+                            >
+                                <TipSuggest content='Link your website'>
+                                    <CgWebsite
+                                        style={{
+                                            display: showLinkYourWebsite
+                                                ? "none"
+                                                : "block",
+                                            color: "#fff",
+                                        }}
+                                    ></CgWebsite>
+                                </TipSuggest>
+
+                                <AiOutlineClose
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setShowLinkYourWebsite(false);
+                                    }}
+                                    style={{
+                                        color: "#fff",
+                                        display: showLinkYourWebsite
+                                            ? "block"
+                                            : "none",
+                                    }}
+                                ></AiOutlineClose>
+
+                                <div
+                                    className={clsx(
+                                        styles.wrapper_manager_link
+                                    )}
+                                    style={{
+                                        display: showLinkYourWebsite
+                                            ? "block"
+                                            : "none",
+                                    }}
+                                >
+                                    {renderYourLink()}
+                                </div>
+                            </div>
+                            {/* <div>
             <TipSuggest content='Undo'>
               <BiUndo
                 style={{
@@ -248,39 +262,84 @@ function Header({
               ></BiRedo>
             </TipSuggest>
           </div> */}
-                    <TipSuggest content='Show preview'>
-                        <FontAwesomeIcon
-                            onClick={(e) => {
-                                setShowPreview(true);
-                            }}
-                            style={{
-                                color: "#fff",
-                            }}
-                            icon={faComputer}
-                        ></FontAwesomeIcon>
-                    </TipSuggest>
-                    <TipSuggest content='Download portfolio'>
-                        <FiDownloadCloud
-                            style={{
-                                fontSize: "32px",
-                                color: "#fff",
-                            }}
-                            onClick={handleDownload}
-                        ></FiDownloadCloud>
-                    </TipSuggest>
+                            <TipSuggest content='Show preview'>
+                                <FontAwesomeIcon
+                                    onClick={(e) => {
+                                        setShowPreview(true);
+                                    }}
+                                    style={{
+                                        color: "#fff",
+                                    }}
+                                    icon={faComputer}
+                                ></FontAwesomeIcon>
+                            </TipSuggest>
+                            <TipSuggest content='Download portfolio'>
+                                <FiDownloadCloud
+                                    style={{
+                                        fontSize: "32px",
+                                        color: "#fff",
+                                    }}
+                                    onClick={handleDownload}
+                                ></FiDownloadCloud>
+                            </TipSuggest>
 
-                    <TipSuggest content='Public'>
-                        <Button
-                            primary
-                            className={clsx(styles.button)}
-                            onClick={(e) => {
-                                setShowModalPublic(true);
-                            }}
-                        >
-                            Public
-                        </Button>
-                    </TipSuggest>
-                </div>
+                            <TipSuggest content='Public'>
+                                <Button
+                                    primary
+                                    className={clsx(styles.button)}
+                                    onClick={(e) => {
+                                        setShowModalPublic(true);
+                                    }}
+                                >
+                                    Public
+                                </Button>
+                            </TipSuggest>
+                        </div>
+                    </>
+                ) : (
+                    ""
+                    // <div
+                    //     className={clsx(styles.wrapper_nofication)}
+                    //     style={{
+                    //         display:
+                    //             showEditorComponent || !showRecovery
+                    //                 ? "none"
+                    //                 : "flex",
+                    //         alignItems: "center",
+                    //     }}
+                    //     onClick={(e) => e.stopPropagation()}
+                    // >
+                    //     <h1
+                    //         style={{
+                    //             color: "white",
+                    //             fontSize: "32px",
+                    //         }}
+                    //     >
+                    //         Web data recovery
+                    //     </h1>
+                    //     <button
+                    //         className={clsx(styles.button_nofication)}
+                    //         onClick={(e) => {
+                    //             setShowRecovery(false);
+                    //             localStorage.clear();
+                    //             localStorage.setItem("showGuided", true);
+                    //         }}
+                    //     >
+                    //         No
+                    //     </button>
+                    //     <button
+                    //         className={clsx(styles.button_nofication)}
+                    //         onClick={(e) => {
+                    //             e.stopPropagation();
+                    //             setItems(dataRecovery.items);
+                    //             setPagesContent(dataRecovery.pagesContent);
+                    //             setShowRecovery(false);
+                    //         }}
+                    //     >
+                    //         Yes
+                    //     </button>
+                    // </div>
+                )}
             </div>
             <ModalPublic
                 pagesContent={pagesContent}

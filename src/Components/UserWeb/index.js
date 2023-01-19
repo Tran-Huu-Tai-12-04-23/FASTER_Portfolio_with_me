@@ -194,7 +194,6 @@ function UserWeb({
             });
         }
     };
-    console.log(items);
     const renderPageContent = () => {
         return pagesContent.map((grid, index) => {
             return (
